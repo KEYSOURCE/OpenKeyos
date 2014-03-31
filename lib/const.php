@@ -275,10 +275,10 @@ define ('USER_TYPE_CUSTOMER_SHOP', 32);
 define ('KEYOS_TYPES', 2+4+8+16);
 
 $GLOBALS['USER_TYPES'] = array(
-	USER_TYPE_KEYSOURCE => 'Keysource user',
+	USER_TYPE_KEYSOURCE => 'Manager user',
 	USER_TYPE_CUSTOMER => 'Customer user',
 	USER_TYPE_CUSTOMER_SHOP => 'Shop user',
-	USER_TYPE_KEYSOURCE_GROUP => 'Keysource group',
+	USER_TYPE_KEYSOURCE_GROUP => 'Manager group',
 	USER_TYPE_GROUP => 'Group'
 );
 
@@ -321,7 +321,7 @@ define ('ACL_ROLE_TYPE_KEYSOURCE', 1);
 define ('ACL_ROLE_TYPE_CUSTOMER', 2);
 
 $GLOBALS['ACL_ROLE_TYPES'] = array (
-	ACL_ROLE_TYPE_KEYSOURCE => 'Keysource ACL role',
+	ACL_ROLE_TYPE_KEYSOURCE => 'Manager ACL role',
 	ACL_ROLE_TYPE_CUSTOMER => 'Customer ACL role'
 );
 
@@ -583,11 +583,9 @@ define('ACCOUNT_MANAGER_MPI', 576);
 define('DEFAULT_ACCOUNT_MANAGER', ACCOUNT_MANAGER_KS);
 $GLOBALS['ACCOUNT_MANAGERS'] = array(
     ACCOUNT_MANAGER_KS => "Keysource",
-    ACCOUNT_MANAGER_MPI => "MPI"
 );
 $GLOBALS['ACCOUNT_MANAGERS_LOGOS'] = array(
 	ACCOUNT_MANAGER_KS => "logo_ksrc.gif",
-	ACCOUNT_MANAGER_MPI => "logo_ksrcmpi.jpg"
 );
 $GLOBALS['ACCOUNT_MANAGERS_INFO']  = array(
 	ACCOUNT_MANAGER_KS => array(
@@ -599,25 +597,11 @@ $GLOBALS['ACCOUNT_MANAGERS_INFO']  = array(
 		"fax" => "F +32-2-62.61.339",
 		"email" => "info@keysource.be",
 		"web" => "www.keysource.be",
-		"tva" => "TVA: BE 435 019 363",
-		"rcb" => "RCB: 508.360",
-		"bbl" => "BBL: 310-0808309-94",
-		"fortis" => "FORTIS: 210-0533549-04"
-	),
-	ACCOUNT_MANAGER_MPI => array(
-		"name" => "MPI-KS Groupe Keysource",
-		"address" => "11 route d'iss�",
-		"city" => "44110 ch�teaubriant",
-		"country" => "France",
-		"phone" => "T : 02 40 81 03 80",
-		"fax" => "FAX : 02 40 81 05 76",
-		"email" => "info@keysource.eu",
-		"web" => "www.mpi44.com",
 		"tva" => "",
 		"rcb" => "",
 		"bbl" => "",
 		"fortis" => ""
-	)
+	),
 );
 
 $GLOBALS['MAIN_CUSTOMER_ADMINISTRATOR_MODULES'] = array();
@@ -660,6 +644,20 @@ $routerObj->map(
         'filters' => array(
             'cl' =>  '([a-zA-Z][a-zA-Z0-9_-]*)',
             'action' => '([a-zA-Z][a-zA-Z0-9_-]*)',
+        ),
+    )
+);
+
+$routerObj->map(
+    '/:cl[/]*:op[/]*/:id[/]*',
+    array(),
+    array(
+        'methods' => array('GET', 'POST'),
+        'name' => 'default' ,
+        'filters' => array(
+            'cl' =>  '([a-zA-Z][a-zA-Z0-9_-]*)',
+            'action' => '([a-zA-Z][a-zA-Z0-9_-]*)',
+            'action' => '([0-9]*)',
         ),
     )
 );
