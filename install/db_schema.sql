@@ -4,24 +4,24 @@
 -- ------------------------------------------------------
 -- Server version	5.1.67-0ubuntu0.11.10.1
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+
+
+
+
+
+
+
+
 
 --
 -- Table structure for table `access_phones`
 --
 
 DROP TABLE IF EXISTS `access_phones`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `access_phones` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL DEFAULT '0',
@@ -37,15 +37,15 @@ CREATE TABLE `access_phones` (
   KEY `phone` (`phone`),
   KEY `device_type` (`device_type`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `acl`
 --
 
 DROP TABLE IF EXISTS `acl`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `acl` (
   `user_id` int(11) NOT NULL DEFAULT '0',
   `acl_role_id` int(11) NOT NULL DEFAULT '0',
@@ -53,30 +53,30 @@ CREATE TABLE `acl` (
   KEY `acl_role_id` (`acl_role_id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `acl_categories`
 --
 
 DROP TABLE IF EXISTS `acl_categories`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `acl_categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `acl_items`
 --
 
 DROP TABLE IF EXISTS `acl_items`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `acl_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL DEFAULT '',
@@ -86,16 +86,16 @@ CREATE TABLE `acl_items` (
   KEY `special` (`special`),
   KEY `category_id` (`category_id`),
   KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `acl_items_operations`
 --
 
 DROP TABLE IF EXISTS `acl_items_operations`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `acl_items_operations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `acl_item_id` int(11) NOT NULL DEFAULT '0',
@@ -105,46 +105,46 @@ CREATE TABLE `acl_items_operations` (
   KEY `acl_item_id` (`acl_item_id`),
   KEY `module` (`module`),
   KEY `function` (`function`)
-) ENGINE=MyISAM AUTO_INCREMENT=586 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `acl_roles`
 --
 
 DROP TABLE IF EXISTS `acl_roles`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `acl_roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL DEFAULT '',
   `type` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `type` (`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `acl_roles_items`
 --
 
 DROP TABLE IF EXISTS `acl_roles_items`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `acl_roles_items` (
   `acl_role_id` int(11) NOT NULL DEFAULT '0',
   `acl_item_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`acl_item_id`,`acl_role_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `action_types`
 --
 
 DROP TABLE IF EXISTS `action_types`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `action_types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `erp_id` varchar(25) NOT NULL DEFAULT '',
@@ -177,16 +177,16 @@ CREATE TABLE `action_types` (
   KEY `erp_code` (`erp_code`),
   KEY `family` (`family`),
   KEY `helpdesk` (`helpdesk`)
-) ENGINE=MyISAM AUTO_INCREMENT=109 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `action_types_categories`
 --
 
 DROP TABLE IF EXISTS `action_types_categories`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `action_types_categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `erp_id` varchar(50) NOT NULL DEFAULT '',
@@ -194,16 +194,16 @@ CREATE TABLE `action_types_categories` (
   PRIMARY KEY (`id`),
   KEY `erp_id` (`erp_id`),
   KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `activities`
 --
 
 DROP TABLE IF EXISTS `activities`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `activities` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL DEFAULT '',
@@ -217,32 +217,32 @@ CREATE TABLE `activities` (
   KEY `is_travel` (`is_travel`),
   KEY `erp_id` (`erp_id`),
   KEY `erp_name` (`erp_name`)
-) ENGINE=MyISAM AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `activities_categories`
 --
 
 DROP TABLE IF EXISTS `activities_categories`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `activities_categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
   `erp_code` varchar(30) DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `activities_users`
 --
 
 DROP TABLE IF EXISTS `activities_users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `activities_users` (
   `activity_id` int(11) NOT NULL DEFAULT '0',
   `user_id` int(11) NOT NULL DEFAULT '0',
@@ -251,15 +251,15 @@ CREATE TABLE `activities_users` (
   KEY `user_id` (`user_id`),
   KEY `erp_activity_id` (`erp_activity_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `ad_printers_extras`
 --
 
 DROP TABLE IF EXISTS `ad_printers_extras`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `ad_printers_extras` (
   `canonical_name` varchar(200) NOT NULL DEFAULT '',
   `asset_number` varchar(10) NOT NULL DEFAULT '',
@@ -284,15 +284,15 @@ CREATE TABLE `ad_printers_extras` (
   KEY `date_created` (`date_created`),
   KEY `location_id` (`location_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `ad_printers_locations`
 --
 
 DROP TABLE IF EXISTS `ad_printers_locations`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `ad_printers_locations` (
   `canonical_name` varchar(200) NOT NULL DEFAULT '',
   `customer_id` int(11) NOT NULL DEFAULT '0',
@@ -301,15 +301,15 @@ CREATE TABLE `ad_printers_locations` (
   KEY `customer_id` (`customer_id`),
   KEY `location_id` (`location_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `ad_printers_warranties`
 --
 
 DROP TABLE IF EXISTS `ad_printers_warranties`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `ad_printers_warranties` (
   `canonical_name` varchar(200) NOT NULL DEFAULT '',
   `customer_id` int(11) NOT NULL DEFAULT '0',
@@ -332,15 +332,15 @@ CREATE TABLE `ad_printers_warranties` (
   KEY `hw_product_id` (`hw_product_id`),
   KEY `product_number` (`product_number`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `alerts`
 --
 
 DROP TABLE IF EXISTS `alerts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `alerts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL DEFAULT '',
@@ -363,16 +363,16 @@ CREATE TABLE `alerts` (
   KEY `ignore_days` (`ignore_days`),
   KEY `send_to` (`send_to`),
   KEY `delay_email` (`delay_email`)
-) ENGINE=MyISAM AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `alerts_conditions`
 --
 
 DROP TABLE IF EXISTS `alerts_conditions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `alerts_conditions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `alert_id` int(11) NOT NULL DEFAULT '0',
@@ -383,30 +383,30 @@ CREATE TABLE `alerts_conditions` (
   PRIMARY KEY (`id`),
   KEY `alert_id` (`alert_id`),
   KEY `field_id` (`field_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=110 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `alerts_lists_values`
 --
 
 DROP TABLE IF EXISTS `alerts_lists_values`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `alerts_lists_values` (
   `alert_id` int(11) NOT NULL DEFAULT '0',
   `list_value` int(11) NOT NULL DEFAULT '0',
   KEY `alert_id` (`alert_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `alerts_recipients`
 --
 
 DROP TABLE IF EXISTS `alerts_recipients`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `alerts_recipients` (
   `alert_id` int(11) NOT NULL DEFAULT '0',
   `user_id` int(11) NOT NULL DEFAULT '0',
@@ -414,29 +414,29 @@ CREATE TABLE `alerts_recipients` (
   PRIMARY KEY (`alert_id`,`user_id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `alerts_send_fields`
 --
 
 DROP TABLE IF EXISTS `alerts_send_fields`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `alerts_send_fields` (
   `alert_id` int(11) NOT NULL DEFAULT '0',
   `field_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`alert_id`,`field_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `bk_notifications`
 --
 
 DROP TABLE IF EXISTS `bk_notifications`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `bk_notifications` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `event_code` int(11) NOT NULL DEFAULT '0',
@@ -469,16 +469,16 @@ CREATE TABLE `bk_notifications` (
   KEY `no_repeat` (`no_repeat`),
   KEY `ticket_id` (`ticket_id`),
   KEY `level` (`level`)
-) ENGINE=MyISAM AUTO_INCREMENT=41551 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `cart_item`
 --
 
 DROP TABLE IF EXISTS `cart_item`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `cart_item` (
   `CICLEUNIK` int(4) unsigned NOT NULL AUTO_INCREMENT,
   `ITCLEUNIK` int(4) unsigned DEFAULT '0',
@@ -500,57 +500,57 @@ CREATE TABLE `cart_item` (
   KEY `ITCLEUNIK` (`ITCLEUNIK`),
   KEY `CUCLEUNIK` (`CUCLEUNIK`),
   KEY `EGCLEUNIK` (`EGCLEUNIK`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=latin1 COMMENT='Shop-Item-Cart';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Shop-Item-Cart';
+
 
 --
 -- Table structure for table `cc_cf`
 --
 
 DROP TABLE IF EXISTS `cc_cf`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `cc_cf` (
   `cc_id` int(11) NOT NULL,
   `cf_id` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `cf_rc`
 --
 
 DROP TABLE IF EXISTS `cf_rc`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `cf_rc` (
   `rc_id` int(11) NOT NULL,
   `cf_id` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `class1`
 --
 
 DROP TABLE IF EXISTS `class1`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `class1` (
   `C1CLEUNIK` int(4) unsigned NOT NULL AUTO_INCREMENT,
   `Class_Name` varchar(40) DEFAULT NULL,
   UNIQUE KEY `C1CLEUNIK` (`C1CLEUNIK`),
   UNIQUE KEY `Class_Name` (`Class_Name`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1 COMMENT='Shop-Item-Category';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Shop-Item-Category';
+
 
 --
 -- Table structure for table `class2`
 --
 
 DROP TABLE IF EXISTS `class2`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `class2` (
   `C2CLEUNIK` int(4) unsigned NOT NULL AUTO_INCREMENT,
   `C1CLEUNIK` int(4) unsigned DEFAULT '0',
@@ -558,16 +558,16 @@ CREATE TABLE `class2` (
   UNIQUE KEY `C2CLEUNIK` (`C2CLEUNIK`),
   UNIQUE KEY `Class_Name` (`Class_Name`),
   KEY `C1CLEUNIK` (`C1CLEUNIK`)
-) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=latin1 COMMENT='Shop-Item-Sub-Category';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Shop-Item-Sub-Category';
+
 
 --
 -- Table structure for table `class3`
 --
 
 DROP TABLE IF EXISTS `class3`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `class3` (
   `C3CLEUNIK` int(4) unsigned NOT NULL AUTO_INCREMENT,
   `C2CLEUNIK` int(4) unsigned DEFAULT '0',
@@ -575,48 +575,48 @@ CREATE TABLE `class3` (
   UNIQUE KEY `C3CLEUNIK` (`C3CLEUNIK`),
   UNIQUE KEY `Class_Name` (`Class_Name`),
   KEY `C2CLEUNIK` (`C2CLEUNIK`)
-) ENGINE=MyISAM AUTO_INCREMENT=127 DEFAULT CHARSET=latin1 COMMENT='Shop-Item-Sub-Sub-Category';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Shop-Item-Sub-Sub-Category';
+
 
 --
 -- Table structure for table `component_class`
 --
 
 DROP TABLE IF EXISTS `component_class`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `component_class` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `type` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_component_class_1_idx` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `components_filter`
 --
 
 DROP TABLE IF EXISTS `components_filter`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `components_filter` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `type_filter` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_components_filter_1_idx` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `computer_groups`
 --
 
 DROP TABLE IF EXISTS `computer_groups`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `computer_groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
@@ -633,46 +633,46 @@ CREATE TABLE `computer_groups` (
   `skype_im` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   FULLTEXT KEY `title` (`title`,`description`,`address`,`email`,`yim`,`skype_im`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COMMENT='//groups of computers from a customer';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='//groups of computers from a customer';
+
 
 --
 -- Table structure for table `computer_groups_computers`
 --
 
 DROP TABLE IF EXISTS `computer_groups_computers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `computer_groups_computers` (
   `group_id` int(11) NOT NULL,
   `computer_id` int(11) NOT NULL,
   PRIMARY KEY (`group_id`,`computer_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `computer_logmein`
 --
 
 DROP TABLE IF EXISTS `computer_logmein`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `computer_logmein` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computer_id` int(11) NOT NULL,
   `logmein_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `computer_id` (`computer_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `computer_quick_contacts`
 --
 
 DROP TABLE IF EXISTS `computer_quick_contacts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `computer_quick_contacts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `contact_time` int(11) NOT NULL DEFAULT '0',
@@ -687,16 +687,16 @@ CREATE TABLE `computer_quick_contacts` (
   `net_mac_address` varchar(100) NOT NULL DEFAULT '',
   `net_remote_ip` varchar(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=408 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `computer_stolen`
 --
 
 DROP TABLE IF EXISTS `computer_stolen`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `computer_stolen` (
   `computer_id` int(11) NOT NULL,
   `stolen_date` int(11) DEFAULT '0',
@@ -704,15 +704,15 @@ CREATE TABLE `computer_stolen` (
   `date_alert` int(11) DEFAULT '0',
   PRIMARY KEY (`computer_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `computers`
 --
 
 DROP TABLE IF EXISTS `computers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `computers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL DEFAULT '0',
@@ -742,31 +742,31 @@ CREATE TABLE `computers` (
   KEY `is_manual` (`is_manual`),
   KEY `date_created` (`date_created`),
   KEY `netbios_name` (`netbios_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2527 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `computers_agent_linux_versions`
 --
 
 DROP TABLE IF EXISTS `computers_agent_linux_versions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `computers_agent_linux_versions` (
   `computer_id` int(11) NOT NULL DEFAULT '0',
   `version` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`computer_id`),
   KEY `version` (`version`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `computers_agent_versions`
 --
 
 DROP TABLE IF EXISTS `computers_agent_versions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `computers_agent_versions` (
   `computer_id` int(11) NOT NULL DEFAULT '0',
   `file_id` int(11) NOT NULL DEFAULT '0',
@@ -774,15 +774,15 @@ CREATE TABLE `computers_agent_versions` (
   PRIMARY KEY (`computer_id`,`file_id`),
   KEY `version` (`version`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `computers_blackouts`
 --
 
 DROP TABLE IF EXISTS `computers_blackouts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `computers_blackouts` (
   `computer_id` int(11) NOT NULL DEFAULT '0',
   `start_date` int(11) NOT NULL DEFAULT '0',
@@ -792,15 +792,15 @@ CREATE TABLE `computers_blackouts` (
   KEY `start_date` (`start_date`),
   KEY `end_date` (`end_date`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `computers_items`
 --
 
 DROP TABLE IF EXISTS `computers_items`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `computers_items` (
   `computer_id` int(11) NOT NULL DEFAULT '0',
   `item_id` int(11) NOT NULL DEFAULT '0',
@@ -813,15 +813,15 @@ CREATE TABLE `computers_items` (
   KEY `computer_id` (`computer_id`),
   KEY `item_id` (`item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `computers_items_dev`
 --
 
 DROP TABLE IF EXISTS `computers_items_dev`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `computers_items_dev` (
   `computer_id` int(11) NOT NULL DEFAULT '0',
   `item_id` int(11) NOT NULL DEFAULT '0',
@@ -834,15 +834,15 @@ CREATE TABLE `computers_items_dev` (
   KEY `computer_id` (`computer_id`),
   KEY `item_id` (`item_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `computers_items_log`
 --
 
 DROP TABLE IF EXISTS `computers_items_log`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `computers_items_log` (
   `computer_id` int(11) NOT NULL DEFAULT '0',
   `item_id` int(11) NOT NULL DEFAULT '0',
@@ -856,7 +856,7 @@ CREATE TABLE `computers_items_log` (
   KEY `item_id` (`item_id`),
   KEY `reported` (`reported`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 
 --
@@ -864,8 +864,8 @@ CREATE TABLE `computers_items_log` (
 --
 
 DROP TABLE IF EXISTS `computers_notes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `computers_notes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computer_id` int(11) NOT NULL DEFAULT '0',
@@ -876,16 +876,16 @@ CREATE TABLE `computers_notes` (
   KEY `computer_id` (`computer_id`),
   KEY `user_id` (`user_id`),
   KEY `created` (`created`)
-) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `computers_passwords`
 --
 
 DROP TABLE IF EXISTS `computers_passwords`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `computers_passwords` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computer_id` int(11) NOT NULL DEFAULT '0',
@@ -899,16 +899,16 @@ CREATE TABLE `computers_passwords` (
   KEY `computer_id` (`computer_id`),
   KEY `login` (`login`),
   KEY `customer_id` (`customer_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=399 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `computers_plan`
 --
 
 DROP TABLE IF EXISTS `computers_plan`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `computers_plan` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computer_id` int(11) NOT NULL DEFAULT '0',
@@ -929,16 +929,16 @@ CREATE TABLE `computers_plan` (
   UNIQUE KEY `computer_plan_id` (`computer_id`,`plan_id`),
   KEY `plan_id` (`plan_id`),
   KEY `plug_id` (`plug_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `computers_remote_services`
 --
 
 DROP TABLE IF EXISTS `computers_remote_services`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `computers_remote_services` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computer_id` int(11) NOT NULL DEFAULT '0',
@@ -958,46 +958,46 @@ CREATE TABLE `computers_remote_services` (
   KEY `name` (`name`),
   KEY `is_web` (`is_web`),
   KEY `use_https` (`use_https`)
-) ENGINE=MyISAM AUTO_INCREMENT=4915 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `computers_roles`
 --
 
 DROP TABLE IF EXISTS `computers_roles`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `computers_roles` (
   `computer_id` int(11) NOT NULL DEFAULT '0',
   `role_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`computer_id`,`role_id`),
   KEY `role_id` (`role_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `computers_updating`
 --
 
 DROP TABLE IF EXISTS `computers_updating`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `computers_updating` (
   `computer_id` int(11) NOT NULL DEFAULT '0',
   `update_time` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`computer_id`),
   KEY `update_time` (`update_time`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `country`
 --
 
 DROP TABLE IF EXISTS `country`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `country` (
   `COCLEUNIK` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Country_Name_FR` varchar(40) DEFAULT NULL,
@@ -1012,16 +1012,16 @@ CREATE TABLE `country` (
   UNIQUE KEY `Country_Name_NL` (`Country_Name_NL`),
   UNIQUE KEY `Country_Name_UK` (`Country_Name_UK`),
   UNIQUE KEY `Country_Name_ES` (`Country_Name_ES`)
-) ENGINE=MyISAM AUTO_INCREMENT=221 DEFAULT CHARSET=latin1 COMMENT='List of Countries';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='List of Countries';
+
 
 --
 -- Table structure for table `customer_nagvis_account`
 --
 
 DROP TABLE IF EXISTS `customer_nagvis_account`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `customer_nagvis_account` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
@@ -1031,16 +1031,16 @@ CREATE TABLE `customer_nagvis_account` (
   `protocol` varchar(150) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `customer_id` (`customer_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `customer_orders`
 --
 
 DROP TABLE IF EXISTS `customer_orders`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `customer_orders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `erp_id` varchar(25) DEFAULT NULL,
@@ -1064,16 +1064,16 @@ CREATE TABLE `customer_orders` (
   KEY `status` (`status`),
   KEY `billable` (`billable`),
   KEY `from_subscription` (`for_subscription`)
-) ENGINE=MyISAM AUTO_INCREMENT=57 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `customer_template_styles`
 --
 
 DROP TABLE IF EXISTS `customer_template_styles`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `customer_template_styles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
@@ -1092,16 +1092,16 @@ CREATE TABLE `customer_template_styles` (
   `tab_header_text_color` varchar(7) NOT NULL DEFAULT '#709D19',
   PRIMARY KEY (`id`),
   KEY `fk_cust` (`customer_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `customers`
 --
 
 DROP TABLE IF EXISTS `customers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `customers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL DEFAULT '',
@@ -1153,16 +1153,16 @@ CREATE TABLE `customers` (
   KEY `contract_sub_type` (`contract_sub_type`),
   KEY `contract_type` (`contract_type`),
   KEY `price_type` (`price_type`)
-) ENGINE=MyISAM AUTO_INCREMENT=776 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `customers_allowed_ips`
 --
 
 DROP TABLE IF EXISTS `customers_allowed_ips`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `customers_allowed_ips` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `remote_ip` varchar(50) NOT NULL DEFAULT '',
@@ -1173,31 +1173,31 @@ CREATE TABLE `customers_allowed_ips` (
   KEY `customer_id` (`customer_id`),
   KEY `remote_ip` (`remote_ip`),
   KEY `updated_by_id` (`updated_by_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=260 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `customers_cc_recipients`
 --
 
 DROP TABLE IF EXISTS `customers_cc_recipients`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `customers_cc_recipients` (
   `customer_id` int(11) NOT NULL DEFAULT '0',
   `user_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`customer_id`,`user_id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `customers_comments`
 --
 
 DROP TABLE IF EXISTS `customers_comments`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `customers_comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL DEFAULT '0',
@@ -1208,16 +1208,16 @@ CREATE TABLE `customers_comments` (
   PRIMARY KEY (`id`),
   KEY `customer_id` (`customer_id`),
   KEY `subject` (`subject`)
-) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `customers_contacts`
 --
 
 DROP TABLE IF EXISTS `customers_contacts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `customers_contacts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL DEFAULT '0',
@@ -1230,16 +1230,16 @@ CREATE TABLE `customers_contacts` (
   KEY `email` (`email`),
   KEY `customer_id` (`customer_id`),
   KEY `name` (`fname`,`lname`)
-) ENGINE=MyISAM AUTO_INCREMENT=629 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `customers_contacts_phones`
 --
 
 DROP TABLE IF EXISTS `customers_contacts_phones`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `customers_contacts_phones` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `contact_id` int(11) NOT NULL DEFAULT '0',
@@ -1248,16 +1248,16 @@ CREATE TABLE `customers_contacts_phones` (
   `comments` varchar(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `contact_id` (`contact_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=837 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `customers_internet_contracts`
 --
 
 DROP TABLE IF EXISTS `customers_internet_contracts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `customers_internet_contracts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL DEFAULT '0',
@@ -1307,16 +1307,16 @@ CREATE TABLE `customers_internet_contracts` (
   KEY `suspend_notifs` (`suspend_notifs`),
   KEY `notice_days_again` (`notice_days_again`),
   KEY `notice_again_sent` (`notice_again_sent`)
-) ENGINE=MyISAM AUTO_INCREMENT=73 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `customers_internet_contracts_attachments`
 --
 
 DROP TABLE IF EXISTS `customers_internet_contracts_attachments`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `customers_internet_contracts_attachments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_internet_contract_id` int(11) NOT NULL DEFAULT '0',
@@ -1327,16 +1327,16 @@ CREATE TABLE `customers_internet_contracts_attachments` (
   KEY `customer_internet_contract_id` (`customer_internet_contract_id`),
   KEY `uploaded` (`uploaded`),
   KEY `local_filename` (`local_filename`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `customers_photos`
 --
 
 DROP TABLE IF EXISTS `customers_photos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `customers_photos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL DEFAULT '0',
@@ -1355,16 +1355,16 @@ CREATE TABLE `customers_photos` (
   KEY `object_class` (`object_class`),
   KEY `object_id` (`object_id`),
   KEY `subject` (`subject`)
-) ENGINE=MyISAM AUTO_INCREMENT=305 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `customers_satisfaction`
 --
 
 DROP TABLE IF EXISTS `customers_satisfaction`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `customers_satisfaction` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -1384,16 +1384,16 @@ CREATE TABLE `customers_satisfaction` (
   `would_recommend` tinyint(1) NOT NULL DEFAULT '1',
   `date_completed` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `daily_re`
 --
 
 DROP TABLE IF EXISTS `daily_re`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `daily_re` (
   `DRCLEUNIK` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` tinyint(11) DEFAULT NULL,
@@ -1410,30 +1410,30 @@ CREATE TABLE `daily_re` (
   KEY `Date` (`Date`),
   KEY `user_id` (`user_id`),
   KEY `user_id_date` (`user_id`,`Date`)
-) ENGINE=MyISAM AUTO_INCREMENT=10052 DEFAULT CHARSET=latin1 COMMENT='Daily Report';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Daily Report';
+
 
 --
 -- Table structure for table `disabled_plugins`
 --
 
 DROP TABLE IF EXISTS `disabled_plugins`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `disabled_plugins` (
   `plugin_key` varchar(50) NOT NULL,
   `plugin_status` int(11) NOT NULL DEFAULT '2',
   PRIMARY KEY (`plugin_key`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `discoveries`
 --
 
 DROP TABLE IF EXISTS `discoveries`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `discoveries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `detail_id` int(11) NOT NULL DEFAULT '0',
@@ -1490,15 +1490,15 @@ CREATE TABLE `discoveries` (
   KEY `nb_mac` (`nb_mac`),
   KEY `snmp_sys_object_id` (`snmp_sys_object_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `discoveries_settings`
 --
 
 DROP TABLE IF EXISTS `discoveries_settings`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `discoveries_settings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL DEFAULT '0',
@@ -1511,16 +1511,16 @@ CREATE TABLE `discoveries_settings` (
   KEY `disable_discoveries` (`disable_discoveries`),
   KEY `last_discovery` (`last_discovery`),
   KEY `duration` (`duration`)
-) ENGINE=MyISAM AUTO_INCREMENT=146 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `discoveries_settings_details`
 --
 
 DROP TABLE IF EXISTS `discoveries_settings_details`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `discoveries_settings_details` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL DEFAULT '0',
@@ -1543,15 +1543,15 @@ CREATE TABLE `discoveries_settings_details` (
   KEY `last_discovery` (`last_discovery`),
   KEY `request_update` (`request_update`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `events_log_requested`
 --
 
 DROP TABLE IF EXISTS `events_log_requested`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `events_log_requested` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(11) NOT NULL DEFAULT '0',
@@ -1565,16 +1565,16 @@ CREATE TABLE `events_log_requested` (
   KEY `category_id` (`category_id`),
   KEY `source_id` (`source_id`),
   KEY `types` (`types`)
-) ENGINE=MyISAM AUTO_INCREMENT=110 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `events_sources`
 --
 
 DROP TABLE IF EXISTS `events_sources`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `events_sources` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `category_id` int(11) NOT NULL DEFAULT '0',
@@ -1587,30 +1587,30 @@ CREATE TABLE `events_sources` (
   KEY `name` (`name`),
   KEY `reported_first` (`reported_first`),
   FULLTEXT KEY `ft_name_idx` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=136642 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `filter_type`
 --
 
 DROP TABLE IF EXISTS `filter_type`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `filter_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `imap_settings`
 --
 
 DROP TABLE IF EXISTS `imap_settings`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `imap_settings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `server` varchar(150) NOT NULL,
@@ -1622,16 +1622,16 @@ CREATE TABLE `imap_settings` (
   `password` varchar(255) NOT NULL,
   `assigned_user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `int_rpt`
 --
 
 DROP TABLE IF EXISTS `int_rpt`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `int_rpt` (
   `IRCLEUNIK` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
@@ -1666,16 +1666,16 @@ CREATE TABLE `int_rpt` (
   KEY `Date_Time` (`Date_Intervention`,`Time_in`),
   KEY `user_id` (`user_id`),
   KEY `Engineer_Date` (`user_id`,`Date_Intervention`)
-) ENGINE=MyISAM AUTO_INCREMENT=5988 DEFAULT CHARSET=latin1 COMMENT='Intervention Report';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Intervention Report';
+
 
 --
 -- Table structure for table `int_rpt_tmp`
 --
 
 DROP TABLE IF EXISTS `int_rpt_tmp`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `int_rpt_tmp` (
   `IRCLEUNIK` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `CUCLEUNIK` int(10) unsigned DEFAULT NULL,
@@ -1712,15 +1712,15 @@ CREATE TABLE `int_rpt_tmp` (
   KEY `Date_Intervention` (`Date_Intervention`),
   KEY `Date_Time` (`Date_Intervention`,`Time_in`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `intervention_locations`
 --
 
 DROP TABLE IF EXISTS `intervention_locations`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `intervention_locations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
@@ -1730,16 +1730,16 @@ CREATE TABLE `intervention_locations` (
   KEY `name` (`name`),
   KEY `on_site` (`on_site`),
   KEY `helpdesk` (`helpdesk`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `intervention_reports`
 --
 
 DROP TABLE IF EXISTS `intervention_reports`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `intervention_reports` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `subject` varchar(255) NOT NULL DEFAULT '',
@@ -1758,16 +1758,16 @@ CREATE TABLE `intervention_reports` (
   KEY `subject` (`subject`),
   KEY `approved_date` (`approved_date`),
   KEY `approved_by_id` (`approved_by_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8302 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `intervention_reports_details`
 --
 
 DROP TABLE IF EXISTS `intervention_reports_details`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `intervention_reports_details` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `intervention_report_id` int(11) NOT NULL DEFAULT '0',
@@ -1792,31 +1792,31 @@ CREATE TABLE `intervention_reports_details` (
   KEY `for_subscription` (`for_subscription`),
   KEY `billable` (`billable`),
   KEY `location_id` (`location_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=17039 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `intervention_reports_details_ids`
 --
 
 DROP TABLE IF EXISTS `intervention_reports_details_ids`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `intervention_reports_details_ids` (
   `intervention_report_detail_id` int(11) NOT NULL DEFAULT '0',
   `ticket_detail_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`intervention_report_detail_id`,`ticket_detail_id`),
   KEY `ticket_detail_id` (`ticket_detail_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `interventions_exports`
 --
 
 DROP TABLE IF EXISTS `interventions_exports`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `interventions_exports` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created` int(11) NOT NULL DEFAULT '0',
@@ -1830,16 +1830,16 @@ CREATE TABLE `interventions_exports` (
   KEY `created` (`created`),
   KEY `status` (`status`),
   KEY `md5_file` (`md5_file`)
-) ENGINE=MyISAM AUTO_INCREMENT=730 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `interventions_exports_actions`
 --
 
 DROP TABLE IF EXISTS `interventions_exports_actions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `interventions_exports_actions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `export_id` int(11) NOT NULL DEFAULT '0',
@@ -1848,31 +1848,31 @@ CREATE TABLE `interventions_exports_actions` (
   `requester_ip` varchar(255) DEFAULT NULL,
   `result_ok` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1048 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `interventions_exports_ids`
 --
 
 DROP TABLE IF EXISTS `interventions_exports_ids`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `interventions_exports_ids` (
   `export_id` int(11) NOT NULL DEFAULT '0',
   `intervention_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`export_id`,`intervention_id`),
   KEY `intervention_id` (`intervention_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `item`
 --
 
 DROP TABLE IF EXISTS `item`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `item` (
   `ITCLEUNIK` int(4) unsigned NOT NULL AUTO_INCREMENT,
   `C1CLEUNIK` int(4) unsigned DEFAULT '0',
@@ -1910,16 +1910,16 @@ CREATE TABLE `item` (
   KEY `ArtID3` (`ArtID3`),
   KEY `PartID` (`PartID`),
   KEY `C1CLEUNIK_C2CLEUNIK_C3CLEUNIK` (`C1CLEUNIK`,`C2CLEUNIK`,`C3CLEUNIK`)
-) ENGINE=MyISAM AUTO_INCREMENT=43449 DEFAULT CHARSET=latin1 COMMENT='Shop-Item';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Shop-Item';
+
 
 --
 -- Table structure for table `kawacs_agent_linux_updates`
 --
 
 DROP TABLE IF EXISTS `kawacs_agent_linux_updates`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `kawacs_agent_linux_updates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `version` varchar(100) NOT NULL DEFAULT '',
@@ -1930,16 +1930,16 @@ CREATE TABLE `kawacs_agent_linux_updates` (
   `date_published` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `version` (`version`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `kawacs_agent_updates`
 --
 
 DROP TABLE IF EXISTS `kawacs_agent_updates`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `kawacs_agent_updates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `gen_version` varchar(100) NOT NULL DEFAULT '',
@@ -1949,16 +1949,16 @@ CREATE TABLE `kawacs_agent_updates` (
   `date_published` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `gen_version` (`gen_version`)
-) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `kawacs_agent_updates_files`
 --
 
 DROP TABLE IF EXISTS `kawacs_agent_updates_files`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `kawacs_agent_updates_files` (
   `version_id` int(11) NOT NULL DEFAULT '0',
   `file_id` int(11) NOT NULL DEFAULT '0',
@@ -1967,15 +1967,15 @@ CREATE TABLE `kawacs_agent_updates_files` (
   PRIMARY KEY (`version_id`,`file_id`),
   KEY `version` (`version`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `kawacs_agent_updates_previews`
 --
 
 DROP TABLE IF EXISTS `kawacs_agent_updates_previews`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `kawacs_agent_updates_previews` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `update_id` int(11) NOT NULL DEFAULT '0',
@@ -1983,16 +1983,16 @@ CREATE TABLE `kawacs_agent_updates_previews` (
   PRIMARY KEY (`id`),
   KEY `update_id` (`update_id`),
   KEY `computer_id` (`computer_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=196 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `kerm_ad_groups`
 --
 
 DROP TABLE IF EXISTS `kerm_ad_groups`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `kerm_ad_groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -2001,29 +2001,29 @@ CREATE TABLE `kerm_ad_groups` (
   `customer_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `kerm_ad_reports`
 --
 
 DROP TABLE IF EXISTS `kerm_ad_reports`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `kerm_ad_reports` (
   `customer_id` int(11) NOT NULL,
   `last_report` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`customer_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `kerm_ad_users`
 --
 
 DROP TABLE IF EXISTS `kerm_ad_users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `kerm_ad_users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
@@ -2049,30 +2049,30 @@ CREATE TABLE `kerm_ad_users` (
   `DistinguishedName` varchar(100) DEFAULT NULL,
   `GroupName` varchar(200) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `kerm_customers_domains`
 --
 
 DROP TABLE IF EXISTS `kerm_customers_domains`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `kerm_customers_domains` (
   `customer_id` int(11) NOT NULL DEFAULT '0',
   `domain` varchar(200) NOT NULL DEFAULT '',
   PRIMARY KEY (`customer_id`,`domain`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `krifs_saved_searches`
 --
 
 DROP TABLE IF EXISTS `krifs_saved_searches`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `krifs_saved_searches` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL DEFAULT '',
@@ -2082,30 +2082,30 @@ CREATE TABLE `krifs_saved_searches` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`id`),
   KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `krifs_saved_searches_favorites`
 --
 
 DROP TABLE IF EXISTS `krifs_saved_searches_favorites`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `krifs_saved_searches_favorites` (
   `user_id` int(11) NOT NULL DEFAULT '0',
   `search_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`,`search_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `locations`
 --
 
 DROP TABLE IF EXISTS `locations`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `locations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL DEFAULT '0',
@@ -2120,16 +2120,16 @@ CREATE TABLE `locations` (
   KEY `name` (`name`),
   KEY `parent_id` (`parent_id`),
   KEY `city_id` (`town_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=153 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `locations_comments`
 --
 
 DROP TABLE IF EXISTS `locations_comments`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `locations_comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `location_id` int(11) NOT NULL DEFAULT '0',
@@ -2140,16 +2140,16 @@ CREATE TABLE `locations_comments` (
   KEY `location_id` (`location_id`),
   KEY `user_id` (`user_id`),
   KEY `updated` (`updated`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `locations_fixed`
 --
 
 DROP TABLE IF EXISTS `locations_fixed`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `locations_fixed` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
@@ -2159,8 +2159,8 @@ CREATE TABLE `locations_fixed` (
   KEY `name` (`name`),
   KEY `type` (`type`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 
 --
@@ -2168,8 +2168,8 @@ CREATE TABLE `locations_fixed` (
 --
 
 DROP TABLE IF EXISTS `mibs`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `mibs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL DEFAULT '',
@@ -2184,16 +2184,16 @@ CREATE TABLE `mibs` (
   KEY `orig_fname` (`orig_fname`),
   KEY `loaded_ok` (`loaded_ok`),
   KEY `main_file_id` (`main_file_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `mibs_files`
 --
 
 DROP TABLE IF EXISTS `mibs_files`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `mibs_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `mib_id` int(11) NOT NULL DEFAULT '0',
@@ -2201,16 +2201,16 @@ CREATE TABLE `mibs_files` (
   PRIMARY KEY (`id`),
   KEY `mib_id` (`mib_id`),
   KEY `fname` (`fname`)
-) ENGINE=MyISAM AUTO_INCREMENT=232 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `mibs_oids`
 --
 
 DROP TABLE IF EXISTS `mibs_oids`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `mibs_oids` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `mib_id` int(11) NOT NULL DEFAULT '0',
@@ -2237,16 +2237,16 @@ CREATE TABLE `mibs_oids` (
   KEY `access` (`access`),
   KEY `status` (`status`),
   KEY `ord` (`ord`)
-) ENGINE=MyISAM AUTO_INCREMENT=6976 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `mibs_oids_vals`
 --
 
 DROP TABLE IF EXISTS `mibs_oids_vals`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `mibs_oids_vals` (
   `oid_id` int(11) NOT NULL DEFAULT '0',
   `val` int(11) NOT NULL DEFAULT '0',
@@ -2254,15 +2254,15 @@ CREATE TABLE `mibs_oids_vals` (
   PRIMARY KEY (`oid_id`,`val`),
   KEY `val` (`val`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `monitor_alerts`
 --
 
 DROP TABLE IF EXISTS `monitor_alerts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `monitor_alerts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL DEFAULT '',
@@ -2285,16 +2285,16 @@ CREATE TABLE `monitor_alerts` (
   KEY `join_type` (`join_type`),
   KEY `ignore_days` (`ignore_days`),
   KEY `send_to` (`send_to`)
-) ENGINE=MyISAM AUTO_INCREMENT=109 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `monitor_alerts_conditions`
 --
 
 DROP TABLE IF EXISTS `monitor_alerts_conditions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `monitor_alerts_conditions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `alert_id` int(11) NOT NULL DEFAULT '0',
@@ -2305,16 +2305,16 @@ CREATE TABLE `monitor_alerts_conditions` (
   PRIMARY KEY (`id`),
   KEY `alert_id` (`alert_id`),
   KEY `field_id` (`field_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=248 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `monitor_items`
 --
 
 DROP TABLE IF EXISTS `monitor_items`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `monitor_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `parent_id` int(11) NOT NULL DEFAULT '0',
@@ -2342,16 +2342,16 @@ CREATE TABLE `monitor_items` (
   KEY `list_type` (`list_type`),
   KEY `is_snmp` (`is_snmp`),
   KEY `snmp_oid_id` (`snmp_oid_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5105 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `monitor_profiles`
 --
 
 DROP TABLE IF EXISTS `monitor_profiles`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `monitor_profiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `is_default` tinyint(1) NOT NULL DEFAULT '0',
@@ -2360,16 +2360,16 @@ CREATE TABLE `monitor_profiles` (
   `description` mediumtext NOT NULL,
   `alert_missed_cycles` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `monitor_profiles_items`
 --
 
 DROP TABLE IF EXISTS `monitor_profiles_items`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `monitor_profiles_items` (
   `profile_id` int(11) NOT NULL DEFAULT '0',
   `item_id` int(11) NOT NULL DEFAULT '0',
@@ -2377,15 +2377,15 @@ CREATE TABLE `monitor_profiles_items` (
   `log_type` float NOT NULL DEFAULT '0',
   PRIMARY KEY (`profile_id`,`item_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `monitor_profiles_items_periph`
 --
 
 DROP TABLE IF EXISTS `monitor_profiles_items_periph`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `monitor_profiles_items_periph` (
   `profile_id` varchar(100) NOT NULL DEFAULT '',
   `item_id` varchar(100) NOT NULL DEFAULT '',
@@ -2393,15 +2393,15 @@ CREATE TABLE `monitor_profiles_items_periph` (
   `log_type` float NOT NULL DEFAULT '0',
   PRIMARY KEY (`profile_id`,`item_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `monitor_profiles_periph`
 --
 
 DROP TABLE IF EXISTS `monitor_profiles_periph`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `monitor_profiles_periph` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `is_default` tinyint(1) NOT NULL DEFAULT '0',
@@ -2410,16 +2410,16 @@ CREATE TABLE `monitor_profiles_periph` (
   `description` mediumtext NOT NULL,
   `alert_missed_cycles` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `monitored_ips`
 --
 
 DROP TABLE IF EXISTS `monitored_ips`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `monitored_ips` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL DEFAULT '0',
@@ -2452,16 +2452,16 @@ CREATE TABLE `monitored_ips` (
   KEY `last_traceroute_test` (`last_traceroute_test`),
   KEY `ping_ok` (`ping_ok`),
   KEY `last_test_duration` (`last_test_duration`)
-) ENGINE=MyISAM AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `mremote_connection_info`
 --
 
 DROP TABLE IF EXISTS `mremote_connection_info`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `mremote_connection_info` (
   `id` int(11) NOT NULL,
   `protocol` int(4) DEFAULT NULL,
@@ -2472,15 +2472,15 @@ CREATE TABLE `mremote_connection_info` (
   `hostname` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `mremote_connections`
 --
 
 DROP TABLE IF EXISTS `mremote_connections`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `mremote_connections` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `parent_id` int(11) NOT NULL DEFAULT '0',
@@ -2490,16 +2490,16 @@ CREATE TABLE `mremote_connections` (
   `customer_id` int(11) DEFAULT NULL,
   `computer_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1280 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `notifications`
 --
 
 DROP TABLE IF EXISTS `notifications`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `notifications` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `event_code` int(11) NOT NULL DEFAULT '0',
@@ -2533,8 +2533,8 @@ CREATE TABLE `notifications` (
   KEY `no_repeat` (`no_repeat`),
   KEY `ticket_id` (`ticket_id`),
   KEY `level` (`level`)
-) ENGINE=MyISAM AUTO_INCREMENT=76884 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 
 --
@@ -2542,8 +2542,8 @@ CREATE TABLE `notifications` (
 --
 
 DROP TABLE IF EXISTS `notifications_customers_recipients`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `notifications_customers_recipients` (
   `customer_id` int(11) NOT NULL DEFAULT '0',
   `notif_obj_class` int(11) NOT NULL DEFAULT '0',
@@ -2552,15 +2552,15 @@ CREATE TABLE `notifications_customers_recipients` (
   PRIMARY KEY (`customer_id`,`notif_obj_class`,`user_id`),
   KEY `is_default` (`is_default`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `notifications_customers_recipients_customers`
 --
 
 DROP TABLE IF EXISTS `notifications_customers_recipients_customers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `notifications_customers_recipients_customers` (
   `customer_id` int(11) NOT NULL DEFAULT '0',
   `user_id` int(11) NOT NULL DEFAULT '0',
@@ -2568,15 +2568,15 @@ CREATE TABLE `notifications_customers_recipients_customers` (
   PRIMARY KEY (`customer_id`,`user_id`),
   KEY `is_default` (`is_default`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `notifications_general_recipients`
 --
 
 DROP TABLE IF EXISTS `notifications_general_recipients`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `notifications_general_recipients` (
   `notif_obj_class` int(11) NOT NULL DEFAULT '0',
   `user_id` int(10) unsigned NOT NULL DEFAULT '0',
@@ -2584,15 +2584,15 @@ CREATE TABLE `notifications_general_recipients` (
   PRIMARY KEY (`notif_obj_class`,`user_id`),
   KEY `is_default` (`is_default`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `notifications_recipients`
 --
 
 DROP TABLE IF EXISTS `notifications_recipients`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `notifications_recipients` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `notification_id` int(11) NOT NULL DEFAULT '0',
@@ -2607,16 +2607,16 @@ CREATE TABLE `notifications_recipients` (
   KEY `user_id` (`user_id`),
   KEY `emailed_last` (`emailed_last`),
   KEY `date_read` (`date_read`)
-) ENGINE=MyISAM AUTO_INCREMENT=317851 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `now_working`
 --
 
 DROP TABLE IF EXISTS `now_working`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `now_working` (
   `user_id` int(11) NOT NULL DEFAULT '0',
   `ticket_id` int(11) NOT NULL DEFAULT '0',
@@ -2625,15 +2625,15 @@ CREATE TABLE `now_working` (
   KEY `ticket_id` (`ticket_id`),
   KEY `since` (`since`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `peripheral_plink`
 --
 
 DROP TABLE IF EXISTS `peripheral_plink`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `peripheral_plink` (
   `user_id` int(11) NOT NULL DEFAULT '0',
   `peripheral_id` int(11) NOT NULL DEFAULT '0',
@@ -2645,15 +2645,15 @@ CREATE TABLE `peripheral_plink` (
   `local_port` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`user_id`,`peripheral_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `peripheral_plink_services`
 --
 
 DROP TABLE IF EXISTS `peripheral_plink_services`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `peripheral_plink_services` (
   `user_id` int(11) NOT NULL DEFAULT '0',
   `peripheral_id` int(11) NOT NULL DEFAULT '0',
@@ -2663,15 +2663,15 @@ CREATE TABLE `peripheral_plink_services` (
   `selected` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`,`peripheral_id`,`service_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `peripherals`
 --
 
 DROP TABLE IF EXISTS `peripherals`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `peripherals` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL DEFAULT '0',
@@ -2695,16 +2695,16 @@ CREATE TABLE `peripherals` (
   KEY `snmp_ip` (`snmp_ip`),
   KEY `last_contact` (`last_contact`),
   KEY `date_created` (`date_created`)
-) ENGINE=MyISAM AUTO_INCREMENT=896 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `peripherals_classes`
 --
 
 DROP TABLE IF EXISTS `peripherals_classes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `peripherals_classes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL DEFAULT '',
@@ -2750,16 +2750,16 @@ CREATE TABLE `peripherals_classes` (
   KEY `warranty_contract_number_field` (`warranty_contract_number_field`),
   KEY `warranty_hw_product_id_field` (`warranty_hw_product_id_field`),
   KEY `use_snmp` (`use_snmp`)
-) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `peripherals_classes_fields`
 --
 
 DROP TABLE IF EXISTS `peripherals_classes_fields`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `peripherals_classes_fields` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `class_id` int(11) NOT NULL DEFAULT '0',
@@ -2773,31 +2773,31 @@ CREATE TABLE `peripherals_classes_fields` (
   KEY `type` (`type`),
   KEY `class_id` (`class_id`),
   KEY `ord` (`ord`)
-) ENGINE=MyISAM AUTO_INCREMENT=328 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `peripherals_classes_profiles`
 --
 
 DROP TABLE IF EXISTS `peripherals_classes_profiles`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `peripherals_classes_profiles` (
   `class_id` int(11) NOT NULL DEFAULT '0',
   `profile_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`class_id`,`profile_id`),
   KEY `profile_id` (`profile_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `peripherals_classes_profiles_fields`
 --
 
 DROP TABLE IF EXISTS `peripherals_classes_profiles_fields`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `peripherals_classes_profiles_fields` (
   `class_id` int(11) NOT NULL DEFAULT '0',
   `profile_id` int(11) NOT NULL DEFAULT '0',
@@ -2810,29 +2810,29 @@ CREATE TABLE `peripherals_classes_profiles_fields` (
   KEY `item_id` (`item_id`),
   KEY `item_field_id` (`item_field_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `peripherals_computers`
 --
 
 DROP TABLE IF EXISTS `peripherals_computers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `peripherals_computers` (
   `peripheral_id` int(11) NOT NULL DEFAULT '0',
   `computer_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`computer_id`,`peripheral_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `peripherals_fields`
 --
 
 DROP TABLE IF EXISTS `peripherals_fields`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `peripherals_fields` (
   `peripheral_id` int(11) NOT NULL DEFAULT '0',
   `field_id` int(11) NOT NULL DEFAULT '0',
@@ -2841,15 +2841,15 @@ CREATE TABLE `peripherals_fields` (
   PRIMARY KEY (`field_id`,`peripheral_id`),
   KEY `nrc` (`nrc`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `peripherals_items`
 --
 
 DROP TABLE IF EXISTS `peripherals_items`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `peripherals_items` (
   `obj_id` int(11) NOT NULL DEFAULT '0',
   `obj_class` tinyint(4) NOT NULL DEFAULT '0',
@@ -2864,15 +2864,15 @@ CREATE TABLE `peripherals_items` (
   KEY `computer_id` (`obj_id`),
   KEY `item_id` (`item_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `peripherals_items_log`
 --
 
 DROP TABLE IF EXISTS `peripherals_items_log`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `peripherals_items_log` (
   `obj_id` int(11) NOT NULL DEFAULT '0',
   `obj_class` tinyint(4) NOT NULL DEFAULT '0',
@@ -2887,7 +2887,7 @@ CREATE TABLE `peripherals_items_log` (
   KEY `computer_id` (`obj_id`),
   KEY `item_id` (`item_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 
 --
@@ -2895,8 +2895,8 @@ CREATE TABLE `peripherals_items_log` (
 --
 
 DROP TABLE IF EXISTS `plan`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `plan` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL DEFAULT '0',
@@ -2905,16 +2905,16 @@ CREATE TABLE `plan` (
   `plan_path` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `customer_id` (`customer_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `plink`
 --
 
 DROP TABLE IF EXISTS `plink`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `plink` (
   `user_id` int(11) NOT NULL DEFAULT '0',
   `computer_id` int(11) NOT NULL DEFAULT '0',
@@ -2926,15 +2926,15 @@ CREATE TABLE `plink` (
   `local_port` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`user_id`,`computer_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `plink_services`
 --
 
 DROP TABLE IF EXISTS `plink_services`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `plink_services` (
   `user_id` int(11) NOT NULL DEFAULT '0',
   `computer_id` int(11) NOT NULL DEFAULT '0',
@@ -2944,15 +2944,15 @@ CREATE TABLE `plink_services` (
   `selected` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`,`computer_id`,`service_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `plugins`
 --
 
 DROP TABLE IF EXISTS `plugins`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `plugins` (
   `plugin_key` varchar(50) NOT NULL,
   `plugin_name` varchar(50) NOT NULL DEFAULT '',
@@ -2962,15 +2962,15 @@ CREATE TABLE `plugins` (
   `status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`plugin_key`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `plugs`
 --
 
 DROP TABLE IF EXISTS `plugs`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `plugs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computer_id` int(11) DEFAULT NULL,
@@ -2984,46 +2984,46 @@ CREATE TABLE `plugs` (
   `scale` tinyint(3) NOT NULL DEFAULT '100',
   PRIMARY KEY (`id`),
   KEY `plan_id` (`plan_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `profiles_alerts`
 --
 
 DROP TABLE IF EXISTS `profiles_alerts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `profiles_alerts` (
   `profile_id` int(11) NOT NULL DEFAULT '0',
   `alert_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`profile_id`,`alert_id`),
   KEY `alert_id` (`alert_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `profiles_periph_alerts`
 --
 
 DROP TABLE IF EXISTS `profiles_periph_alerts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `profiles_periph_alerts` (
   `profile_id` int(11) NOT NULL DEFAULT '0',
   `alert_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`profile_id`,`alert_id`),
   KEY `alert_id` (`alert_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `providers`
 --
 
 DROP TABLE IF EXISTS `providers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `providers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
@@ -3032,16 +3032,16 @@ CREATE TABLE `providers` (
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
   KEY `website` (`website`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `providers_contacts`
 --
 
 DROP TABLE IF EXISTS `providers_contacts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `providers_contacts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `provider_id` int(11) NOT NULL DEFAULT '0',
@@ -3053,16 +3053,16 @@ CREATE TABLE `providers_contacts` (
   KEY `fname` (`fname`,`lname`),
   KEY `provider_id` (`provider_id`),
   KEY `email` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `providers_contacts_phones`
 --
 
 DROP TABLE IF EXISTS `providers_contacts_phones`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `providers_contacts_phones` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `contact_id` int(11) NOT NULL DEFAULT '0',
@@ -3072,16 +3072,16 @@ CREATE TABLE `providers_contacts_phones` (
   PRIMARY KEY (`id`),
   KEY `contact_id` (`contact_id`),
   KEY `type` (`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `providers_contracts`
 --
 
 DROP TABLE IF EXISTS `providers_contracts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `providers_contracts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `provider_id` int(11) NOT NULL DEFAULT '0',
@@ -3090,48 +3090,48 @@ CREATE TABLE `providers_contracts` (
   PRIMARY KEY (`id`),
   KEY `provider_id` (`provider_id`),
   KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `pub_name`
 --
 
 DROP TABLE IF EXISTS `pub_name`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `pub_name` (
   `PUCLEUNIK` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Name` varchar(40) DEFAULT NULL,
   `Logo` varchar(255) DEFAULT NULL,
   UNIQUE KEY `PUCLEUNIK` (`PUCLEUNIK`),
   UNIQUE KEY `Name` (`Name`)
-) ENGINE=MyISAM AUTO_INCREMENT=246 DEFAULT CHARSET=latin1 COMMENT='Shop-Publisher Name';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Shop-Publisher Name';
+
 
 --
 -- Table structure for table `real_components`
 --
 
 DROP TABLE IF EXISTS `real_components`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `real_components` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '	',
   `name` varchar(255) DEFAULT NULL,
   `detail` text,
   PRIMARY KEY (`id`),
   KEY `fk_real_components_1_idx` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `remote_access`
 --
 
 DROP TABLE IF EXISTS `remote_access`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `remote_access` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL DEFAULT '0',
@@ -3148,16 +3148,16 @@ CREATE TABLE `remote_access` (
   KEY `has_port_forwarding` (`has_port_forwarding`),
   KEY `customer_id` (`customer_id`),
   KEY `private_key_id` (`private_key_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `removed_ad_printers`
 --
 
 DROP TABLE IF EXISTS `removed_ad_printers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `removed_ad_printers` (
   `id` int(11) NOT NULL DEFAULT '0',
   `canonical_name` varchar(200) DEFAULT NULL,
@@ -3197,15 +3197,15 @@ CREATE TABLE `removed_ad_printers` (
   KEY `warranty_starts` (`warranty_starts`),
   KEY `warranty_ends` (`warranty_ends`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `removed_computers`
 --
 
 DROP TABLE IF EXISTS `removed_computers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `removed_computers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL DEFAULT '0',
@@ -3231,16 +3231,16 @@ CREATE TABLE `removed_computers` (
   KEY `date_created` (`date_created`),
   KEY `netbios_name` (`netbios_name`),
   KEY `date_removed` (`date_removed`)
-) ENGINE=MyISAM AUTO_INCREMENT=1903 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `removed_computers_items`
 --
 
 DROP TABLE IF EXISTS `removed_computers_items`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `removed_computers_items` (
   `computer_id` int(11) NOT NULL DEFAULT '0',
   `item_id` int(11) NOT NULL DEFAULT '0',
@@ -3253,15 +3253,15 @@ CREATE TABLE `removed_computers_items` (
   KEY `computer_id` (`computer_id`),
   KEY `item_id` (`item_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `removed_computers_notes`
 --
 
 DROP TABLE IF EXISTS `removed_computers_notes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `removed_computers_notes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `computer_id` int(11) NOT NULL DEFAULT '0',
@@ -3272,16 +3272,16 @@ CREATE TABLE `removed_computers_notes` (
   KEY `computer_id` (`computer_id`),
   KEY `user_id` (`user_id`),
   KEY `created` (`created`)
-) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `removed_peripherals`
 --
 
 DROP TABLE IF EXISTS `removed_peripherals`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `removed_peripherals` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL DEFAULT '0',
@@ -3310,16 +3310,16 @@ CREATE TABLE `removed_peripherals` (
   KEY `date_created` (`date_created`),
   KEY `date_removed` (`date_removed`),
   KEY `removed_by` (`removed_by`)
-) ENGINE=MyISAM AUTO_INCREMENT=676 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `removed_peripherals_fields`
 --
 
 DROP TABLE IF EXISTS `removed_peripherals_fields`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `removed_peripherals_fields` (
   `peripheral_id` int(11) NOT NULL DEFAULT '0',
   `field_id` int(11) NOT NULL DEFAULT '0',
@@ -3328,15 +3328,15 @@ CREATE TABLE `removed_peripherals_fields` (
   PRIMARY KEY (`field_id`,`peripheral_id`),
   KEY `nrc` (`nrc`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `removed_peripherals_items`
 --
 
 DROP TABLE IF EXISTS `removed_peripherals_items`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `removed_peripherals_items` (
   `obj_id` int(11) NOT NULL DEFAULT '0',
   `obj_class` tinyint(4) NOT NULL DEFAULT '0',
@@ -3351,15 +3351,15 @@ CREATE TABLE `removed_peripherals_items` (
   KEY `computer_id` (`obj_id`),
   KEY `item_id` (`item_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `removed_users`
 --
 
 DROP TABLE IF EXISTS `removed_users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `removed_users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -3409,29 +3409,29 @@ CREATE TABLE `removed_users` (
   KEY `language` (`language`),
   KEY `newsletter` (`newsletter`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `removed_users_customers`
 --
 
 DROP TABLE IF EXISTS `removed_users_customers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `removed_users_customers` (
   `user_id` int(11) NOT NULL DEFAULT '0',
   `customer_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`,`customer_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `report_chapters`
 --
 
 DROP TABLE IF EXISTS `report_chapters`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `report_chapters` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `index` int(11) DEFAULT NULL,
@@ -3441,47 +3441,47 @@ CREATE TABLE `report_chapters` (
   `sub_chapter_name_FR` varchar(40) DEFAULT NULL,
   `report_name` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
 
 --
 -- Table structure for table `roles`
 --
 
 DROP TABLE IF EXISTS `roles`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `service_levels`
 --
 
 DROP TABLE IF EXISTS `service_levels`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `service_levels` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL DEFAULT '',
   `description` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `snmp_sysobjids`
 --
 
 DROP TABLE IF EXISTS `snmp_sysobjids`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `snmp_sysobjids` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `snmp_sys_object_id` varchar(100) DEFAULT NULL,
@@ -3490,15 +3490,15 @@ CREATE TABLE `snmp_sysobjids` (
   KEY `snmp_sys_object_id` (`snmp_sys_object_id`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `software`
 --
 
 DROP TABLE IF EXISTS `software`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `software` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
@@ -3511,16 +3511,16 @@ CREATE TABLE `software` (
   KEY `manufacturer` (`manufacturer`),
   KEY `license_types` (`license_types`),
   FULLTEXT KEY `name_2` (`name`,`manufacturer`)
-) ENGINE=MyISAM AUTO_INCREMENT=144 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `software_licenses`
 --
 
 DROP TABLE IF EXISTS `software_licenses`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `software_licenses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL DEFAULT '0',
@@ -3537,16 +3537,16 @@ CREATE TABLE `software_licenses` (
   KEY `software_id` (`software_id`),
   KEY `used` (`used`),
   KEY `no_notifications` (`no_notifications`)
-) ENGINE=MyISAM AUTO_INCREMENT=343 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `software_licenses_files`
 --
 
 DROP TABLE IF EXISTS `software_licenses_files`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `software_licenses_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `license_id` int(11) DEFAULT NULL,
@@ -3559,16 +3559,16 @@ CREATE TABLE `software_licenses_files` (
   KEY `uploaded` (`uploaded`),
   KEY `original_filename` (`original_filename`),
   KEY `local_filename` (`local_filename`)
-) ENGINE=MyISAM AUTO_INCREMENT=98 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `software_licenses_sn`
 --
 
 DROP TABLE IF EXISTS `software_licenses_sn`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `software_licenses_sn` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `license_id` int(11) NOT NULL DEFAULT '0',
@@ -3577,16 +3577,16 @@ CREATE TABLE `software_licenses_sn` (
   PRIMARY KEY (`id`),
   KEY `license_id` (`license_id`),
   KEY `sn` (`sn`)
-) ENGINE=MyISAM AUTO_INCREMENT=214 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `software_matches`
 --
 
 DROP TABLE IF EXISTS `software_matches`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `software_matches` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `software_id` int(11) NOT NULL DEFAULT '0',
@@ -3594,16 +3594,16 @@ CREATE TABLE `software_matches` (
   `expression` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `software_id` (`match_type`)
-) ENGINE=MyISAM AUTO_INCREMENT=156 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `supplier_customers`
 --
 
 DROP TABLE IF EXISTS `supplier_customers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `supplier_customers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL DEFAULT '',
@@ -3644,30 +3644,30 @@ CREATE TABLE `supplier_customers` (
   KEY `no_email_alerts` (`no_email_alerts`),
   KEY `price_type` (`price_type`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `suppliers`
 --
 
 DROP TABLE IF EXISTS `suppliers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `suppliers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `suppliers_c_customers`
 --
 
 DROP TABLE IF EXISTS `suppliers_c_customers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `suppliers_c_customers` (
   `id_supplier_customer` int(11) NOT NULL,
   `id_customer` int(11) NOT NULL,
@@ -3676,15 +3676,15 @@ CREATE TABLE `suppliers_c_customers` (
   `sla_hours` tinyint(4) DEFAULT '1',
   PRIMARY KEY (`id_supplier_customer`,`id_customer`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `suppliers_service_packages`
 --
 
 DROP TABLE IF EXISTS `suppliers_service_packages`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `suppliers_service_packages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `supplier_id` int(11) NOT NULL DEFAULT '0',
@@ -3693,16 +3693,16 @@ CREATE TABLE `suppliers_service_packages` (
   PRIMARY KEY (`id`),
   KEY `supplier_id` (`supplier_id`),
   KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=54 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `tasks`
 --
 
 DROP TABLE IF EXISTS `tasks`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `tasks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL DEFAULT '0',
@@ -3734,31 +3734,31 @@ CREATE TABLE `tasks` (
   KEY `date_end` (`date_end`),
   KEY `modified_date` (`modified_date`),
   KEY `exchange_uid` (`exchange_uid`)
-) ENGINE=MyISAM AUTO_INCREMENT=730 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `tasks_attendees`
 --
 
 DROP TABLE IF EXISTS `tasks_attendees`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `tasks_attendees` (
   `task_id` int(11) NOT NULL DEFAULT '0',
   `user_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`task_id`,`user_id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `test_plugin`
 --
 
 DROP TABLE IF EXISTS `test_plugin`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `test_plugin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL DEFAULT '',
@@ -3767,16 +3767,16 @@ CREATE TABLE `test_plugin` (
   `date_last_modification` int(11) NOT NULL DEFAULT '0',
   `fk_user` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `tickets`
 --
 
 DROP TABLE IF EXISTS `tickets`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `tickets` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL DEFAULT '0',
@@ -3823,16 +3823,16 @@ CREATE TABLE `tickets` (
   KEY `customer_order_id` (`customer_order_id`),
   KEY `for_subscription` (`for_subscription`),
   KEY `seen_manager_id` (`seen_manager_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=116070 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `tickets_attachments`
 --
 
 DROP TABLE IF EXISTS `tickets_attachments`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `tickets_attachments` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ticket_id` int(10) unsigned NOT NULL DEFAULT '0',
@@ -3844,30 +3844,30 @@ CREATE TABLE `tickets_attachments` (
   KEY `user_id` (`user_id`),
   KEY `uploaded` (`uploaded`),
   KEY `ticket_id` (`ticket_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1043 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `tickets_cc`
 --
 
 DROP TABLE IF EXISTS `tickets_cc`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `tickets_cc` (
   `ticket_id` int(11) NOT NULL DEFAULT '0',
   `user_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ticket_id`,`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `tickets_details`
 --
 
 DROP TABLE IF EXISTS `tickets_details`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `tickets_details` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `ticket_id` int(11) NOT NULL DEFAULT '0',
@@ -3914,45 +3914,45 @@ CREATE TABLE `tickets_details` (
   KEY `is_continuation` (`is_continuation`),
   KEY `customer_order_id` (`customer_order_id`),
   KEY `for_subscription` (`for_subscription`)
-) ENGINE=MyISAM AUTO_INCREMENT=77186 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `tickets_escalation_recipients`
 --
 
 DROP TABLE IF EXISTS `tickets_escalation_recipients`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `tickets_escalation_recipients` (
   `user_id` int(11) NOT NULL DEFAULT '0',
   `default_recipient` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`),
   KEY `default_recipient` (`default_recipient`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `tickets_manual_cc`
 --
 
 DROP TABLE IF EXISTS `tickets_manual_cc`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `tickets_manual_cc` (
   `ticket_id` int(11) NOT NULL,
   `email_address` varchar(100) NOT NULL,
   PRIMARY KEY (`ticket_id`,`email_address`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `tickets_objects`
 --
 
 DROP TABLE IF EXISTS `tickets_objects`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `tickets_objects` (
   `ticket_id` int(11) NOT NULL DEFAULT '0',
   `object_class` int(11) NOT NULL DEFAULT '0',
@@ -3963,15 +3963,15 @@ CREATE TABLE `tickets_objects` (
   KEY `object_id` (`object_id`),
   KEY `object_id2` (`object_id2`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `tickets_statuses`
 --
 
 DROP TABLE IF EXISTS `tickets_statuses`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `tickets_statuses` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL DEFAULT '',
@@ -3979,16 +3979,16 @@ CREATE TABLE `tickets_statuses` (
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
   KEY `escalate_after` (`escalate_after`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `tickets_types`
 --
 
 DROP TABLE IF EXISTS `tickets_types`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `tickets_types` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL DEFAULT '',
@@ -4000,16 +4000,16 @@ CREATE TABLE `tickets_types` (
   KEY `is_customer_default` (`is_customer_default`),
   KEY `ignore_count` (`ignore_count`),
   KEY `is_billable` (`is_billable`)
-) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `timesheets`
 --
 
 DROP TABLE IF EXISTS `timesheets`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `timesheets` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL DEFAULT '0',
@@ -4027,16 +4027,16 @@ CREATE TABLE `timesheets` (
   KEY `closed_by_id` (`closed_by_id`),
   KEY `approved_date` (`approved_date`),
   KEY `approved_by_id` (`approved_by_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1059 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `timesheets_details`
 --
 
 DROP TABLE IF EXISTS `timesheets_details`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `timesheets_details` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `timesheet_id` int(11) NOT NULL DEFAULT '0',
@@ -4057,16 +4057,16 @@ CREATE TABLE `timesheets_details` (
   KEY `ticket_detail_id` (`ticket_detail_id`),
   KEY `customer_id` (`customer_id`),
   KEY `detail_special_type` (`detail_special_type`)
-) ENGINE=MyISAM AUTO_INCREMENT=5928 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `timesheets_exports`
 --
 
 DROP TABLE IF EXISTS `timesheets_exports`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `timesheets_exports` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created` int(11) NOT NULL DEFAULT '0',
@@ -4079,16 +4079,16 @@ CREATE TABLE `timesheets_exports` (
   KEY `created` (`created`),
   KEY `status` (`status`),
   KEY `md5_file` (`md5_file`)
-) ENGINE=MyISAM AUTO_INCREMENT=98 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `timesheets_exports_actions`
 --
 
 DROP TABLE IF EXISTS `timesheets_exports_actions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `timesheets_exports_actions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `export_id` int(11) NOT NULL DEFAULT '0',
@@ -4097,31 +4097,31 @@ CREATE TABLE `timesheets_exports_actions` (
   `requester_ip` varchar(255) DEFAULT NULL,
   `result_ok` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `timesheets_exports_ids`
 --
 
 DROP TABLE IF EXISTS `timesheets_exports_ids`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `timesheets_exports_ids` (
   `export_id` int(11) NOT NULL DEFAULT '0',
   `timesheet_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`export_id`,`timesheet_id`),
   KEY `intervention_id` (`timesheet_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `user_action_log`
 --
 
 DROP TABLE IF EXISTS `user_action_log`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `user_action_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `action` int(4) NOT NULL DEFAULT '0',
@@ -4129,16 +4129,16 @@ CREATE TABLE `user_action_log` (
   `action_user` int(11) NOT NULL DEFAULT '0',
   `action_date` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `users`
 --
 
 DROP TABLE IF EXISTS `users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `login` varchar(20) NOT NULL DEFAULT '',
@@ -4185,8 +4185,8 @@ CREATE TABLE `users` (
   KEY `is_manager` (`is_manager`),
   KEY `language` (`language`),
   KEY `newsletter` (`newsletter`)
-) ENGINE=MyISAM AUTO_INCREMENT=724 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 insert into `users` (id, login, fname, lname, password, email, administrator) values  (1, 'admin', 'admin', '', md5('admin1234'), 'admin@yourdomain.com', 1);
 
 --
@@ -4194,50 +4194,50 @@ insert into `users` (id, login, fname, lname, password, email, administrator) va
 --
 
 DROP TABLE IF EXISTS `users_customers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `users_customers` (
   `user_id` int(11) NOT NULL DEFAULT '0',
   `customer_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`,`customer_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `users_customers_assigned`
 --
 
 DROP TABLE IF EXISTS `users_customers_assigned`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `users_customers_assigned` (
   `user_id` int(11) NOT NULL DEFAULT '0',
   `customer_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`,`customer_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `users_customers_favorites`
 --
 
 DROP TABLE IF EXISTS `users_customers_favorites`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `users_customers_favorites` (
   `user_id` int(11) NOT NULL DEFAULT '0',
   `customer_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`,`customer_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `users_exchange`
 --
 
 DROP TABLE IF EXISTS `users_exchange`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `users_exchange` (
   `id` int(11) NOT NULL DEFAULT '0',
   `exch_login` varchar(100) NOT NULL DEFAULT '',
@@ -4250,29 +4250,29 @@ CREATE TABLE `users_exchange` (
   KEY `exch_ha1` (`exch_ha1`),
   KEY `exch_basic` (`exch_basic`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `users_groups`
 --
 
 DROP TABLE IF EXISTS `users_groups`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `users_groups` (
   `group_id` int(11) NOT NULL DEFAULT '0',
   `user_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`group_id`,`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `users_phones`
 --
 
 DROP TABLE IF EXISTS `users_phones`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `users_phones` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL DEFAULT '0',
@@ -4281,32 +4281,32 @@ CREATE TABLE `users_phones` (
   `comment` varchar(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`,`user_id`),
   KEY `type` (`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=195 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `valid_dup_names`
 --
 
 DROP TABLE IF EXISTS `valid_dup_names`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `valid_dup_names` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `netbios_name` varchar(255) NOT NULL DEFAULT '',
   `computer_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `netbios_name` (`netbios_name`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `web_access`
 --
 
 DROP TABLE IF EXISTS `web_access`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `web_access` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
@@ -4316,16 +4316,16 @@ CREATE TABLE `web_access` (
   `date_modified` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `web_access_resources`
 --
 
 DROP TABLE IF EXISTS `web_access_resources`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `web_access_resources` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `webaccess_id` int(11) NOT NULL,
@@ -4337,16 +4337,16 @@ CREATE TABLE `web_access_resources` (
   `date_modified` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
 
 --
 -- Table structure for table `work_markers`
 --
 
 DROP TABLE IF EXISTS `work_markers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
+
 CREATE TABLE `work_markers` (
   `user_id` int(11) NOT NULL,
   `ticket_detail_id` int(11) NOT NULL,
@@ -4354,15 +4354,15 @@ CREATE TABLE `work_markers` (
   `stop_time` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`,`ticket_detail_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+
+
+
+
+
+
+
+
 
 -- Dump completed on 2014-03-06 10:38:22
