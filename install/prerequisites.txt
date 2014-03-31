@@ -9,6 +9,10 @@ Don't forget that after a new extension is installed or a modification in the we
     1.2. the .htaccess file in the webroot directory must contain at least the following in order for the OpenKeyOS routing engine to work
 
          RewriteEngine on
+         <FilesMatch ^((config)\.ini$|logs)$>
+        	Order allow,deny
+        	deny from all
+        </FilesMatch>
          RewriteCond %{REQUEST_FILENAME} !-f
          RewriteCond %{REQUEST_FILENAME} !-d
          RewriteRule ^(.*)$ index.php/$1 [QSA,L]
