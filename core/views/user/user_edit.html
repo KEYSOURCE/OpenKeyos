@@ -1,0 +1,518 @@
+{assign var="paging_titles" value="Users Administration, Edit User"}
+{assign var="paging_urls" value="/?cl=user"}
+{include file="paging.html"}
+
+<h1>Edit User</h1>
+
+<p class="error">{$error_msg}</p>
+
+<form action="" method="POST">
+{$form_redir}
+
+<table class="list" width="95%">
+	<thead>
+	<tr>
+		<td colspan="2" width="50%">Login information</td>
+		<td colspan="2" width="50%">User type</td>
+	</tr>
+	</thead>
+	
+	<tr>
+		<td class="highlight" width="20%">Login name: </td>
+		<td class="post_highlight" width="30%"><input type="text" name="user[login]" value="{$user->login}" size="30"/></td>
+		<td class="highlight">Type: </td>
+		<td class="post_highlight">
+			{assign var="user_type" value=$user->type}
+			{$USER_TYPES.$user_type}
+		</td>
+		
+	</tr>
+	<tr>
+		<td class="highlight">Password: </td>
+		<td class="post_highlight">
+			{if $user->is_customer_user()}
+				<input type="password" name="user[password]" value="{$user->password}" size="30"/>
+			{else}
+				<input type="password" name="user[password]" value="{$user->password}" size="30"/>
+			{/if}
+		</td>
+		<td colspan="2" class="head">Personal information</td>
+	</tr>
+	<tr>
+		<td class="highlight">Confirm password: </td>
+		<td class="post_highlight">
+			{if $user->is_customer_user()}
+				<input type="password" name="user[password_confirm]" value="{$user->password_confirm}" size="30"/>
+			{else}
+				<input type="password" name="user[password_confirm]" value="{$user->password_confirm}" size="30"/>
+			{/if}
+		</td>
+		<td class="highlight" width="20%">First name: </td>
+		<td class="post_highlight" width="30%"><input type="text" name="user[fname]" value="{$user->fname|escape}" size="30"/></td>
+	</tr>
+	<tr>
+		{if $user->is_customer_user()}
+			<td class="highlight">Active: </td>
+			<td class="post_highlight">
+				<select name="user[active]">
+					<option value="1" {if $user->active}selected{/if}>Yes</option>
+					<option value="0" {if !$user->active}selected{/if}>No</option>
+				</select>
+			</td>
+		{else}
+			<td class="highlight" nowrap="nowrap">
+				Active:
+				<a href="/?cl=user&amp;op=user_edit_active&amp;id={$user->id}&amp;returl={$ret_url}">Edit &#0187;</a>
+			</td>
+			<td class="post_highlight">
+				{assign var="active" value=$user->active}
+				{$USER_STATUSES.$active}
+				{if $user->is_away()}
+					<br/>
+					{assign var="away_recipient_id" value=$user->away_recipient_id}
+					Redirect to: {$users_list.$away_recipient_id}
+				{/if}
+			</td>
+		{/if}
+		<td class="highlight">Last name: </td>
+		<td class="post_highlight"><input type="text" name="user[lname]" value="{$user->lname|escape}" size="30"/></td>
+	</tr>
+	<tr>
+		<td class="highlight">ERP ID (Mercator):</td>
+		<td class="post_highlight"><input type="text" name="user[erp_id]" value="{$user->erp_id|escape}" size="30"/></td>
+		<td class="highlight">E-mail: </td>
+		<td class="post_highlight"><input type="text" name="user[email]" value="{$user->email}" size="30"/></td>
+	</tr>
+	
+	{if $user->is_customer_user()}
+		<!-- These fields are relevant only for customer users -->
+		<tr>
+			<td class="highlight">Customer: </td>
+			<td class="post_highlight" colspan="3">
+				{if $user->type == $smarty.const.USER_TYPE_CUSTOMER}
+				<select name="user[customer_id]">
+					<option value="">[None - KeySource user]</option>
+					{html_options options=$customers selected=$user->customer_id}
+				</select>
+				{/if}
+			</td>
+		</tr>
+		<tr>
+			<td class="highlight">Allow private access: </td>
+			<td class="post_highlight" colspan="3">
+				<select name="user[allow_private]">
+					<option value="0">No</option>
+					<option value="1" {if $user->allow_private} selected {/if}>Yes</a>
+				</select>
+				For customer users only. Internal users are always allowed to see private entries.
+			</td>
+		</tr>
+		<tr>
+			<td class="highlight">Allow dashboards access: </td>
+			<td class="post_highlight" colspan="3">
+				<select name="user[allow_dashboard]">
+					<option value="0">No</option>
+					<option value="1" {if $user->allow_dashboard} selected {/if}>Yes</a>
+				</select>
+				For customer users only.
+			</td>
+		</tr>
+		<tr>
+			<td class="highlight">Allow user management access: </td>
+			<td class="post_highlight" colspan="3">
+				<select name="user[has_kadeum]">
+					<option value="0">No</option>
+					<option value="1" {if $user->has_kadeum} selected {/if}>Yes</a>
+				</select>
+				For customer users only.
+			</td>
+		</tr>
+	{else}
+		<!-- These fields are relevant only for Keysource users -->
+		<tr>
+			<td class="highlight">Is manager: </td>
+			<td class="post_highlight">
+				<select name="user[is_manager]">
+					<option value="0">No</option>
+					<option value="1" {if $user->is_manager} selected {/if}>Yes</option>
+				</select>
+			</td>
+			<td class="highlight"> </td>
+			<td class="post_highlight"> </td>
+		</tr>
+		<tr>
+		    <td class="highlight">Exchange server informations: </td>
+		    <td class="post_highlight">
+			<a href="/?cl=user&op=user_edit_exchange&id={$user->id}">Edit informations &#0187;</a>
+		    </td>
+		    <td class="highlight"></td>
+		    <td class="post_highlight"></td>
+		</tr>
+	{/if}
+	
+	<tr>
+		<td class="highlight">Preferred language:</td>
+		<td class="post_highlight">
+			<select name="user[language]">
+				{html_options options=$LANGUAGES selected=$user->language}
+			</select> 
+		</td>
+		<td class="highlight">Newsletter:</td>
+		<td class="post_highlight">
+			<select name="user[newsletter]">
+				<option value="0">No</option>
+				<option value="1" {if $user->newsletter} selected {/if}>Yes</option>
+			</select>
+		</td>
+	</tr>
+	
+	<tr class="head">
+		<td colspan="4">Phones</td>
+	</tr>
+	<tr>
+		<td class="highlight">
+			Phone numbers:<br/>
+			<a href="/?cl=user&op=phone_add&user_id={$user->id}&ret=user_edit">Add number &#0187;</a>
+		</td>
+		<td class="post_highlight" colspan="4">
+			<table>
+				<tr>
+					<td><b>Number</b></td>
+					<td><b>Type</b></td>
+					<td><b>Comments</b></td>
+					<td> </td>
+					{foreach from=$user->phones item=phone key=phoneid}
+					
+						<tr>
+							<td nowrap>{$phone->phone}</td>
+							<td>
+								{assign var="phone_type" value=$phone->type}
+								{$PHONE_TYPES.$phone_type}
+							</td>
+							<td>{$phone->comment}</td>
+							<td>
+								<a href="/?cl=user&op=phone_edit&id={$phone->id}&ret=user_edit">Edit</a> |
+								<a href="/?cl=user&op=phone_delete&id={$phone->id}&ret=user_edit"
+									onclick="return confirm('Are you sure you want to delete this number?');"
+								>Delete</a>
+							</td>
+						</tr>
+					
+					{foreachelse}
+						<tr><td colspan="3">
+						[There are no phone numbers defined]
+						</td></tr>
+					{/foreach}
+				</tr>
+			</table>
+		</td>
+	</tr>
+	{if $user->is_customer_user()}
+	<!-- These fields are relevant only for customer users -->
+	<tr><td colspan="4">&nbsp;</td></tr>
+	<tr class="head">
+		<td colspan="4">Add more/Remove customer accounts for this user</td>
+	</tr>
+	<tr>
+		<td colspan="4"><br /><a href="/?cl=user&op=add_more_customers&user_id={$user->id}&ret=user_edit">Add/Remove customers&#0187;</a></td>
+	</tr>
+	<tr>	
+		<td colspan="4">
+			<table class="list" width="100%">
+				<tr class="head">
+					<td>
+					Member of the following customers:</td>
+				</tr>
+				{foreach from=$member_of_customers item=customer_id}
+				<tr>	
+					<td><a href="/?cl=customer&op=customer_edit&id={$customer_id}">{$customers.$customer_id} (#{$customer_id})</a></td>
+				</tr>
+				{/foreach}
+				
+			</table>
+		</td>
+	</tr>
+	<tr><td colspan="4">&nbsp;</td></tr>
+	<tr class="head">
+		<td colspan="4">
+		Merge existing accounts with this one</td>
+	</tr>
+	<tr>
+		<td colspan="4"><a href="/?cl=user&op=merge_accounts&user_id={$user->id}&ret=user_edit">Select accounts to merge &#0187;</a></td>
+	</tr>
+	{/if}
+</table>
+<p/>
+<input type="submit" name="save" value="Save" />
+<input type="submit" name="cancel" value="Close" />
+<p/>
+
+
+{if !$user->is_customer_user()}
+
+<script language="JavaScript" type="text/javascript">
+//<![CDATA
+
+// The names of available tabs
+var tabs = new Array ('customer_access', 'groups', 'notifications', 'notifications_cust');
+
+{literal}
+// Retrieve a cookie value by name
+function getCookie (cookie_name)
+{
+	var nameEQ = cookie_name + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++)
+	{
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	return null;
+}
+
+// Set the active tab
+function showTab (tab_name)
+{
+	// Hide all tabs first. Also make sure the requested tab is in the list
+	found = false;
+	for (i=0; i<tabs.length; i++)
+	{
+		document.getElementById('tab_' + tabs[i]).style.display = 'none';
+		document.getElementById('tab_head_' + tabs[i]).className = 'tab_inactive';
+		if (tabs[i] == tab_name) found = true;
+	}
+	
+	if (!found) tab_name = tabs[0];
+	
+	document.getElementById('tab_'+tab_name).style.display = 'block';
+	document.getElementById('tab_head_'+tab_name).className = '';
+	
+	document.cookie = 'user_edit_tab='+tab_name;
+	
+	return false;
+}
+{/literal}
+//]]>
+</script>
+
+<table class="tab_header"><tr>
+	<td id="tab_head_customer_access" class="tab_inactive"><a href="#" onclick="return showTab('customer_access');">Customer Access</a></td>
+	<td id="tab_head_groups" class="tab_inactive"><a href="#" onclick="return showTab('groups');">Groups [{$groups_list|@count}]</a></td>
+	<td id="tab_head_notifications" class="tab_inactive"><a href="#" onclick="return showTab('notifications');" 
+		>Notifcations [{$notifs_generic_direct|@count}:{$notifs_generic_group|@count}:{$assigned_alerts|@count}]</a></td>
+	<td id="tab_head_notifications_cust" class="tab_inactive"><a href="#" onclick="return showTab('notifications_cust');" style="width: 150px;">
+		Customer Notifications [{$notifs_customer_direct|@count}:{$notifs_customer_group|@count}]</a></td>
+</tr></table>
+
+
+<!-- Tab with customer access -->
+<div id="tab_customer_access" class="tab_content" >
+<h2>Customer Access</h2>
+<br/>
+
+<table class="list" width="100%">
+
+	<tr class="head">
+		<td colspan="2">Customers access</td>
+	</tr>
+	
+	<tr>
+		<td>Restrict customers:</td>
+		<td>
+			<select name="user[restrict_customers]">
+				<option value="0">No</option>
+				<option value="1" {if $user->restrict_customers}selected{/if}>Yes</option>
+			</select>
+		</td>
+	</tr>
+	
+	{if $user->restrict_customers}
+		<!-- Show the list of assigned customers -->
+		<tr>
+			<td>
+				Assigned customers:<br>
+				<a href="/?cl=user&op=user_edit_assigned_customers&id={$user->id}">Edit list &#0187;</a>
+			</td>
+			<td>
+				{foreach from=$assigned_customers item=customer_name key=customer_id}
+					{$customer_name} ({$customer_id})
+					{if $group_assigned_customers.$customer_id}
+						- Also assigned via group: {$group_assigned_customers.$customer_id->group_name}
+					{/if}
+					<br/>
+				{foreachelse}
+					[None]
+				{/foreach}
+				<p/>
+			
+				<b>Assigned via groups:</b><br/>
+				{foreach from=$group_assigned_customers item=val key=customer_id}
+					{$val->customer_name} ({$customer_id}) :: {$val->group_name}<br>
+				{foreachelse}
+					[None]
+				{/foreach}
+			</td>
+		</tr>
+	{/if}
+	
+	<tr>
+		<td>
+			Favorite customers:<br>
+			<a href="/?cl=user&op=user_edit_favorite_customers&id={$user->id}">Edit list &#0187;</a>
+		</td>
+		<td>
+			{foreach from=$favorite_customers item=customer_name key=customer_id}
+				{$customer_name} ({$customer_id})<br>
+			{foreachelse}
+				[None]
+			{/foreach}
+		</td>
+	</tr>
+</table>
+</div>
+
+<!-- Tab with group memberships -->
+<div id="tab_groups" class="tab_content" style="display:none">
+<h2>Groups Membership</h2>
+<br/>
+
+<table class="list" width="100%">
+
+	<tr class="head">
+		<td width="1%">ID</td>
+		<td>Group name</td>
+	</tr>
+	
+	{foreach from=$groups_list key=group_id item=group_name}
+		<tr>
+			<td><a href="/?cl=user&amp;op=group_edit&amp;id={$group_id}&amp;returl={$ret_url}">{$group_id}</a></td>
+			<td><a href="/?cl=user&amp;op=group_edit&amp;id={$group_id}&amp;returl={$ret_url}">{$group_name}</a></td>
+		</tr>
+	{foreachelse}
+	<tr>
+		<td colspan="2" class="light_text">[The user is not member of any group]</td>
+	</tr>
+	{/foreach}
+</table>
+</div>
+
+
+<!-- Tab with generic notifications assigned -->
+<div id="tab_notifications" class="tab_content" style="display:none">
+<h2>Notifications Recipient :: Generic</h2>
+<br/>
+
+<table class="list" width="100%">
+	<tr class="head">
+		<td width="50%">Directly assigned</td>
+		<td width="50%">Assigned via groups</td>
+	</tr>
+	<tr>
+		<td>
+			{foreach from=$notifs_generic_direct key=notif_class item=is_default}
+				{if $is_default}<b>{/if}
+				{$NOTIF_OBJ_CLASSES.$notif_class}
+				{if $is_default}</b>{/if}
+				<br/>
+			{foreachelse}
+				<font class="light_text">--</font>
+			{/foreach}
+		</td>
+		<td>
+			{foreach from=$notifs_generic_group key=notif_class item=is_default}
+				{if $is_default}<b>{/if}
+				{$NOTIF_OBJ_CLASSES.$notif_class}
+				{if $is_default}</b>{/if}
+				<br/>
+			{foreachelse}
+				<font class="light_text">--</font>
+			{/foreach}
+		</td>
+	</tr>
+</table>
+
+<h2>Notifications Recipient :: Specific Alerts</h2>
+<br/>
+
+<table class="list" width="100%">
+	<tr class="head">
+		<td>Alert definitions</td>
+	</tr>
+	
+	{foreach from=$assigned_alerts key=alert_id item=alert_name}
+	<tr>
+		<td><a href="/?cl=kawacs&amp;op=alert_edit&amp;id={$alert_id}&amp;returl={$ret_url}">{$alert_name|escape}</a></td>
+	</tr>
+	{foreachelse}
+	<tr>
+		<td class="light_text">[None]</td>
+	</tr>
+	{/foreach}
+</table>
+<p/>
+
+</div>
+
+<!-- Tab with generic notifications assigned -->
+<div id="tab_notifications_cust" class="tab_content" style="display:none">
+<h2>Notifications Recipient :: Customers </h2>
+<br/>
+
+<table class="list" width="100%">
+
+	<tr class="head">
+		<td width="50%">Directly assigned</td>
+		<td width="50%">Assigned via groups</td>
+	</tr>
+	<tr>
+		<td>
+			{foreach from=$notifs_customer_direct key=customer_id item=notifs}
+				{$customers_list_all.$customer_id}:
+				{foreach from=$notifs key=notif_class item=is_default}
+					{if $is_default}<b>{/if}
+					[{$NOTIF_OBJ_CLASSES.$notif_class}]
+					{if $is_default}</b>{/if}
+				{/foreach}
+				<br/>
+			{foreachelse}
+				<font class="light_text">--</font>
+			{/foreach}
+		</td>
+		<td>
+			{foreach from=$notifs_customer_group key=customer_id item=notifs}
+				{$customers_list_all.$customer_id}:
+				{foreach from=$notifs key=notif_class item=is_default}
+					{if $is_default}<b>{/if}
+					[{$NOTIF_OBJ_CLASSES.$notif_class}]
+					{if $is_default}</b>{/if}
+				{/foreach}
+				<br/>
+			{foreachelse}
+				<font class="light_text">--</font>
+			{/foreach}
+		</td>
+	</tr>
+	
+</table>
+</div>
+
+
+<p/>
+<input type="submit" name="save" value="Save" />
+<input type="submit" name="cancel" value="Close" />
+
+<script language="JavaScript" type="text/javascript">
+//<![CDATA
+
+// Check what was the last selected tab, if any
+if (!(last_tab = getCookie('user_edit_tab'))) last_tab = tabs[0];
+showTab (last_tab);
+
+//]]>
+</script>
+
+{/if}
+
+
+</form>

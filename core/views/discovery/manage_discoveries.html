@@ -1,0 +1,227 @@
+{assign var="paging_titles" value="KAWACS, Networks Discoveries"}
+{assign var="paging_urls" value="/?cl=kawacs"}
+{include file="paging.html"}
+
+<script language="JavaScript" type="text/javascript">
+//<[CDATA[
+
+{literal}
+
+function do_select_detail (detail_id)
+{
+	var frm = document.forms['filter_frm'];
+	var elm = frm.elements['filter[detail_id]'];
+	for (i=0; i<elm.options.length; i++)
+	{
+		if (elm.options[i].value == detail_id)
+		{
+			elm.options[i].selected = true;
+			frm.submit ();
+			break;
+		}
+	}
+	return false;
+}
+
+{/literal}
+
+//]]>
+</script>
+
+<h1>Networks Discoveries
+{if $filter.customer_id}
+	: {$tot_devices_cnt} devices
+	{if $tot_devices_cnt != count($discoveries)}({$discoveries|@count} shown){/if}
+{/if}
+</h1>
+
+<p class="error">{$error_msg}</p>
+
+<p>
+Below you have the network devices discovered for the selected customer. To view
+the discoveries only for a specific setting detail, click on its name or select it from the list.<br/>
+To view more details about a specific device or to associate it with a Keyos device, click on its IP address.<br/>
+If a SNMP type is shown as link, click it to define a descriptive name for that SNMP ID.
+</p>
+
+{if $has_unmatched_discoveries}
+<p class="warning">WARNING: Some of the discovered devices for this customer 
+are not matched with Keyos devices. You should manually set the matching Keyos
+devices, or specify that these devices will not be managed in Keyos.
+</p>
+{/if}
+
+<form action="" method="POST" name="filter_frm">
+{$form_redir}
+
+<table class="list" width="98%">
+	<thead>
+	<tr>
+		<td>Customer:</td>
+		<td>Show:</td>
+		<td>Ranges:</td>
+		<td>Sort by:</td>
+	</tr>
+	</thead>
+	
+	<tr>
+		<td>
+			<select name="filter[customer_id]" onchange="document.forms['filter_frm'].submit();">
+				<option value="">[Select customer]</option>
+				{html_options options=$customers_list selected=$filter.customer_id}
+			</select>
+		</td>
+		<td>
+			<select name="filter[match]" onchange="document.forms['filter_frm'].submit();">
+				<option value="0">[All devices]</option>
+				<option value="1" {if $filter.match==1}selected{/if}>With Keyos matches</option>
+				<option value="2" {if $filter.match==2}selected{/if}>Without matches</option>
+				<option value="3" {if $filter.match==3}selected{/if}>Not in Keyos</option>
+			</select>
+			<br/>
+			<input type="checkbox" class="checkbox" name="filter[show_details]" value="1" 
+			{if $filter.show_details}checked{/if} onclick="document.forms['filter_frm'].submit();" />&nbsp;Details
+		</td>
+		<td>
+			<select name="filter[detail_id]" onchange="document.forms['filter_frm'].submit();">
+				{if count($setting->details) > 0}
+					<option value="">[All]</option>
+					{foreach from=$setting->details item=detail}
+					<option value="{$detail->id}" {if $filter.detail_id==$detail->id}selected{/if}>{$detail->computer_name}: {$detail->ip_start} - {$detail->ip_end}</option>
+					{/foreach}
+				{else}
+					<option value="">[No discovery settings defined]</option>
+				{/if}
+			</select>
+		</td>
+		<td>
+			<select name="filter[order_by]" onchange="document.forms['filter_frm'].submit();">
+				<option value="">IP address</option>
+				<option value="name" {if $filter.order_by=='name'}selected{/if}>Name</option>
+				<option value="last_discovered" {if $filter.order_by=='last_discovered'}selected{/if}>Last discovered</option>
+				<option value="duration" {if $filter.order_by=='duration'}selected{/if}>Duration</option>
+			</select>
+		</td>
+	</tr>
+	{if count($setting->details) > 0}
+	<tr>
+		<td rowspan="{$setting->details|@count}"><h3>Discovery Settings:</h3></td>
+		
+		{foreach from=$setting->details item=detail}
+			<td nowrap="nowrap" colspan="2">
+				<a href="#" onclick="return do_select_detail({$detail->id});"
+				>#{$detail->computer_id}: {$detail->computer_name}:&nbsp;&nbsp;
+				{$detail->ip_start} - {$detail->ip_end}</a>
+				{if !$detail->enabled}[Disabled]{/if}
+			</td>
+			<td nowrap="nowrap">
+				{if $detail->last_discovery}
+					{$detail->last_discovery|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY},
+					{$detail->duration} sec.
+				{else}-
+				{/if}
+			</td>
+		</tr>
+		{/foreach}
+	{/if}
+</table>
+</form>
+<p/>
+
+<table class="list" width="98%">
+	<thead>
+	<tr>
+		<td width="100" nowrap="nowrap">IP address</td>
+		<td width="180" nowrap="nowrap">Name / Keyos match</td>
+		<td nowrap="nowrap">Duration</td>
+		<td width="45%">SNMP data</td>
+		<td width="45%">WMI data</td>
+		<td width="60"> </td>
+	</tr>
+	</thead>
+	
+	{foreach from=$discoveries item=discovery}
+	<tr>
+		<td nowrap="nowrap">
+			<a href="/?cl=discovery&amp;op=discovery_details&amp;id={$discovery->id}">{$discovery->ip|escape}</a><br/>
+			<font class="light_text">{$discovery->last_discovered|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}</font>
+			{if !$discovery->finished_ok}
+			<br/><font class="warning">Incomplete discovery</font>
+			{/if}
+			{if $filter.show_details}
+				<p/>{if $discovery->get_mac()}{$discovery->get_mac()|escape}{else}[No MAC address]{/if}
+			{/if}
+		</td>
+		<td nowrap="nowrap">
+			{$discovery->get_name()|escape}<br/>
+			{if !$discovery->matched_obj_id}
+				<font class="light_text">[No match]</font>
+			{elseif $discovery->matched_obj_id < 0}
+				<i>[Not in Keyos]</i>
+			{else}
+				<a href="{$discovery->matched_obj_url}">{$discovery->matched_obj_name}</a>
+			{/if}
+		</td>
+		<td nowrap="nowrap">
+			{if $discovery->duration}{$discovery->duration|number_format:2} sec.{else}-{/if}
+		</td>
+		<td>
+			{if !$discovery->snmp_resp}<font class="light_text">[n/a]</font>
+			{else}
+				Name:&nbsp;{$discovery->snmp_sys_name|escape}<br/>
+				{if !$discovery->snmp_sys_object_name}
+					Type:&nbsp;<a href="/?cl=discovery&amp;op=snmp_sysobjid_add&amp;snmp_sys_object_id={$discovery->snmp_sys_object_id}&amp;returl={$ret_url}"
+					>{$discovery->snmp_sys_object_id|escape}</a>
+				{else}
+					Type:&nbsp;{$discovery->snmp_sys_object_name|escape}
+				{/if}
+				
+				{if $filter.show_details}
+					<br/>
+					{if $discovery->snmp_sys_desc}Description:&nbsp;{$discovery->snmp_sys_desc|escape}<br/>{/if}
+					{if $discovery->snmp_sys_contact}Contact:&nbsp;{$discovery->snmp_sys_contact|escape}{/if}
+				{/if}
+			{/if}
+		</td>
+		<td>
+			{if !$discovery->wmi_resp}
+				<font class="light_text">[n/a]
+				{if $discovery->wmi_error}<br/>{$discovery->wmi_error|escape}{/if}
+				</font>
+			{else}
+				Name:&nbsp;{$discovery->wmi_name}
+				{if $discovery->wmi_system_type}<br/>Type:&nbsp;{$discovery->wmi_system_type}{/if}
+				{if $discovery->wmi_error}<br/><i>WMI&nbsp;err.:&nbsp;{$discovery->wmi_error|escape}{/if}
+				{if $filter.show_details}
+					<br/>
+					{if $discovery->wmi_description}Description:&nbsp;{$discovery->wmi_description|escape}<br/>{/if}
+					{if $discovery->wmi_domain}Domain:&nbsp;{$discovery->wmi_domain}<br/>{/if}
+					{if $discovery->wmi_domain_role}
+						{assign var="role" value=$discovery->wmi_domain_role}
+						Role:&nbsp;{$WMI_DOMAIN_ROLES.$role}<br/>
+					{/if}
+					{if $discovery->wmi_manufacturer}Manufacturer:&nbsp;{$discovery->wmi_manufacturer}<br/>{/if}
+					{if $discovery->wmi_model}Model:&nbsp;{$discovery->wmi_model}<br/>{/if}
+					{if $discovery->wmi_primary_owner_name}Owner:&nbsp;{$discovery->wmi_primary_owner_name}<br/>{/if}
+					{if $discovery->wmi_os_caption}OS&nbsp;name:&nbsp;{$discovery->wmi_os_caption}<br/>{/if}
+					{if $discovery->wmi_os_organization}OS&nbsp;organization:{$discovery->wmi_os_organization}<br/>{/if}
+				{/if}
+			{/if}
+		</td>
+		<td nowrap="nowrap" align="right">
+			<a href="/?cl=discovery&amp;op=discovery_delete&amp;id={$discovery->id}"
+			onclick="return confirm('Are you sure you want to delete this discovered device?\n\nNOTE: If Kawacs Agent discovers this device again, it will be recreated.');"
+			>Delete &#0187;</a>
+		</td>
+	</tr>
+	{foreachelse}
+	<tr>
+		<td colspan="5" class="light_text">
+			{if !$filter.customer_id}[Select customer]
+			{elseif count($setting->details)==0}[No discovery settings defined]
+			{else}[No discovered devices]
+			{/if}
+		</td>
+	</tr>
+	{/foreach}
+</table>

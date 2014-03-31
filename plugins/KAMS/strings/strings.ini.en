@@ -1,0 +1,28 @@
+NEED_NAME = Please specify the name of the asset.
+NEED_CATEGORY = Please specify the asset category.
+
+#strings for financial informations
+NEED_INVOICE_NUMBER = Please specify the number of this invoice.
+NEED_INVOICE_DATE = Please select the date of the invoice.
+NEED_PURCHASE_VALUE = Please specify a purchase value.
+NEED_SUPPLIER = Please select a supplier from the list.
+NEED_PERIOD = Please specify an amortization period.
+
+#strings for contract types
+NEED_CTYPE_NAME = Please specify a name for this type of contract.
+WARNING_NO_CTYPE_DESC = Warning, You didn't provide a desciption for this type of contract.
+
+#strings for contracts
+NEED_CONTRACT_NAME = Please specify a name for this contract.
+NEED_CONTRACT_NUMBER = Please specify a number for this contract.
+NEED_CONTRACT_TYPE = Please select a valid contract type for this contract.
+NEED_CONTRACT_STARTDATE = Please specify a valid start date for this contract.
+NEED_CONTRACT_QUANTITY = This contract type requires a quantity. Please specify the quantity;
+NEED_CONTRACT_TOTALPRICE = This contract type requires a total price. Please specify a total price;
+NEED_CONTRACT_PAYMENTPERIODS = This contract type requires settings for recurring payments. Please specify the payment periods.
+NEED_CONTRACT_PRICEPERPERIOD = This contract type requires settings for recurring payments. Please specify the price per period.
+NEED_CONTRACT_ENDDATE = This contract type requires an end/expiration date. Please specify an end/expiration date.
+NEED_CONTRACT_VENDOR = This contract type requires a vendor. Please specify a vendor.
+NEED_CONTRACT_SUPPLIER = This contract type requires a supplier. Please specify a supplier.
+NEED_CONTRACT_NOTICEPERIOD = This contract type requires periodical notifications. Please specify a notice period.
+NEED_CONTRACT_RENEWAL = This contract type requires a renewal period. Please specify a renewal period.

@@ -1,0 +1,387 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+targetNamespace="{$http_base_url|escape}"
+xmlns="{$http_base_url|escape}">
+
+<xs:annotation>
+<xs:documentation>
+	Schema for exporting intervention reports from the Keyos system.
+</xs:documentation>
+</xs:annotation>
+
+<xs:element name="export">
+	<xs:annotation>
+	<xs:documentation>
+		An "export" element represents an export batch, which is composed of zero or more
+		intervention reports. In case there are no intervention reports to export, the
+		"export_id" element will not be present.
+		The export batch will include only the intervention reports which have been approved
+		in the Keyos system. Before the XML file is sent from the Keyos server, all those
+		intervention reports will be marked as "pending", until the ERP system confirms 
+		that the export batch has been succesfully processed.
+	</xs:documentation>
+	</xs:annotation>
+	
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element name="export_id" type="xs:integer" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+				<xs:documentation>
+				Each export batch will have a unique numeric ID in the Keyos system.
+				If the XML file contains an "export" element with no "export_id" element, this means
+				there are no intervention reports currently waiting to be exported.
+				Also, if there is no "export_id" element, then the "export" element will not 
+				have any other child elements either.
+				</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="confirmation_file_url" type="xs:anyURI" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+				<xs:documentation>
+				This is the URL which the ERP system will use for confirming that the XML file has been
+				correctly downloaded. In order to do that, the ERP system will have to append to the
+				URL the MD5 checksum of the downloaded file (Note that this URL alreay contains an empty 
+				parameter called "md5").
+				When the URL is accessed this way, Keyos will reply with the strings "ok" or "incorrect"
+				if the checksum is correct or not.
+				If the checksum is incorrect, the XML file can be re-downloaded using the URL specified
+				in the "retransfer_url" element.
+				</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="confirmation_import_url" type="xs:anyURI" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+				<xs:documentation>
+				This is the URL which the ERP system will use for confirming that the correct values have
+				been imported from the XML file. In order to do that, the ERP system will have to add to the
+				URL the following parameters: "cnt_interventions" - the number of intervention reports processed and
+				"tbb_sum" - the sum of all the tbb_amount fields from all intervention reports. For example:
+				?cl=erp&amp;op=interventions_confirm_import&amp;id=41&amp;cnt_interventions=2&amp;tbb_sum=10.30
+				When the URL is accessed this way, Keyos will reply with the strings "ok" or "incorrect"
+				if the values are correct or not. If they are correct, then all the intervention reports
+				from the import batch will be marked as being centralized in the ERP system.
+				</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="retransfer_url" type="xs:anyURI" minOccurs="0"  maxOccurs="1">
+				<xs:annotation>
+				<xs:documentation>
+				This is the URL which can be used by the ERP system to fetch another copy of the XML file,
+				in case a download has failed.
+				</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="intervention_reports" minOccurs="0"  maxOccurs="1">
+				<xs:annotation>
+				<xs:documentation>
+				This element contains the intervention reports exported in this batch.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+				<xs:sequence>
+					<xs:element name="intervention_report" type="intervention_report" minOccurs="1"/>
+				</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:element>
+
+<xs:complexType name="intervention_report">
+	<xs:all>
+		<xs:element name="intervention_report_id" type="xs:integer" use="required">
+			<xs:annotation>
+			<xs:documentation>
+			The unique numeric ID of the intervention report from the Keyos system.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="customer_id" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The ERP reference number of the customer.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="subject" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The subject of the intervention report.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="creation_date" type="xs:date" minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The creation date for the intervention report. Note that this date
+			can be modified in Keyos by the managers.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="creation_date_string" type="xs:string" minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			String representation (dd/mm/yy) of the creation date.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="invoicing" minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			This element will contain all the invoice lines generated for this intervention report.
+			These invoicing lines are obtained by summarizing all ticket details belonging to this
+			intervention report, grouped by date, action type, engineer and Mercator order/subscription.
+			</xs:documentation>
+			</xs:annotation>
+			<xs:complexType>
+			<xs:sequence>
+				<xs:element name="invoicing_line" type="invoicing_line" minOccurs="1"/>
+			</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+		<xs:element name="reporting" minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			This element will contain all the tickets details which were included in this intervention report.
+			</xs:documentation>
+			</xs:annotation>
+			<xs:complexType>
+			<xs:sequence>
+				<xs:element name="reporting_detail" type="reporting_detail" minOccurs="1"/>
+			</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+	</xs:all>
+</xs:complexType>
+
+<xs:complexType name="invoicing_line">
+	<xs:all>
+		<xs:element name="intervention_date" type="xs:date"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The date (in Unix timestamp format) when the activity was performed.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="intervention_date_string" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The date (as dd/mm/yy string) when the activity was performed
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="action_type" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The code (article number) of the performed activity.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="engineer_id" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The ERP article number representing the engineer who performed the activity.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="order_num" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The Mercator order number if this activity was requested for a customer order.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="subscription_num" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The Mercator subscription number if this activity was requested for a customer subscription.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="location" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The name of the location where the activity was performed.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="on_site" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			Specifies 'yes' or 'no' if the location should be considered on-site or not.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="work_hours" type="xs:decimal"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The total number of hours that the engineer has worked for this activity.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="billable" minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			Specifies if this invoicing line is billable or not.
+			</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="yes"/>
+				<xs:enumeration value="no"/>
+			</xs:restriction>
+			</xs:simpleType>
+		</xs:element>
+		<xs:element name="price_type" minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			Specifies if this activity is priced hourly or if it has a fixed price.
+			</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="hourly"/>
+				<xs:enumeration value="fixed"/>
+			</xs:restriction>
+			</xs:simpleType>
+		</xs:element>
+		<xs:element name="bill_amount" type="xs:decimal"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The billable amount calculated by the Keyos system for this activity. It 
+			can be a number of hours (if the activity is hourly priced) or a number
+			of items (if the activity has a fixed price).
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="tbb_amount" type="xs:decimal"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The amount that should be actually invoiced to the customer for this activity,
+			since the Keysource managers can adjust this amount manually. It can be a 
+			number of hours (if the activity is hourly priced) or a number of items 
+			(if the activity has a fixed price).
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="billing_unit_minutes" type="xs:decimal"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			For hourly-priced activities, this element contain the billing unit (in minutes).
+			By default it is 60 minutes, but certain activities could be billed on, for example,
+			on 15 minutes intervals.
+			For fixed-price activities this element is empty.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+	</xs:all>
+</xs:complexType>
+
+<xs:complexType name="reporting_detail">
+	<xs:all>
+		<xs:element name="ticket_id" type="xs:integer">
+			<xs:annotation>
+			<xs:documentation>
+			The unique numeric ID of the ticket to whith this ticket detail belongs.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="ticket_subject" type="xs:string">
+			<xs:annotation>
+			<xs:documentation>
+			The subject for thsi ticket
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="ticket_detail_id" type="xs:integer">
+			<xs:annotation>
+			<xs:documentation>
+			The unique numeric ID of the ticket detail.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="action_type" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The code (article number) of the performed activity.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="engineer_id" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The ERP code for the engineer who performed the activity.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="engineer_act_id" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The ERP article number representing the engineer who performed the activity.
+			If the reporting line is related to the service, it contains the ERP service ID.
+			If the reporting line is related to the travel, it contain the ERP travel ID.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="work_hours" type="xs:decimal"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The number of work hours included in this ticket detail.
+			It is empty for travel items.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="time_in" type="xs:date"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The date and time (as UNIX timestamp) when the activity for this ticket detail
+			has started.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="time_in_string" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The date and time (as dd/mm/yy string) when the activity for this ticket detail
+			has started.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="order_num" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The Mercator order number if this activity was requested for a customer order.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="subscription_num" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The Mercator subscription number if this activity was requested for a customer subscription.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="location" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The name of the location where this activity was performed.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="on_site" minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			Specifies if this activity was performed or not at a customer location.
+			</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="yes"/>
+				<xs:enumeration value="no"/>
+			</xs:restriction>
+			</xs:simpleType>
+		</xs:element>
+	</xs:all>
+</xs:complexType>
+
+</xs:schema>

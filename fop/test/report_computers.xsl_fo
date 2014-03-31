@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html [
+  <!ENTITY % HTMLlat1 PUBLIC
+  "-//W3C/ENTITIES Latin 1 for XHTML//EN"
+  "html4-all.ent">
+  %HTMLlat1;
+]>
+
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+		xmlns:fo="http://www.w3.org/1999/XSL/Format"
+                version="1.0">
+		
+
+<xsl:template name="computers">
+
+	<fo:block xsl:use-attribute-sets="section-title">Servers</fo:block>
+	
+	
+	<fo:table table-layout="fixed" width="100%">
+		<fo:table-column column-width="proportional-column-width(0.1)"/>
+		<fo:table-column column-width="proportional-column-width(0.3)"/>
+		<fo:table-column column-width="proportional-column-width(0.1)"/>
+		<fo:table-column column-width="proportional-column-width(0.1)"/>
+		<fo:table-column column-width="proportional-column-width(0.15)"/>
+		<fo:table-column column-width="proportional-column-width(0.15)"/>
+		<fo:table-column column-width="proportional-column-width(0.15)"/>
+		
+		<fo:table-header>
+			<fo:table-row>
+				<fo:table-cell xsl:use-attribute-sets="table-head-list">
+					<fo:block>ID</fo:block>
+				</fo:table-cell>
+				<fo:table-cell xsl:use-attribute-sets="table-head-list">
+					<fo:block>Subject</fo:block>
+				</fo:table-cell>
+				
+				<xsl:if test="report/filter/customer_id = ''">
+					<fo:table-cell xsl:use-attribute-sets="table-head-list">
+						<fo:block>Customer</fo:block>
+					</fo:table-cell>
+				</xsl:if>
+				
+				<fo:table-cell xsl:use-attribute-sets="table-head-list">
+					<fo:block>Type</fo:block>
+				</fo:table-cell>
+				<fo:table-cell xsl:use-attribute-sets="table-head-list">
+					<fo:block>Priority</fo:block>
+				</fo:table-cell>
+				<fo:table-cell xsl:use-attribute-sets="table-head-list">
+					<fo:block>Status</fo:block>
+				</fo:table-cell>
+				<fo:table-cell xsl:use-attribute-sets="table-head-list">
+					<fo:block>Created</fo:block>
+				</fo:table-cell>
+				<fo:table-cell xsl:use-attribute-sets="table-head-list">
+					<fo:block>Updated</fo:block>
+				</fo:table-cell>
+			</fo:table-row>
+		</fo:table-header>
+		
+		<fo:table-body>
+			<xsl:for-each select="report/tickets/ticket">
+				<fo:table-row>
+					<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+						<fo:block font-weight="bold">
+							<xsl:value-of select="id"/>
+						</fo:block>
+					</fo:table-cell>
+					<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+						<fo:block font-weight="bold">
+							<xsl:value-of select="subject"/>
+						</fo:block>
+					</fo:table-cell>
+					
+					<xsl:if test="report/filter/customer_id = ''">
+						<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+							<fo:block><xsl:value-of select="customer_name"/></fo:block>
+						</fo:table-cell>
+					</xsl:if>
+					
+					<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+						<fo:block><xsl:value-of select="type_name"/></fo:block>
+					</fo:table-cell>
+					<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+						<fo:block><xsl:value-of select="priority_name"/></fo:block>
+					</fo:table-cell>
+					<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+						<fo:block><xsl:value-of select="status_name"/></fo:block>
+					</fo:table-cell>
+					<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+						<fo:block><xsl:value-of select="created_readable"/></fo:block>
+					</fo:table-cell>
+					<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+						<fo:block><xsl:value-of select="updated_readable"/></fo:block>
+					</fo:table-cell>
+				</fo:table-row>
+				
+				<xsl:if test="ticket_details">
+					<fo:table-row>
+						<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+						</fo:table-cell>
+						
+						<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+							<xsl:if test="report/filter/customer_id = ''">
+								<xsl:attribute name="number-columns-spanned">7</xsl:attribute>
+							</xsl:if>
+							<xsl:if test="report/filter/customer_id != ''">
+								<xsl:attribute name="number-columns-spanned">6</xsl:attribute>
+							</xsl:if>
+							
+							<fo:table table-layout="fixed" width="100%">
+							<fo:table-column column-width="proportional-column-width(0.4)"/>
+							<fo:table-column column-width="proportional-column-width(0.6)"/>
+							<fo:table-body>
+							<xsl:for-each select="ticket_details/ticket_detail">
+								<fo:table-row>
+								
+									<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+										<fo:block font-weight="bold">
+											<xsl:value-of select="created_readable"/>,
+											<xsl:value-of select="user_name"/>
+										</fo:block>
+									</fo:table-cell>
+									<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+										<xsl:if test="assigned_name">
+											<fo:block font-weight="bold">
+											Assigned to: <xsl:value-of select="assigned_name"/>
+											</fo:block>
+										</xsl:if>
+										
+										<fo:block>
+											<xsl:value-of select="comments"/>
+										</fo:block>
+									</fo:table-cell>
+									
+								</fo:table-row>
+							</xsl:for-each>
+							</fo:table-body>
+							</fo:table>
+						
+						</fo:table-cell>
+					</fo:table-row>
+				</xsl:if>
+				
+			</xsl:for-each>
+		</fo:table-body>
+	</fo:table>
+</xsl:template>
+
+</xsl:stylesheet>

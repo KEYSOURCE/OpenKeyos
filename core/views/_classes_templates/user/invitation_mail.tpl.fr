@@ -1,0 +1,24 @@
+Cher {$user->fname} {$user->lname},
+
+Un compte utilisateur a été; créé pour vous dans le systéme KeyOS :
+
+Nome d'utilisateur (Login name) : {$user->login}
+Mot de passe (Password): {$user->password_f}
+
+Vous pouvez accéder au systéme KeyOS via l'URL suivant :
+https://{$base_url}
+
+Veuillez mettre à  jour vos informations ainsi que mettre un nouveau mot 
+de passe à  l'aide du lien 'Your account' affiché sur le menu de gauche :
+https://{$base_url}/?cl=home&op=user_area
+
+Pour introduire de nouveaux tickets de support ou consulter un ticket 
+existant vous pouvez utiliser le menu 'Tech support':
+https://{$base_url}/?cl=customer_krifs
+
+
+--------------------------------------------------
+This is an automated message, please do not reply.
+
+Best regards,
+The KeyOS System

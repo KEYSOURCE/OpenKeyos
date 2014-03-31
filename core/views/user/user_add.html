@@ -1,0 +1,139 @@
+{assign var="paging_titles" value="Users Administration, Users, Add User"}
+{assign var="paging_urls" value="/?cl=user, /?cl=user&op=manage_users"}
+{include file="paging.html"}
+
+<h1>Add User</h1>
+<p>
+<font class="error">{$error_msg}</font>
+<p>
+
+<form action="" method="POST">
+{$form_redir}
+
+<table class="list" width="95%">
+	<thead>
+	<tr>
+		<td colspan="2">Login information</td>
+	</tr>
+	</thead>
+	
+	<tr>
+		<td width="120">Login name: </td>
+		<td><input type="text" name="user[login]" value="{$user->login}" size="30"></td>
+	</tr>
+	<tr>
+		<td>Password: </td>
+		<td><input type="password" name="user[password]" value="{$user->password}" size="30"></td>
+	</tr>
+	<tr>
+		<td>Confirm password: </td>
+		<td><input type="password" name="user[password_confirm]" value="{$user->password_confirm}" size="30"></td>
+	</tr>
+	<tr>
+		<td>ERP ID (Mercator):</td>
+		<td><input type="text" name="user[erp_id]" value="{$user->erp_id|escape}" size="30"></td>
+	</tr>
+	
+	
+	<tr class="head">
+		<td colspan="2">Personal information</td>
+	</tr>
+	
+	<tr>
+		<td>First name: </td>
+		<td><input type="text" name="user[fname]" value="{$user->fname|escape}" size="30"></td>
+	</tr>
+	<tr>
+		<td>Last name: </td>
+		<td><input type="text" name="user[lname]" value="{$user->lname|escape}" size="30"></td>
+	</tr>
+	<tr>
+		<td>E-mail: </td>
+		<td><input type="text" name="user[email]" value="{$user->email}" size="30"></td>
+	</tr>
+	<tr>
+		<td>Preferred language: </td>
+		<td>
+			<select name="user[language]">
+				{html_options options=$LANGUAGES selected=$user->language}
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>Newsletter: </td>
+		<td>
+			<select name="user[newsletter]">
+				<option value="0">No</option>
+				<option value="1" {if $user->newsletter} selected {/if}>Yes</option>
+			</select>
+		</td>
+	</tr>
+	
+	<tr class="head">
+		<td colspan="2">User type</td>
+	</tr>
+	
+	<tr>
+		<td>Type: </td>
+		<td>
+			<select name="user[type]">
+				{html_options options=$USER_TYPES selected=$user->type}
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>Customer: </td>
+		<td>
+			<select name="user[customer_id]">
+				<option value="">[None - KeySource user]</option>
+				{html_options options=$customers selected=$user->customer_id}
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>Allow private access: </td>
+		<td>
+			<select name="user[allow_private]">
+				<option value="0">No</option>
+				<option value="1" {if $user->allow_private} selected {/if}>Yes</a>
+			</select>
+			For customer users only. Internal users are always allowed to see private entries.
+		</td>
+	</tr>
+	<tr>
+		<td>Allow private access: </td>
+		<td>
+			<select name="user[allow_dashboard]">
+				<option value="0">No</option>
+				<option value="1" {if $user->allow_dashboard} selected {/if}>Yes</a>
+			</select>
+			For customer users only.
+		</td>
+	</tr>
+	<tr>
+		<td>Allow user management access: </td>
+		<td>
+			<select name="user[has_kadeum]">
+				<option value="0">No</option>
+				<option value="1" {if $user->has_kadeum} selected {/if}>Yes</a>
+			</select>
+			For customer users only.
+		</td>
+	</tr>
+	<tr>
+		<td>Send invitation email: </td>
+		<td>
+			<input type="checkbox" class="checkbox" name="user[send_invitation_email]" value="1" {if $user->send_invitation_email}checked{/if} />
+			&nbsp;&nbsp;&nbsp;If checked, an invitation e-mail with the account details will be sent
+			to the user.
+		</td>
+	</tr>
+	
+</table>
+
+<p>
+
+<input type="submit" name="save" value="Save">
+<input type="submit" name="cancel" value="Cancel">
+
+</form>

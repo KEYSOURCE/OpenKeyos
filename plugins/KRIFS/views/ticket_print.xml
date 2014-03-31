@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html [
+  <!ENTITY % HTMLlat1 PUBLIC
+  "-//W3C/ENTITIES Latin 1 for XHTML//EN"
+  "html4-all.ent">
+  %HTMLlat1;
+]>
+<ticket id="{$ticket->id}">
+        <id>{$ticket->id}</id>
+        <subject>{$ticket->subject|escape}</subject>
+        <customer_id>{$ticket->customer_id}</customer_id>
+        <customer_name>{assign var="customer_id" value=$ticket->customer_id}{$customers_list.$customer_id|escape}</customer_name>
+        <type>{$ticket->type}</type>
+        <type_name>{assign var="ticket_type" value=$ticket->type}{$TICKET_TYPES.$ticket_type}</type_name>
+        <priority>{$ticket->priority}</priority>
+        <priority_name>{assign var="ticket_priority" value=$ticket->priority}{$TICKET_PRIORITIES.$ticket_priority}</priority_name>
+        <private>{$ticket->private}</private>
+        <assigned_id>{$ticket->assigned_id}</assigned_id>
+        <assigned_name>{if $ticket->assigned_id}{$ticket->assigned->get_short_name()|escape}
+                        {if $ticket->assigned->customer_id}
+                                {assign var="user_customer_id" value=$ticket->assigned->customer_id}
+                                ({$customers_list.$user_customer_id}|escape)
+                        {/if}
+                {/if}</assigned_name>
+        <status>{$ticket->status}</status>
+        <status_name>{assign var="ticket_status"  value=$ticket->status}{$TICKET_STATUSES.$ticket_status}</status_name>
+        <created>{$ticket->created}</created>
+        <created_readable>{$ticket->created|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}</created_readable>
+        <updated>{$ticket->last_modified}</updated>
+        <updated_readable>{$ticket->last_modified|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}</updated_readable>
+        <escalated>{$ticket->escalated}</escalated>
+        <escalated_readable>{if $ticket->escalated}{$ticket->last_modified|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}{else}-{/if}</escalated_readable>
+
+        <ticket_details>
+                {assign var="last_assigned_id" value=""}
+                {foreach from=$ticket->details item=ticket_detail}
+                        {if ($filter.private!=0 or ($filter.private==0 and !$ticket_detail->private and $ticket_detail->comments))}
+                                <ticket_detail id="{$ticket_detail->id}">
+                                        <id>{$ticket_detail->id}</id>
+                                        <comments>{$ticket_detail->comments}</comments>
+                                        <created>{$ticket_detail->created}</created>
+                                        <created_readable>{$ticket_detail->created|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}</created_readable>
+                                        <escalated>{$ticket_detail->escalated}</escalated>
+                                        <escalated_readable>{if $ticket_detail->escalated}{$ticket_detail->last_modified|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}{else}-{/if}</escalated_readable>
+                                        <user_id>{$ticket_detail->user->id}</user_id>
+                                        {if $ticket_detail->user->id}
+                                                {if $filter.private == 0}
+                                                        {if $ticket_detail->user->is_customer_user()}
+                                                                <user_name>{$ticket_detail->user->get_name()|escape}</user_name>
+                                                        {else}
+                                                                <user_name>[Keysource suppport]</user_name>
+                                                        {/if}
+                                                {else}
+                                                        <user_name>{$ticket_detail->user->get_name()|escape}</user_name>
+
+                                                        {if $ticket_detail->assigned_id and $ticket_detail->assigned_id != $last_assigned_id}
+                                                                {assign var="last_assigned_id" value=$ticket_detail->assigned_id}
+                                                                <assigned_id>{$ticket_detail->assigned_id}</assigned_id>
+                                                                <assigned_name>{$ticket_detail->assigned->get_name()|escape}</assigned_name>
+                                                        {/if}
+                                                {/if}
+                                        {else}
+                                                <user_name/>
+                                        {/if}
+
+                                        <status>{$ticket_detail->status}</status>
+                                        <status_name>{assign var="ticket_detail_status" value=$ticket_detail->status}{$TICKET_STATUSES.$ticket_detail_status}</status_name>
+                                        <private>{$ticket_detail->private}</private>
+                                </ticket_detail>
+                        {/if}
+                {/foreach}
+        </ticket_details>
+</ticket>
+

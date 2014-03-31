@@ -1,0 +1,21 @@
+{assign var="paging_titles" value="KAWACS, Manage Removed Computers, View Removed Computer, Delete Removed Computer"}
+{assign var="computer_id" value=$computer->id}
+{assign var="paging_urls" value="/?cl=kawacs_removed, /?cl=kawacs_removed&op=manage_computers, /?cl=kawacs_removed&op=computer_view&id=$computer_id"}
+{include file="paging.html"}
+
+<script language="JavaScript" src="/javascript/CalendarPopup.js" type="text/javascript"></script>
+
+<h1>Delete Removed Computer</h1>
+
+<p class="error">{$error_msg}</p>
+
+<p>This will <b>permanently</b> delete this computer from the Keyos system.</p>
+
+<form action="" method="POST" name="frm_t">
+{$form_redir}
+
+<input type="submit" name="delete" value="Delete computer" class="button"
+onclick="return confirm('Are you really sure you want to permanently delete this computer from Keyos?');"
+/>
+<input type="submit" name="cancel" value="Cancel" class="button" />
+</form>

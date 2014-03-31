@@ -1,0 +1,57 @@
+{assign var="paging_titles" value="Users Administration, Manage ACL Items"}
+{assign var="paging_urls" value="/?cl=user"}
+{include file="paging.html"}
+
+
+<h1>Manage ACL Items</h1>
+<p>
+<font class="error">{$error_msg}</font>
+<p>
+
+<a href="/?cl=user&op=acl_item_add">Add ACL item &#0187;</a>
+<p>
+
+<table class="list" width="98%">
+	<thead>
+	<tr>
+		<td>ID</td>
+		<td>Name</td>
+		<td>Operations</td>
+		<td> </td>
+	</tr>
+	</thead>
+	
+	{foreach from=$categories_items item=items key=category_id}
+		<tr class="head">
+			<td colspan="4">[{$categories_list.$category_id}]</td>
+		</tr>
+		
+		{foreach from=$items item=item}
+			<tr>
+				<td><a href="/?cl=user&op=acl_item_edit&id={$item->id}">{$item->id}</a></td>
+				<td><a href="/?cl=user&op=acl_item_edit&id={$item->id}">{$item->name}</a></td>
+				<td>
+					{foreach from=$item->operations item=operation}
+						{$operation->module} :: {$operation->function} <br>
+					{/foreach}
+				</td>
+				<td>
+					<a href="/?cl=user&op=acl_item_delete&id={$item->id}"
+						onClick="return confirm ('Are you sure you want to delete this item?');"
+					>Delete</a>
+				</td>
+			</tr>
+		{foreachelse}
+			<tr>
+				<td colspan="4">[No items in this category]</td>
+			</tr>
+		{/foreach}
+		
+	{foreachelse}
+		<tr>
+			<td colspan="4">[There are no ACL items defined yet]</td>
+		</tr>
+	{/foreach}
+
+</table>
+<p>

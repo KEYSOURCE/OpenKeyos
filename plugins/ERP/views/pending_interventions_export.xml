@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<pending_exports
+xmlns="{$http_base_url|escape}"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="{$http_base_url|escape}/?cl=erp&amp;op=pending_interventions_export_schema">
+>
+{foreach from=$exports item=export}
+	<export>
+		<export_id>{$export->id}</export_id>
+		<status>{$export->status}</status>
+		<retransfer_url>{$export->get_retransfer_url()|escape}</retransfer_url>
+		<confirmation_file_url>{$export->get_confirmation_file_url()|escape}</confirmation_file_url>
+		<confirmation_import_url>{$export->get_confirmation_import_url()|escape}</confirmation_import_url>
+	</export>
+{/foreach}
+</pending_exports>

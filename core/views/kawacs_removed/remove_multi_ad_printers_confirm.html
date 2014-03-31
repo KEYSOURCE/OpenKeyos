@@ -1,0 +1,56 @@
+{assign var="paging_titles" value="KAWACS, Manage Removed AD Printers, Remove Multiple AD Printers"}
+{assign var="paging_urls" value="/?cl=kawacs_removed, /?cl=kawacs_removed&op=manage_ad_printers"}
+{include file="paging.html"}
+
+<script language="JavaScript" src="/javascript/CalendarPopup.js" type="text/javascript"></script>
+
+<h1>Confirm Removing Multiple AD Printers</h1>
+
+<p class="error">{$error_msg}</p>
+
+<p>Please confirm below that you want to remove these AD Printers.</p>
+
+<form action="" method="POST" name="frm_t">
+{$form_redir}
+
+<table class="list" width="70%">
+	<thead>
+	<tr>
+		<td width="140">Customer:</td>
+		<td class="post_highlight">{$customer->name|escape} ({$customer->id})</td>
+	</tr>
+	</thead>
+	
+	<tr>
+		<td class="highlight">Removal date:</td>
+		<td class="post_highlight">
+			<input type="text" size="12" name="removal[date_removed]"
+				value="{$removal->date_removed|date_format:$smarty.const.DATE_FORMAT_SELECTOR}"
+			/>
+			{literal}
+			<a href="#" onclick="showCalendarSelector('frm_t', 'removal[date_removed]'); return false;" name="anchor_calendar" id="anchor_calendar"
+				><img src="./images/icon_cal.gif" alt="calendar" border=0 style="vertical-align: middle"></a>
+			{/literal}
+		</td>
+	</tr>
+	<tr>
+		<td class="highlight">Removal reason:</td>
+		<td class="post_highlight"><textarea name="removal[reason_removed]" rows="5" cols="60">{$removal->reason_removed}</textarea></td>
+	</tr>
+	
+	<tr>
+		<td class="highlight">AD Printers to remove:</td>
+		<td class="post_highlight">
+			{foreach from=$ad_printers item=ad_printer}
+			{if in_array($ad_printer->id,$ad_printers_ids)}
+				{$ad_printer->id} {$ad_printer->name}<br/>
+			{/if}
+			{/foreach}
+		</td>
+	</tr>
+</table>
+<p/>
+
+<input type="submit" name="save" value="Remove AD Printers" class="button" />
+<input type="submit" name="cancel" value="Cancel" class="button" />
+</form>

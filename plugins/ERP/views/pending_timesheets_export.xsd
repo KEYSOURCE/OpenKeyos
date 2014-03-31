@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+targetNamespace="{$http_base_url|escape}"
+xmlns="{$http_base_url|escape}">
+
+<xs:annotation>
+<xs:documentation>
+	Schema for retrieving the list of pending exports for timesheets.
+</xs:documentation>
+</xs:annotation>
+
+<xs:element name="pending_exports">
+	<xs:annotation>
+	<xs:documentation>
+		The "pending_exports" element contains all the export batches which have been so 
+		far requested by the ERP system and for which the Keyos system has not received
+		confirmation that the contained timesheets have been centralized.
+	</xs:documentation>
+	</xs:annotation>
+	
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element name="export" type="export" minOccurs="0">
+				<xs:annotation>
+				<xs:documentation>
+					This element contains the detail for pending export batches.
+				</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:element>
+
+<xs:complexType name="export">
+	<xs:all>
+		<xs:element name="export_id" type="xs:integer"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+				The unique numeric ID of the export batch.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		
+		<xs:element name="retransfer_url" type="xs:anyURI" minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+				This is the URL which can be used by the ERP system to fetch another copy of the XML file,
+				in case a download has failed.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		
+		<xs:element name="confirmation_file_url" type="xs:anyURI" minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			This is the URL which the ERP system will use for confirming that the XML file has been
+			correctly downloaded. In order to do that, the ERP system will have to append to the
+			URL the MD5 checksum of the downloaded file (Note that this URL alreay contains an empty 
+			parameter called "md5").
+			When the URL is accessed this way, Keyos will reply with the strings "ok" or "incorrect"
+			if the checksum is correct or not.
+			If the checksum is incorrect, the XML file can be re-downloaded using the URL specified
+			in the "retransfer_url" element.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="confirmation_import_url" type="xs:anyURI" minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			This is the URL which the ERP system will use for confirming that the correct values have
+			been imported from the XML file. In order to do that, the ERP system will have to add to the
+			URL the following parameters: "cnt_timesheets" - the number of timesheets processed and
+			"work_time_sum" - the sum of all the work_time fields from all timesheets. For example:
+			?cl=erp&amp;op=timesheets_confirm_import&amp;id=41&amp;cnt_timesheets=2&amp;work_time_sum=10.30
+			When the URL is accessed this way, Keyos will reply with the strings "ok" or "incorrect"
+			if the values are correct or not. If they are correct, then all the intervention reports
+			from the import batch will be marked as being centralized in the ERP system.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+	</xs:all>
+</xs:complexType>
+
+</xs:schema>

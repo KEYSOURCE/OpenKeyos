@@ -1,0 +1,29 @@
+NEED_LOGIN_NAME = Spécifiez un nom d'utilisateur s'il vous plaît.
+NEED_PASSWORD = Spécifiez un mot de passe s'il vous plaît.
+NEED_FIRST_NAME = Spécifiez votre prénom s'il vous plaît.
+NEED_LAST_NAME = Spécifiez votre nom s'il vous plaît.
+NEED_UNIQUE_LOGIN_NAME = Le nom d'utilisateur existe déjà, choisissez-en un autre s'il vous plaît.
+
+NEED_USER_PHONE = Un numéro de téléphone doit être associé à un utilisateur.
+NEED_PHONE_NUMBER = Spécifiez le numéro de téléphone s'il vous plaît.
+
+NEED_LOGIN_AND_PASSWORD = Introduisez un nom d'utilisateur et un mot de passe s'il vous plaît.
+NEED_LOGIN_AND_EMAIL = Introduisez un nom d'utilisateur et une adresse email s'il vous plaît..
+SORRY_ACCOUNT_DISABLED = Désolé, votre compte a été désactivé.
+INVALID_LOGIN = Nom d'utilisateur et/ou mot de passe invalide. Réessayez s'il vous plaît.
+
+CANT_FIND_EMAIL = Désolé, nous ne trouvons pas de compte avec le nom d'utilisateur et l'adresse email spécifiés.
+PASSWORDS_DONT_MATCH = Les mot de passe ne correspond pas, veuillez réessayer s'il vous plaît.
+KEYSOURCE_ONLY_OPPERATION = Cette opération est uniquement accessible pour des utilisateurs Keysource.
+ACCESS_DENIED = Opération non disponible pour cet utilisateur.
+
+NEED_CUSTOMER_ACCOUNT = S'il s'agit d'un compte client, vous devez spécifier un client.
+MUST_BE_CUSTOMER_USER = Vous avez spécifié un client, mais le type d'utilisateur n'est pas 'Utilisateur Client'. Vérifiez votre délection s'il vous plaît.
+NEED_ALTERNATE_RECIPIENT = Pour les statuts d'absence, vous devez spécifier un autre utilisateur (remplaçant).
+NEED_DIFFERENT_ALTERNATE_RECIP = Un utilisateur absent ne peut pas être son propre remplaçant.
+NEED_ACTIVE_RECIPIENT = Seuls les utilisateurs Keysource (et non absents) peuvent être définis comme remplaçants.
+
+CANT_DELETE_LINKED_USER = L'utilisateur ne peut être effacé car il y a des tickets dans lesquels il/elle est impliqué. Essayez plutôt de désactiver l'utilisateur.
+CANT_DELETE_NOTIF_USER = L'utilisateur ne peut être effacé car il était désigné comme principal destinataire pour une ou plusieurs classes de notifications. Essayez plutôt de désactiver l'utilisateur.
+
+NEED_SELECT_NOTIFICATION = Vous n'avez pas sélectionné de notifications.

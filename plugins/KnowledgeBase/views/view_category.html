@@ -1,0 +1,196 @@
+{assign var="paging_titles" value="KB, View KB Category"}
+{assign var="paging_urls" value="/?cl=kb"}
+{include file="paging.html"}
+
+<p class="error">{$error_msg}</p>
+
+<style type="text/css">
+	@import "./kskb.css";
+</style>
+<script src="/javascript/AjaxControlToolkit/compositejscript2.js" type="text/javascript"></script>
+<script src="/javascript/AjaxControlToolkit/AjaxControlToolkit.Common.Common.js" type="text/javascript"></script>
+<script src="/javascript/AjaxControlToolkit/AjaxControlToolkit.HoverExtender.HoverBehavior.js" type="text/javascript"></script>
+<script src="/javascript/AjaxControlToolkit/AjaxControlToolkit.PopupExtender.PopupBehavior.js" type="text/javascript"></script>
+<script src="/javascript/AjaxControlToolkit/AjaxControlToolkit.HoverMenu.HoverMenuBehavior.js" type="text/javascript"></script>
+<script type="text/javascript">
+    //<![CDATA[
+    {literal}
+    function showContent(element_id)
+    {
+        var elem = document.getElementById(element_id+"List");
+        var lblElem = document.getElementById(element_id+"Lbl");
+		var ff = false;
+		if(document.all) ff=false; else ff=true;
+		//alert(lblElem.innerText);
+        if(elem.style.display == 'none')
+        {
+            elem.style.display = 'block';
+            if(!ff)	lblElem.innerText = "Hide";
+			else lblElem.textContent = "Hide";
+        }
+        else
+        {
+            elem.style.display = 'none';
+            if(!ff)lblElem.innerText = "Show";
+			else lblElem.textContent = "Show";
+        }
+    }
+    {/literal}
+    //]]>
+</script>
+<form name="catFrm" method="POST" action="">	
+{$form_redir}   
+    <table border="0" style="width: 98%" cellpadding="0" cellspacing="0">
+        <tr valign="top">
+            <!-- Left side navigator -->
+            <td style="width: 180px">
+                    <div id="leftSideBox_related">
+                            <div>
+                                <div id="related_pnlBox" class="MagazineArticleCtrlBox">
+                                        <div class="MagazineArticleCtrlHeader">Toolbox</div>														
+                                        <div id="editCategoryItem" style="padding: 3px 3px 3px 15px; margin: 0px; width: 140px">	
+                                                <a class="ArtLink" href="?cl=kb&op=edit_category&id={$kb_cat->id}">
+                                                    Edit this category
+                                                </a>
+                                                <br />   
+                                        </div>                                        
+                                        <div id="addCategoryItem" style="padding: 3px 3px 3px 15px; margin: 0px; width: 140px">	
+                                                <a class="ArtLink" href="?cl=kb&op=add_category&pid={$kb_cat->id}">
+                                                    Add subcategory
+                                                </a>
+                                                <br />   
+                                        </div>
+										<div id="addCategoryItem" style="padding: 3px 3px 3px 15px; margin: 0px; width: 140px">	
+                                                <a class="ArtLink" href="?cl=kb&op=add_article&catid={$kb_cat->id}">
+                                                    Add article
+                                                </a>
+                                                <br />   
+                                        </div>
+                                        <span id="toolbox_lblShow"></span>
+                                </div>
+                            </div>
+                    </div>
+            </td>
+            <!-- End left side navigator -->
+            <!-- Subcategories postcard (lets ma it hidable) -->
+            <td>
+                <div class="FeatureHeadline">{if $kb_cat->hasImage}<img src="{$kb_cat->hasImage}">{/if}{$kb_cat->hasTitle} topics</div> 				
+                <div style="margin-left: 5px; margin-right: 5px;"></div><p />				
+                <table class="borderCollapse">
+                    <tr>
+                        <td>
+                            <a href="?cl=kb&op=manage_kb_categories">All KeyOS KB categories</a><p />
+                        </td>                                
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="_infoDiv">
+                                <div style="margin-left: 5px; margin-right: 5px; font-variant:small-caps;">Category information<label id="infoLbl" onclick="showContent('info')" style="float: right;">Show</label></div><p />
+                                <ul id="infoList" class="ArticleListingContainer_info" style="display: none;">
+                                {assign var="author_id" value=$kb_cat->hasAuthor}
+                                    <li>
+                                        <div style="padding: 10px 0 0 3px;">
+                                        Created by: <span id="authorName" name="authorName"><b>{$users_list.$author_id}</b></span> on <span id="creationDate" name="creationDate">{$kb_cat->wasCreatedOn|date_format:$smarty.const.DATE_FORMAT_SELECTOR}</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div style="padding: 10px 0 0 3px;">
+                                        Title: <span id="displayTitle" name="displayTitle"><b>{$kb_cat->hasTitle}</b></span>
+                                        </div>
+                                    </li>
+                                    {if $parent->id}
+                                    <li>
+                                        <div style="padding: 10px 0 0 3px;">
+                                        Super category: <span id="parentTitle" name="parentTitle"><a href="?cl=kb&op=view_category&id={$parent->id}" style="font-weight: bold; font-family: 'SegoeUI', 'Verdana'; text-decoration:none;">{$parent->hasTitle}</a></span>
+                                        </div>
+                                    </li>
+                                    {/if}
+                                    <li>
+                                        <div style="padding: 10px 0 0 3px;">
+                                        Keywords: <span id="keywords" name="keywords"><b>{$kb_cat->hasKeywords}</b></span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div style="padding: 10px 0 0 3px;">
+                                        Description: <span id="keywords" name="keywords">{$kb_cat->hasDescription}</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    {if $kb_cat->cnt_subcats > 0}
+                    <tr>
+                        <td>
+                            <div id="_subcatsDiv">
+                                <div style="margin-left: 5px; margin-right: 5px; font-variant:small-caps;">Subcategories<label id="subcatsLbl" onclick="showContent('subcats')" style="float: right;">Hide</label></div><p />
+                                <table id="subcatsList" class="borderCollapse" style="display:block;">
+                                {foreach from=$subcategories item="category"}
+                                    {if $i==0} 
+                                        <tr>
+                                    {/if}
+                                    {if $i < 3}
+                                        <td >								
+                                            <ul class="ArticleListingContainer"> 
+                                                    {assign var="cn" value=$category->cnt_subcats}
+                                                    {assign var="an" value=$category->cnt_articles}
+                                                    {assign var="cnt_items" value=$cn+$an}
+                                                    
+                                                    <li style="list-style: none;">																		
+                                                    <table>
+                                                    <tr>
+                                                            <td class="imageColumn">
+                                                                    {if $category->hasImage}
+                                                                    <img alt={$category->hasTitle} src="{$category->hasImage}">
+                                                                    {/if}
+                                                            </td>
+                                                            <td class="textColumn">
+                                                            <a href="?cl=kb&op=view_category&id={$category->id}">
+                                                            <b><span name="hasTitle">{$category->hasTitle|escape}</span>({$cnt_items})</b>
+                                                            </a>
+                                                            </td>
+                                                    </tr>
+                                                    </table>	
+                                                    </div>									
+                                                    </li>
+                                            </ul>
+                                        </td>	
+                                        {assign var="i" value=$i+1}
+                                    {/if}
+                                    {if $i == 3}
+                                        {assign var="i" value=0}
+                                        </tr>
+                                    {/if}
+                                {/foreach}
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                    {/if}
+                    {if $kb_cat->cnt_articles > 0}
+                    <tr>
+                        <td>
+                            <div style="margin-left: 5px; margin-right: 5px; font-variant: small-caps;">Articles<label id="articlesLbl" onclick="showContent('articles')" style="float: right;">Hide</label></div><p />
+                            <ul id="articlesList" class="ArticleListingContainer_art" style="display:block;">
+                            {foreach from=$articles item="article"}
+                            {assign var="usr" value=$article->hasAuthor}                            
+                            <li style="list-style: none;">
+                            <div id="artItem{$article->id}" style="width: 98%; margin: 5px; padding: 10px;">
+                                <span id="artItem_{$article->id}_text" name="artItem_{$article->id}_text" ><a href="?cl=kb&op=view_article&cat_id={$kb_cat->id}&id={$article->id}" style="font-family:'Segoe UI','Verdana'; font-size: 130%!important; font-weight: bold; text-decoration: none;">{$article->hasTitle}</a></span><p />
+                                Created by:<span id="artItem_{$article->id}_creator" name="artItem_{$article->id}_creator"><b>{$users_list.$usr}</b></span> on <span id="artItem_{$article->id}_date" name="artItem_{$article->id}_date">{$article->wasCreatedOn|date_format:$smarty.const.DATE_FORMAT_SELECTOR}</span><br />
+                                {if $article->originalURI}
+                                <span id="artItem_{$article->id}_originalURI" name="artItem_{$article->id}_originalURI">Read original article on: <a target="_blank" href="{$article->originalURI}">{$article->originalURI}</a></span>
+                                {/if}
+                            </div>
+                            </li>
+                            {/foreach}
+                            </ul>
+                        </td>
+                    </tr>
+                    {/if}
+                </table>                            
+            </td>
+            <!-- End subcategories postcard -->
+        </tr>
+    </table>
+</form>

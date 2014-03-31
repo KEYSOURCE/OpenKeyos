@@ -1,0 +1,19 @@
+NEED_SUBJECT = "Spécifiez un sujet s'il vous plaît."
+NEED_TICKET_TYPE = "Spécifiez un type de ticket s'il vous plaît."
+NEED_CUSTOMER = "Spécifiez un client s'il vous plaît."
+NEED_ASSIGNED = "Le ticket doit être assigné à quelqu'un."
+ASSIGNED_HASNT_ACCESS_TO_CUSTOMER = "L'utilisateur auquel vous essayez d'attribuer le ticket ne peut accéder au client spécifié."
+ORDER_WRONG_CUSTOMER = "La commande que vous avez effectuée n'appartient pas à ce client."
+
+NEED_COMMENTS = "Vous n'avez pas ajouté de commentaires."
+NEED_ESCALATION_REASON = "Veuillez s'il vous plaît rédiger un commentaire concernant la raison de cette priorité."
+NEED_ATTACHMENT = "Spécifiez une pièce jointe à transférer s'il vous plaît."
+UPLOADING_FAILED = "Le tranfert de la pièce jointe a échoué. Essayez à nouveau s'il vous plaît."
+ATTACHMENT_MISSING = "Désolé, la pièce jointe est manquante."
+
+CANT_DELETE_PREDEFINED_STAT = "Ceci est un statut pédéfini and ne peut être effacé."
+CANT_DELETE_USED_STAT = "Il y a des ticket utilisant ce statut, ils ne peuvent don être effacés."
+CANT_DELETE_USER_TYPE = "Il y a des ticket utilisant ce type, ils ne peuvent don être effacés."
+
+EXCEEDED_SLA_TIME = "Temps SLA dépassé."
+TIME_LIMIT_EXCEEDED = "Limite de temps dépassée, ticket prioritaire."

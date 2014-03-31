@@ -1,0 +1,14 @@
+{assign var='paging_titles' value=','|explode:$paging_titles}
+{assign var='paging_urls' value=','|explode:$paging_urls}
+
+{assign var='urls_count' value=$paging_titles|@count}
+
+{if is_array($paging_titles) and count($paging_titles)>0}
+	<div class="paging"><a href="/?cl=home">{if $CURENT_LANG==$smarty.const.LANG_FR}Accueil{else}Home{/if}</a>
+	{foreach item="title" key="i" from=$paging_titles}
+	
+ 		&#0187; <a href="{if empty($paging_urls[$i])}{$smarty.server.REQUEST_URI}{else}{$paging_urls[$i]}{/if}">{$title}</a>
+
+	{/foreach}
+	</div>
+{/if}

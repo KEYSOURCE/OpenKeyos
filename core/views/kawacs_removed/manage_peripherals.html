@@ -1,0 +1,60 @@
+{assign var="paging_titles" value="Kawacs, Removed Peripherals"}
+{assign var="paging_urls" value="/?cl=kawacs_removed"}
+{include file="paging.html"}
+
+<h1>Removed Peripherals</h1>
+
+<p class="error">{$error_msg}</p>
+
+<form action="" method="POST" name="filter"> 
+{$form_redir}
+
+Customer:
+<select name="filter[customer_id]" onChange="document.forms['filter'].submit()">
+	<option value="">[Select customer]</option>
+	{html_options options=$customers_list selected=$filter.customer_id}
+</select>
+<p/>
+</form>
+
+<table class="list" width="98%">
+	<thead>
+	<tr>
+		<td width="60">Asset&nbsp;No.</td>
+		<td width="30%">Name</td>
+		<td width="20%">Peripheral class</td>
+		<td width="15%">Managing since</td>
+		<td width="15%">Removal date</td>
+		<td> </td>
+	</tr>
+	</thead>
+	
+	{foreach from=$peripherals key=class_id item=class_peripherals}
+	{foreach from=$class_peripherals item=peripheral}
+	<tr>
+		<td><a href="/?cl=kawacs_removed&amp;op=peripheral_view&amp;id={$peripheral->id}">{$peripheral->asset_no}</a></td>
+		<td><a href="/?cl=kawacs_removed&amp;op=peripheral_view&amp;id={$peripheral->id}">{$peripheral->name}</a></td>
+		<td>{$classes_list.$class_id}</td>
+		<td nowrap="nowrap">
+			{if $peripheral->date_created}{$peripheral->date_created|date_format:$smarty.const.DATE_FORMAT_SMARTY}
+			{else}--{/if}
+		</td>
+		<td>
+			{if $peripheral->date_removed}{$peripheral->date_removed|date_format:$smarty.const.DATE_FORMAT_SMARTY}
+			{else}--{/if}
+		</td>
+		<td align="right" nowrap="nowrap">
+			<a href="/?cl=kawacs_removed&amp;op=peripheral_delete&amp;id={$peripheral->id}"
+			onclick="return confirm('Are you sure you want to permanently delete this peripheral?');"
+			>Delete &#0187;</a>
+		</td> 
+	</tr>
+	{/foreach}
+	{foreachelse}
+	<tr>
+		<td colspan="5" class="light_text">[No Removed Peripherals]</td>
+	</tr>
+	{/foreach}
+	
+</table>
+<p/>

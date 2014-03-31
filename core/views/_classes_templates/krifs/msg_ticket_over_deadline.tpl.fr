@@ -1,0 +1,30 @@
+{if $recipient!=null}A l'attention de {$recipient->fname} {$recipient->lname},{/if}
+
+{if $is_reminder}
+Ceci est un rappel pour vous signaler que le ticket suivant a dépassé la date limite:
+{else}
+Le ticket suivant a dépassé la date limite:
+{/if}
+
+N°: {$notification->linked_object->id}
+Sujet: {$notification->linked_object->subject}
+Client: {$notification->linked_object->customer->name}
+Statut: {$notification->linked_object->status}
+
+Lien: https://{$notification->object_url}
+
+{assign var="last_entry_index" value=$notification->linked_object->last_entry_index}
+{assign var="last_entry" value=$notification->linked_object->details.$last_entry_index}
+{if $recipient!=null}
+{if !$recipient->is_customer_user()}
+Assigné à: {assign var="assigned_id" value=$last_entry->assigned_id}{$users_list.$assigned_id}
+{/if}
+{/if}
+{if $last_entry->comments}
+Commentaires: 
+{$last_entry->comments}
+{/if}
+
+
+Bien à vous,
+Le système KeyOS

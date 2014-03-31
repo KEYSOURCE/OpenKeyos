@@ -1,0 +1,105 @@
+{assign var="paging_titles" value="User Administration, Edit user, Merge accounts"}
+{assign var="paging_urls" value=$user->id|string_format:"/?cl=user, /?cl=user&op=user_edit&id=%d"}
+{include file="paging.html"}
+<script language="JavaScript" type="text/javascript">
+//<![CDATA[
+{literal}
+	function addUser()
+	{
+		var frm = document.forms['merge_frm'];
+		var list_users = frm.elements['available_users'];
+		var list_selected_users = frm.elements['selected_users[]'];
+		
+		if (list_users.selectedIndex >= 0)
+		{
+			opt = new Option (list_users.options[list_users.selectedIndex].text, list_users.options[list_users.selectedIndex].value);
+			list_selected_users.options[list_selected_users.options.length] = opt;
+			list_users.options[list_users.selectedIndex] = null;
+		}		
+	}
+	function removeUser()
+	{
+		var frm = document.forms['merge_frm'];
+		var list_users = frm.elements['available_users'];
+		var list_selected_users = frm.elements['selected_users[]'];
+		
+		if (list_selected_users.selectedIndex >= 0)
+		{
+			opt = new Option (list_selected_users.options[list_selected_users.selectedIndex].text, list_selected_users.options[list_selected_users.selectedIndex].value);
+			list_users.options[list_users.options.length] = opt;
+			list_selected_users.options[list_selected_users.selectedIndex] = null;
+		}
+	}
+	function selectAllUsers()
+	{
+		var frm = document.forms['merge_frm'];
+		var list_selected_users = frm.elements['selected_users[]'];
+		for (var i=0; i<list_selected_users.options.length; i++) list_selected_users.options[i].selected = true;
+		
+	}
+{/literal}
+//]]>
+</script>
+<h1>Merge accounts into this one: (#{$user->id}) {$user->fname|escape} {$user->lname|escape}</h1>
+<p class="error">{$error_msg}</p>
+
+<p>In this page you can merge one or more accounts into this one. The resulting user account will be member of all the customer 
+accounts that the merged accounts were part of.<br />
+Also this account will be able to access tickets and get notifications for all the meged accounts
+</p>
+
+<form action="" method="POST" name="merge_frm" onsubmit="return selectAllUsers();">
+{$form_redir}
+<table class="list" width="80%">
+	
+	<thead>
+	<tr>
+		<td colspan="2">User: &nbsp;&nbsp;&nbsp;#{$user->id}: {$user->fname|escape} {$user->lname|escape}</td>
+	</tr>
+	</thead>
+	
+	<tr>
+		<td>
+			Available users:<br/>
+			<select name="available_users" multiple size="18" style="width: 250px;" ondblclick="addUser();">
+				{foreach from=$all_users key=user_id item=user_name}
+				{if $user_id!=$user->id}
+				<option value="{$user_id}">{$user_name|escape}(#{$user_id})</option>
+				{/if}
+				{/foreach}
+			</select>
+		</td>
+		<td class="post_highlight">
+			Accounts to be merged:<br/>
+			<select name="selected_users[]" multiple size="18" style="width: 250px;" ondblclick="removeUser();">
+			</select>
+		</td>
+	</tr>
+	<tr><td colspan="2">&nbsp;</td></tr>
+	<tr class="head">
+		<td colspan=2>Please select the action that should be taken on the merged accounts:</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<input type="radio" name='merged_action' value="2" {if $leave==2}checked="checked"{/if}>Archive merged accounts (archive the merged accounts, that can later be restored, login with the archived accounts will not be possible)
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<input type="radio" name='merged_action' value="1" {if $leave==1}checked="checked"{/if}>Leave the merged accounts intact, but transfer everything to this account(you'll still be able to 
+	login with these accounts)
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<input type="radio" name="merged_action" value="0" {if $leave==0}checked="checked"{/if}>Delete the merged accounts (everything is transferred to this account and the merged accounts will 
+	be permanently deleted)
+		</td>
+	</tr>
+	
+</table>
+
+<p></p>
+<input type="submit" name="save" value="Merge selected accounts">
+<input type="submit" name="close" value="Close">
+</form> 

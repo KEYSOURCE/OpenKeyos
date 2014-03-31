@@ -1,0 +1,164 @@
+{assign var="paging_titles" value="Utilisateur"}
+{include file="paging.html"}
+
+<h1>Bienvenue {$current_user->fname} {$current_user->lname}</h1>
+<p/>
+
+<table width="80%" class="list">
+	<thead>
+	<tr>
+		<td width="180" >Vos renseignements<br/>actuels</td>
+		<td nowrap="nowrap" class="post_highlight">[ <a href="/?cl=user&op=account_edit">Editer les informations &#0187;</a> ]</td>
+	</tr>
+	</thead>
+	<tr>
+		<td class="highlight">Login:</td>
+		<td class="post_highlight">{$current_user->login}</td>
+	</tr>
+	<tr>
+		<td class="highlight">Prénom:</td>
+		<td class="post_highlight" colspan="2">{$current_user->fname}</td>
+	</tr>
+	<tr>
+		<td class="highlight">Nom de famille:</td>
+		<td class="post_highlight" colspan="2">{$current_user->lname}</td>
+	</tr>
+	<tr>
+		<td class="highlight">E-mail:</td>
+		<td class="post_highlight" colspan="2">{$current_user->email}</td>
+	</tr>
+	<tr>
+		<td class="highlight">Numéros de téléphone:</td>
+		<td class="post_highlight" colspan="2">
+			<table width="80%">
+				<tr>
+					<td><b>Numéro</b></td>
+					<td><b>Type</b></td>
+					<td><b>Remarque</b></td>
+					<td width="100"> </td>
+					{foreach from=$current_user->phones item=phone key=phoneid}
+						<tr>
+							<td nowrap>{$phone->phone}</td>
+							<td>
+								{assign var="type" value=$phone->type}
+								{$PHONE_TYPES.$type}
+							</td>
+							<td>{$phone->comment|escape}</td>
+							<td align="right" nowrap="nowrap">
+								<a href="/?cl=user&op=phone_edit&id={$phone->id}">Editer</a> |
+								<a href="/?cl=user&op=phone_delete&id={$phone->id}"
+									onClick="return confirm('Etes-vous sûr d\'effacer ce numéro de téléphone?');"
+								>Supprimer</a>
+							</td>
+						</tr>
+					
+					{foreachelse}
+						<tr><td colspan="4">
+						[Il n'y a pas des téléphones définis] 
+						</td></tr>
+					{/foreach}
+				</tr>
+			</table>
+			<p>
+			<a href="/?cl=user&op=phone_add&user_id={$current_user->id}">Ajouter un numéro de téléphone &#0187;</a>
+		</td>
+	</tr>
+	<tr>
+		<td class="highlight">Votre langue:</td>
+		<td class="post_highlight">
+			{assign var="language" value=$current_user->language}
+			{$LANGUAGES.$language}
+		</td>
+	</tr>
+	<tr>
+		<td class="highlight">Recevoir la lettre<br/>d'information:</td>
+		<td class="post_highlight">
+			{if $current_user->newsletter} Oui
+			{else} Non
+			{/if}
+		</td>
+	</tr>
+</table>
+<p>
+
+{if !$current_user->is_customer_user()}
+	<h2>Favorite Customers</h2>
+	<p>
+	
+	{if $favorite_customers_list}
+	
+		<a href="/?cl=user&op=user_edit_favorite_customers&id={$current_user->id}&ret=user_area">Edit favorite customers list &#0187;</a>
+		<table class="list" width="80%">
+			<thead>
+			<tr>
+				<td width="10">ID</td>
+				<td>Name</td>
+				<td>Kawacs</td>
+				<td>Krifs</td>
+				<td>Kerm</td>
+			</tr>
+			</thead>
+			
+			{foreach from=$favorite_customers_list item=customer_name key=customer_id}
+			<tr>
+				<td><a href="/?cl=customer&op=customer_edit&id={$customer_id}">{$customer_id}</a></td>
+				<td><a href="/?cl=customer&op=customer_edit&id={$customer_id}">{$customer_name}</a></td>
+				<td>
+					<a href="/?cl=kawacs&op=manage_computers&customer_id={$customer_id}">View computers &#0187;</a>
+				</td>
+				<td>
+					<a href="/?cl=krifs&op=manage_tickets&customer_id={$customer_id}">View tickets &#0187;</a>
+				</td>
+				<td>
+					<a href="/?cl=kerm&op=manage_ad_computers&customer_id={$customer_id}">View AD Computers &#0187;</a>
+				</td>
+			</tr>
+			{/foreach}
+		</table>
+	{else}
+		[None selected yet] :: 
+		<a href="/?cl=user&op=user_edit_favorite_customers&id={$current_user->id}&ret=user_area">Edit favorite customers list &#0187;</a>
+	{/if}
+	<p>
+	
+	
+	{if $current_user->restrict_customers}
+		<h2>Assigned Customers</h2>
+		<p>
+		<table class="list" width="80%">
+			<thead>
+			<tr>
+				<td width="10">ID</td>
+				<td>Name</td>
+				<td>Kawacs</td>
+				<td>Krifs</td>
+				<td>Kerm</td>
+				<td>From group<td>
+			</tr>
+			</thead>
+			
+			{foreach from=$assigned_customers_list item=customer_name key=customer_id}
+			<tr>
+				<td><a href="/?cl=customer&op=customer_edit&id={$customer_id}">{$customer_id}</a></td>
+				<td><a href="/?cl=customer&op=customer_edit&id={$customer_id}">{$customer_name}</a></td>
+				<td>
+					<a href="/?cl=kawacs&op=manage_computers&customer_id={$customer_id}">View computers &#0187;</a>
+				</td>
+				<td>
+					<a href="/?cl=krifs&op=manage_tickets&customer_id={$customer_id}">View tickets &#0187;</a>
+				</td>
+				<td>
+					<a href="/?cl=kerm&op=manage_ad_computers&customer_id={$customer_id}">View AD Computers &#0187;</a>
+				</td>
+				<td>
+					{if $group_assigned_customers_list.$customer_id}
+						{$group_assigned_customers_list.$customer_id->group_name}
+					{/if}
+				</td>
+			</tr>
+			{/foreach}
+		</table>
+	{/if}
+	
+{/if}
+<p>

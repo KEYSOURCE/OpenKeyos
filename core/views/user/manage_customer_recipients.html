@@ -1,0 +1,97 @@
+{assign var="paging_titles" value="Users Administration, Notifications Recipients - Keysource"}
+{assign var="paging_urls" value="/?cl=user"}
+{include file="paging.html"}
+
+<h1>Notifications Recipients - Keysource</h1>
+<p>
+<font class="error">{$error_msg}</font>
+<p>
+
+<form action="" method="POST" name="customer_recips">
+{$form_redir}
+
+Specify which <b>Keysource users</b> will receive notifications related to specified customers.
+<p>
+
+
+<table width="98%">
+	<tr>
+		<td width="30%">
+			<select name="filter[customer_id]" onChange="document.forms['customer_recips'].submit()">
+				<option value="0">[All customers]</option>
+				<option value="-1" {if $filter.customer_id==-1}selected{/if}>[All without assigned recipients]</option>
+				{html_options options=$customers_list selected=$filter.customer_id}
+			</select>
+		</td>
+		<td align="right" nowrap>
+			{if $tot_recips > $filter.limit}
+				{if $filter.start > 0}
+					<a href="/?cl=user&op=manage_customer_recipients_submit"
+						onClick="document.forms['customer_recips'].elements['go'].value='prev'; document.forms['customer_recips'].submit(); return false;"
+					>&#0171; Previous</a>
+				{else}
+					<font class="light_text">&#0171; Previous</font>
+				{/if}
+				<select name="filter[start]" onChange="document.forms['customer_recips'].submit()">
+					{html_options options=$pages selected=$filter.start}
+				</select>
+				{if $filter.start + $filter.limit < $tot_recips}
+					<a href="/?cl=user&op=manage_customer_recipients_submit"
+						onClick="document.forms['customer_recips'].elements['go'].value='next'; document.forms['customer_recips'].submit(); return false;"
+					>Next &#0187;</a>
+				{else}
+					<font class="light_text">Next &#0187;</font>
+				{/if}
+			{/if}
+		</td>
+	</tr>
+</table>
+
+<input type="hidden" name="go" value="">
+<input type="hidden" name="filter[limit]" value="{$filter.limit}">
+<p>
+
+<table class="list" width="98%">
+	<thead>
+	<tr>
+		<td width="10">ID</td>
+		<td>Customer</td>
+		<td>Notifications class</td>
+		<td>Recipients</td>
+		<td> </td>
+	</tr>
+	</thead>
+	
+	{foreach from=$recipients item=recipient key=customer_id}
+	<tr>
+		<td rowspan="{$classes_count}"><a href="/?cl=customer&op=customer_edit&id={$customer_id}">{$customer_id}</a></td>
+		<td rowspan="{$classes_count}" width="20%"><a href="/?cl=customer&op=customer_edit&id={$customer_id}">{$customers_list.$customer_id}</a></td>
+		
+		{foreach from=$NOTIF_OBJ_CLASSES item=class_name key=class_id}
+		
+			<td>{$class_name}</td>
+			<td>
+				{foreach from=$recipients.$customer_id.$class_id item=user_id}
+					
+					{if $default_recipients.$customer_id.$class_id == $user_id}<b>{/if}
+				
+					{$users_list.$user_id} ({$user_id})<br>
+					
+					{if $default_recipients.$customer_id.$class_id == $user_id}</b>{/if}
+				{foreachelse}
+					<font class="light_text">[Use default Keysource recipients]</font>
+				{/foreach}
+			</td>
+			
+			<td align="right">
+				<a href="/?cl=user&op=notification_customer_recipients_edit&customer_id={$customer_id}&class_id={$class_id}{if $do_filter}&do_filter={$do_filter}{/if}">Edit&nbsp;&#0187;</a>
+			</td>
+			
+		</tr>
+		{/foreach}
+
+	{/foreach}
+</table>
+<p>
+
+</form>

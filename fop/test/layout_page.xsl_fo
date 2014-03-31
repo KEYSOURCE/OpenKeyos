@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html [
+  <!ENTITY % HTMLlat1 PUBLIC
+  "-//W3C/ENTITIES Latin 1 for XHTML//EN"
+  "html4-all.ent">
+  %HTMLlat1;
+]>
+
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+		xmlns:fo="http://www.w3.org/1999/XSL/Format"
+                version="1.0">
+
+<xsl:variable name="pagewidth" select="21.5"/>
+<xsl:variable name="bodywidth" select="19"/>
+
+<!-- Page layout -->
+<xsl:template name="page_layout">
+	<fo:layout-master-set>
+		<fo:simple-page-master master-name="leftPage"
+			page-height="27.9cm"
+			page-width="21.5cm"
+			margin-left="2cm"
+			margin-right="2cm"
+			margin-top="2cm"
+			margin-bottom="1cm">
+			<fo:region-before extent="2cm"/>
+			<fo:region-after extent="1cm"/>
+			<fo:region-body 
+				margin-top="3cm"
+				margin-bottom="1cm" />
+		</fo:simple-page-master>
+
+		<fo:simple-page-master master-name="rightPage"
+			page-height="27.9cm"
+			page-width="21.5cm"
+			margin-left="2cm"
+			margin-right="2cm"
+			margin-top="2cm"
+			margin-bottom="1cm">
+			<fo:region-before extent="2cm"/>
+			<fo:region-after extent="1cm"/>
+			<fo:region-body 
+				margin-top="3cm"
+				margin-bottom="1cm" />
+		</fo:simple-page-master>
+		
+		<!--
+		<fo:simple-page-master master-name="rightPage"
+			page-height="27.9cm"
+			page-width="21.5cm"
+			margin-left="2cm"
+			margin-right="1cm"
+			margin-top="1cm"
+			margin-bottom="0.5cm">
+			<fo:region-before extent="2cm"/>
+			<fo:region-after extent="1cm"/>
+			<fo:region-body 
+				margin-top="3cm"
+				margin-bottom="1cm" />
+		</fo:simple-page-master>
+		-->
+
+		<fo:page-sequence-master master-reference="contents">
+			<fo:repeatable-page-master-alternatives>
+				<fo:conditional-page-master-reference
+					master-reference="leftPage"
+					odd-or-even="odd"/>
+				<fo:conditional-page-master-reference
+					master-reference="rightPage"
+					odd-or-even="even"/>
+			</fo:repeatable-page-master-alternatives>
+		</fo:page-sequence-master>
+
+	</fo:layout-master-set>
+</xsl:template>
+
+
+<!-- Page header -->
+<xsl:template name="page_header">
+	<fo:static-content flow-name="xsl-region-before">
+		<fo:block font-family="Arial" font-size="10pt" text-align="center">
+			<xsl:attribute name="border-bottom-color">black</xsl:attribute>
+			<xsl:attribute name="border-bottom-width">0.1mm</xsl:attribute>
+
+
+			<fo:table table-layout="fixed" width="100%">
+			<fo:table-column column-width="9cm"/>
+			<fo:table-column column-width="9cm"/>
+			<fo:table-body>
+				<fo:table-row>
+					<fo:table-cell text-align="left">
+						<fo:external-graphic src="file:images/logo.gif" width="200pt" height="46pt"/>
+					</fo:table-cell>
+					<fo:table-cell text-align="right">
+						<fo:block>
+							
+						</fo:block>
+					</fo:table-cell>
+				</fo:table-row>
+			</fo:table-body>
+			</fo:table>
+		</fo:block>
+	</fo:static-content>
+</xsl:template>
+
+
+<!-- Page footer -->
+<xsl:template name="page_footer">
+	<fo:static-content flow-name="xsl-region-after">
+		<fo:block font-family="Arial" font-size="10pt" text-align="center">
+			Page <fo:page-number />
+		</fo:block>
+	</fo:static-content>
+</xsl:template>
+
+</xsl:stylesheet>

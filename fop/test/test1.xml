@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<report>
+<title>Outstanding Tickets</title>
+<type>outstanding_tickets</type>
+
+<report_data>
+	<filter>
+		<customer_id>23</customer_id>
+		<customer_name>Eucomed</customer_name>
+		<interval>23 Mar 2005</interval>
+		<tickets>23</tickets>
+		<generated>24 Mar 2005</generated>
+		<generated_readable>24 Mar 2005</generated_readable>
+	</filter>
+	<tickets>
+		<ticket id="23">
+			<id>23</id>
+			<subject>Subject 23</subject>
+		</ticket>
+		<ticket id="24">
+			<id>24</id>
+			<subject>Subject 24</subject>
+		</ticket>
+	</tickets>
+</report_data>
+</report>

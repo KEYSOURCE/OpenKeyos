@@ -1,0 +1,54 @@
+{assign var="paging_titles" value="User Area, Edit Exchange Information"}
+{assign var="paging_urls" value="/?cl=home"}
+{include file="paging.html"}
+
+<h1>Edit Exchange Information</h1>
+
+<p class="error">{$error_msg}</p>
+
+{if $login_res == 'ok'}
+<p style="color: orange;"><b>Login OK.</b></p>
+{/if}
+
+<form action="" method="POST">
+{$form_redir}
+
+Please enter below the login information for the Exchnage server.<p/>
+
+<table class="list" width="70%">
+	<thead>
+	<tr>
+		<td width="140">Exchange server:</td>
+		<td class="post_highlight">{$smarty.const.EXCHANGE_SERVER}</td>
+	</tr>
+	</thead>
+	
+	<tr>
+		<td class="highlight">Login name: </td>
+		<td class="post_highlight">
+			<input type="text" name="exch[exch_login]" value="{$user->exchange->exch_login}" size="40"/>
+		</td>
+	</tr>
+	<tr>
+		<td class="highlight">Exchange e-mail: </td>
+		<td class="post_highlight">
+			<input type="text" name="exch[exch_email]" value="{$user->exchange->exch_email}" size="40"/>
+		</td>
+	</tr>
+	<tr>
+		<td class="highlight">Password: </td>
+		<td class="post_highlight">
+			<input type="password" name="exch[password]" value="" size="40"/>
+			{if $user->exchange->exch_ha1 or $user->exchange->exch_basic}
+				<br/>(Leave empty if login name and password are unchanged)
+			{/if}
+		</td>
+	</tr>
+</table>
+<p/>
+<input type="submit" name="save" value="Save / Test login" />
+<input type="submit" name="cancel" value="Close" />
+<p/>
+
+
+</form>

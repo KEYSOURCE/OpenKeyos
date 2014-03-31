@@ -1,0 +1,6 @@
+
+<h1>Bienvenue dans le Syst&eacute;me KeyOS</h1>
+<p>
+
+
+Pour entrer dans le syst&eacute;me: <a href="/user/login">cliquez ici &#0187;</a>

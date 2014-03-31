@@ -1,0 +1,208 @@
+{assign var="paging_titles" value="KB, View KB"}
+{assign var="paging_urls" value="/knowledgebase"}
+{include file="paging.html"}
+
+<p class="error">{$error_msg}</p>
+{literal}
+<style type="text/css">
+	@import "/kskb.css";
+</style>
+<script src="/javascript/AjaxControlToolkit/compositejscript2.js" type="text/javascript"></script>
+<script src="/javascript/AjaxControlToolkit/AjaxControlToolkit.Common.Common.js" type="text/javascript"></script>
+<script src="/javascript/AjaxControlToolkit/AjaxControlToolkit.HoverExtender.HoverBehavior.js" type="text/javascript"></script>
+<script src="/javascript/AjaxControlToolkit/AjaxControlToolkit.PopupExtender.PopupBehavior.js" type="text/javascript"></script>
+<script src="/javascript/AjaxControlToolkit/AjaxControlToolkit.HoverMenu.HoverMenuBehavior.js" type="text/javascript"></script>
+{/literal}
+<form name="kb_categories_frm" method="POST" action="">
+	
+	<table border="0" style="width: 98%" cellpadding="0" cellspacing="0">
+		<tr valign="top">
+			<td style="width: 180px">
+				<div id="leftSideBox_related">
+					<div>
+						<div id="related_pnlBox" class="MagazineArticleCtrlBox">
+							<div class="MagazineArticleCtrlHeader">Popular Articles</div>							
+							{foreach from=$root_categories item="category"}
+							<div id="artItem{$category->id}" style="padding: 3px 3px 3px 15px; margin: 0px; width: 140px">	
+								<a class="ArtLink" href="?cl=kb&op=view_category&id={$category->id}">
+								    {$category->hasTitle}
+								</a>
+								<br />    
+							</div>
+							<div id="artPopup{$category->id}" class="MagazineArticleCtrlpopupMenu" style="width:300px;">		
+								<p>{$category->hasDescription}</p> ...<br/>
+								<p><a href="?cl=kb&op=view_category&id={$category->id}">
+								<strong>Read more!</strong></a></p>    
+							</div>
+							{/foreach}
+							<span id="related_lblShow"></span>
+						</div>
+						<div id="related_pnlBox" class="MagazineArticleCtrlBox">
+							<div class="MagazineArticleCtrlHeader">Toolbox</div>														
+							<div id="editCategoryItem" style="padding: 3px 3px 3px 15px; margin: 0px; width: 140px">	
+								<a class="ArtLink" href="?cl=kb&op=edit_category">
+								    Edit KB category
+								</a>
+								<br />   
+							</div>
+							<div id="editCategoryPopup" class="MagazineArticleCtrlpopupMenu" style="width:300px;">		
+								<p>
+								<ul>
+								{foreach from=$root_categories item="category"}
+								<li>
+								<a class="ArtLink" href="?cl=kb&op=edit_category&id={$category->id}">
+								    {$category->hasTitle}
+								</a>
+								</li>
+								{/foreach}
+								</ul>
+								<br />
+								</p>
+								<p>
+								Select a category from the above to edit or go to
+								<a href="?cl=kb&op=edit_category">
+								<strong>Edit category</strong></a> page</p>
+							</div>
+							<div id="addCategoryItem" style="padding: 3px 3px 3px 15px; margin: 0px; width: 140px">	
+								<a class="ArtLink" href="?cl=kb&op=add_category">
+								    Add KB category
+								</a>
+								<br />   
+							</div>
+							<div id="addCategoryPopup" class="MagazineArticleCtrlpopupMenu" style="width:300px;">		
+								<p>Allows you to add a new category to the existing ones</p>...<br />
+								<p><a href="?cl=kb&op=add_category">
+								<strong>Add new category</strong></a></p>
+							</div>
+							<span id="toolbox_lblShow"></span>
+						</div>
+					</div>
+				</div>
+			</td>
+			<td>
+				<div class="FeatureHeadline">KeyOS KnowledgeBase Topics</div> 				
+				<div style="margin-left: 5px; margin-right: 5px;">
+				</div><p />				
+				<table class="borderCollapse">
+					<a href="?cl=kb&op=manage_kb_categories">All KeyOS KB categories</a><p />
+					{assign var="i" value=0}
+					{foreach from=$root_categories item="category"}
+						{if $i==0} 
+							<tr>
+						{/if}
+						{if $i < 3}
+							<td >								
+								<ul class="ArticleListingContainer">
+									{assign var="cn" value=$category->cnt_subcats}
+									{assign var="an" value=$category->cnt_articles}
+									{assign var="cnt_items" value=$cn+$an}
+									
+									<li>									
+									<div class="BostonPostCard">
+									<table>
+									<tr>
+										<td class="imageColumn">
+											{if $category->hasImage}
+											<img alt={$category->hasTitle} src="{$category->hasImage}">
+											{/if}
+										</td>
+										<td class="textColumn">
+										<a href="?cl=kb&op=view_category&id={$category->id}">
+										<b><span name="hasTitle">{$category->hasTitle|escape}</span>({$cnt_items})</b>
+										</a><p />
+										<ul>
+											<li><span><a href="#">Some subcategory</a></span></li>
+											<li><span><a href="#">Some subcategory</a></span></li>
+											<li><span><a href="#">Some subcategory</a></span></li>
+											<li><span><a href="#">Some subcategory</a></span></li>
+										</ul>
+										<div class="more">
+											<span><a href="?cl=kb&op=view _category&id={$category->id}">More {$category->hasTitle} ...</a></span>
+										</div>
+										</br>
+										</td>
+									</tr>
+									</table>	
+									</div>									
+									</li>
+								</ul>
+							</td>	
+							{assign var="i" value=$i+1}
+						{/if}
+						{if $i == 3}
+							{assign var="i" value=0}
+							</tr>
+						{/if}	
+					{foreachelse}
+						<tr>
+							<td colspan=3>[No category was found]</td>
+						<tr>	
+					{/foreach} 
+				</table>				
+			</td>
+		</tr>
+	</table>
+</form>
+<script type="text/javascript">
+//<![CDATA[
+
+Sys.Application.initialize();
+{foreach from=$root_categories item="category"}
+{literal}
+Sys.Application.add_init(
+function()
+{
+    $create(
+		AjaxControlToolkit.HoverMenuBehavior, 
+		{
+			"HoverCssClass":"MagazineArticleCtrlpopupHover",
+			"PopDelay":100,
+			"PopupPosition":4,			
+			"id":"artHover{/literal}{$category->id}{literal}",
+			"popupElement":$get("artPopup{/literal}{$category->id}{literal}")
+		}, 
+		null, 
+		null, 
+		$get("artItem{/literal}{$category->id}{literal}")
+	);
+});
+{/literal}
+{/foreach}
+{literal}
+Sys.Application.add_init(
+function()
+{
+    $create(
+		AjaxControlToolkit.HoverMenuBehavior, 
+		{
+			"HoverCssClass":"MagazineArticleCtrlpopupHover",
+			"PopDelay":100,
+			"PopupPosition":4,			
+			"id":"editCategoryHover",
+			"popupElement":$get("editCategoryPopup")
+		}, 
+		null, 
+		null, 
+		$get("editCategoryItem")
+	);
+});
+Sys.Application.add_init(
+function()
+{
+    $create(
+		AjaxControlToolkit.HoverMenuBehavior, 
+		{
+			"HoverCssClass":"MagazineArticleCtrlpopupHover",
+			"PopDelay":100,
+			"PopupPosition":4,			
+			"id":"addCategoryHover",
+			"popupElement":$get("addCategoryPopup")
+		}, 
+		null, 
+		null, 
+		$get("addCategoryItem")
+	);
+});
+{/literal}
+//]]>
+</script>

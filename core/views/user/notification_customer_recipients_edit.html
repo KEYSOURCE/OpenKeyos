@@ -1,0 +1,81 @@
+
+{if $ret == 'customer'}
+	{assign var="customer_id" value=$customer->id}
+	{assign var="paging_titles" value="Customers, Manage Customers, Edit Customer, Customer Recipients"}
+	{assign var="paging_urls" value="/?cl=customers, /?cl=customers, /?cl=customer&op=customer_edit&id=$customer_id"}
+{else}
+	{assign var="paging_titles" value="Users Administration, Notifications Recipients - Keysource, Edit"}
+	{assign var="paging_urls" value="/?cl=user, /?cl=user&op=manage_customer_recipients"}
+{/if}
+{include file="paging.html"}
+
+
+<h1>Edit Notifications Recipients (Keysource) : {$customer->name}</h1>
+<p>
+<font class="error">{$error_msg}</font>
+<p>
+
+<form action="" method="POST">
+{$form_redir}
+
+Specify below who will receive notifications of type <b>{$NOTIF_OBJ_CLASSES.$class_id}</b> for 
+the customer <b>{$customer->name}</b>.
+<p>
+
+{assign var="customer_id" value=$customer->id}
+<table class="list" width="60%">
+	<thead>
+	<tr>
+		<td>Users:</td>
+		<td>Default</td>
+	</tr>
+	</thead>
+	
+	{foreach from=$users item=user}
+	<tr>
+		<td>
+			<input type="checkbox" name="recipients[]" value="{$user->id}"
+				{if is_array($recipients.$customer_id.$class_id)}
+					{if in_array ($user->id, $recipients.$customer_id.$class_id)}checked{/if}
+				{/if}
+			>
+			{$user->fname} {$user->lname}
+
+		</td>
+		<td>
+			<input type="radio" name="is_default" value="{$user->id}"
+				{if $default_recipients.$customer_id.$class_id == $user->id}checked{/if}
+			>
+		</td>
+	</tr>
+	{/foreach}
+	
+	<tr class="head">
+		<td colspan="2">Groups</td>
+	</tr>
+	
+	{foreach from=$groups key=group_id item=group_name}
+	<tr>
+		<td>
+			<input type="checkbox" name="recipients[]" value="{$group_id}"
+				{if is_array($recipients.$customer_id.$class_id)}
+					{if in_array ($group_id, $recipients.$customer_id.$class_id)}checked{/if}
+				{/if}
+			>
+			{$group_name}
+
+		</td>
+		<td>
+			<input type="radio" name="is_default" value="{$group_id}"
+				{if $default_recipients.$customer_id.$class_id == $group_id}checked{/if}
+			>
+		</td>
+	</tr>
+	{/foreach}
+	
+</table>
+<p>
+<input type="submit" name="save" value="Save">
+<input type="submit" name="cancel" value="Close">
+
+</form>

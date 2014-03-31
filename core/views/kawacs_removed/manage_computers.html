@@ -1,0 +1,63 @@
+{assign var="paging_titles" value="Kawacs, Removed Computers"}
+{assign var="paging_urls" value="/?cl=kawacs_removed"}
+{include file="paging.html"}
+
+<h1>Removed Computers</h1>
+
+<p class="error">{$error_msg}</p>
+
+<form action="" method="POST" name="filter"> 
+{$form_redir}
+
+Customer:
+<select name="filter[customer_id]" onChange="document.forms['filter'].submit()">
+	<option value="">[Select customer]</option>
+	{html_options options=$customers_list selected=$filter.customer_id}
+</select>
+<p/>
+</form>
+
+<table class="list" width="98%">
+	<thead>
+	<tr>
+		<td width="20">ID</td>
+		<td>Name</td>
+		<td width="10%">Managing since</td>
+		<td width="10%">Removal date</td>
+		<td width="120"> </td>
+	</tr>
+	</thead>
+	
+	{assign var="last_type" value=0}
+	{foreach from=$computers item=computer}
+	{if $last_type!=$computer->type}
+		{assign var="last_type" value=$computer->type}
+		<tr class="cathead">
+			<td colspan="5" class="cathead" style="padding-left: 0px;">{$COMP_TYPE_NAMES.$last_type}</td>
+		</tr>
+	{/if}
+	<tr>
+		<td><a href="/?cl=kawacs_removed&amp;op=computer_view&amp;id={$computer->id}">{$computer->id}</a></td>
+		<td><a href="/?cl=kawacs_removed&amp;op=computer_view&amp;id={$computer->id}">{$computer->netbios_name|escape}</a></td>
+		<td nowrap="nowrap">
+			{if $computer->date_created}{$computer->date_created|date_format:$smarty.const.DATE_FORMAT_SMARTY}
+			{else}--{/if}
+		</td>
+		<td>
+			{if $computer->date_removed}{$computer->date_removed|date_format:$smarty.const.DATE_FORMAT_SMARTY}
+			{else}--{/if}
+		</td>
+		<td align="right" nowrap="nowrap">
+			<a href="/?cl=kawacs_removed&amp;op=computer_delete&amp;id={$computer->id}"
+			onclick="return confirm('Are you sure you want to permanently delete this computer?');"
+			>Delete &#0187;</a>
+		</td>
+	</tr>
+	{foreachelse}
+	<tr>
+		<td colspan="5" class="light_text">[No removed computers]</td>
+	</tr>
+	{/foreach}
+	
+</table>
+<p/>

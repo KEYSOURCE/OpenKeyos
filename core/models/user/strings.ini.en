@@ -1,0 +1,29 @@
+NEED_LOGIN_NAME = Please specify the login name.
+NEED_PASSWORD = Please specify the password.
+NEED_FIRST_NAME = Please specify the first name.
+NEED_LAST_NAME = Please specify the last name.
+NEED_UNIQUE_LOGIN_NAME = The user name already exists, please choose a different one.
+
+NEED_USER_PHONE = A phone number must be associated with a user.
+NEED_PHONE_NUMBER = Please specify the phone number.
+
+NEED_LOGIN_AND_PASSWORD = Please enter a login name and password.
+NEED_LOGIN_AND_EMAIL = Please enter a login name and e-mail address.
+SORRY_ACCOUNT_DISABLED = Sorry, your account has been disabled.
+INVALID_LOGIN = Invalid login name and/or password. Please try again.
+
+CANT_FIND_EMAIL = Sorry, we couldn't find any account with the specified login name and e-mail.
+PASSWORDS_DONT_MATCH = The passwords do not match, please try again.
+KEYSOURCE_ONLY_OPPERATION = This operation is allowed only for Keysource users.
+ACCESS_DENIED = Operation not allowed for this user.
+
+NEED_CUSTOMER_ACCOUNT = If this is a customer account, you must specify a customer.
+MUST_BE_CUSTOMER_USER = You have specified a customer, but the user type is not 'Customer User'. Please verify your selection.
+NEED_ALTERNATE_RECIPIENT = For 'Away; statuses you need to specify an alternative recipient.
+NEED_DIFFERENT_ALTERNATE_RECIP = An 'Away' user can't be his own alternative recipient.
+NEED_ACTIVE_RECIPIENT = Only active (and not 'Away') Keysource users can be defined as alternative recipients.
+
+CANT_DELETE_LINKED_USER = The user can't be deleted because there are tickets in which he/she is involved. Try disabling the user instead.
+CANT_DELETE_NOTIF_USER = The user can't be deleted because it was designated as default recipient for one or more classes of notifications. Try disabling the user instead.
+
+NEED_SELECT_NOTIFICATION = You did not select any notifications.

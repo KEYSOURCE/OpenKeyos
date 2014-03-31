@@ -1,0 +1,32 @@
+{assign var="paging_titles" value="Entrez"}
+{include file="paging.html"}
+
+<h1>Identification</h1>
+
+<p class="error">{$error_msg}</p>
+
+<p>Veuillez introduire ci-dessous votre login et mot de passe:</p>
+
+<form action="" method="post">
+{$goto}
+{$form_redir}
+
+<table width="100%">
+	<tr>
+		<td width="100" nowrap="nowrap">Login: </td>
+		<td><input type="text" name="login" size="30" value="" style="width:180px;" /></td>
+	</tr><tr>
+		<td nowrap="nowrap">Mot de passe: </td>
+		<td><input type="password" name="password" size="30" value="" style="width:180px;" /></td>
+	</tr>
+</table>
+<p/>
+
+<input type="submit" name="do_login" value="Entrez &#0187;" />
+
+<input type="submit" name="lost_password" value="Mot de passe oublié?" />
+
+<a href="keysource.exe">Accés à distance</a>
+
+</form>
+<p/>

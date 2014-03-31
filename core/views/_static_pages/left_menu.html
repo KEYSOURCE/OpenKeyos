@@ -1,0 +1,329 @@
+<script language="JavaScript" type="text/javascript">
+//<![CDATA[
+
+var showing_menu_tools = false;
+
+{literal}
+function change_show_menu_tools ()
+{
+	showing_menu_tools = !showing_menu_tools
+
+	title_tools_show_a = document.getElementById ('title_tools_show');
+	title_tools_hide_a = document.getElementById ('title_tools_hide');
+
+	if (showing_tools)
+	{
+		title_tools_show_a.style.display = 'none';
+		title_tools_hide_a.style.display = 'block';
+	}
+	else
+	{
+		title_tools_show_a.style.display = 'block';
+		title_tools_hide_a.style.display = 'none';
+	}
+
+	tools_display (showing_tools)
+
+	return false;
+}
+
+function tools_menu_display (do_show, menu_div, anchor)
+{
+	toolbox_menu_div = document.getElementById (menu_div);
+	if (do_show)
+	{
+
+		coord = getAnchorPosition (anchor);
+		toolbox_menu_div.style.top = (coord.y + 15) + 'px';
+		toolbox_menu_div.style.left = (coord.x + 30) + 'px';
+		toolbox_menu_div.style.display = 'block';
+		toolbox_menu_div.style.visibility = 'visible';
+
+		if (IS_IE)
+		{
+			shim = document.getElementById('DivShim');
+			toolbox_menu_div.style.zIndex = 1001;
+
+			shim.style.width = toolbox_menu_div.offsetWidth;
+			shim.style.height = toolbox_menu_div.offsetHeight;
+			shim.style.top = toolbox_menu_div.style.top;
+			shim.style.left = toolbox_menu_div.style.left;
+			shim.style.zIndex = 1000;
+			shim.style.display = 'block';
+		}
+	}
+	else
+	{
+		toolbox_menu_div.style.display = 'none';
+		if (IS_IE)
+		{
+			shim = document.getElementById('DivShim');
+			shim.style.display = 'none';
+		}
+	}
+}
+
+$(document).ready(function(){
+    $('#clear_cache_lnk').click(function(){
+        $('#clear_cache_lnk').attr('href', "/?cl=home&op=clear_and_redir&redir_url=" + window.location);
+        setTimeout(function() {
+            window.location = $('#clear_cache_lnk').attr("href");
+        }, 0);
+        return false;
+    });
+});
+
+{/literal}
+//]]>
+</script>
+<div id="toolbox_menu" class="menu" onMouseOver="tools_menu_display (true, 'toolbox_menu', 'locked_cust')" onMouseOut="tools_menu_display (false, 'toolbox_menu', 'locked_cust')" style="width: 180px; display:none;">
+	<a href="/?cl=customer&op=customer_edit&id={$locked_customer->id}">Customer details &#0187;</a>
+	<a href="/?cl=user&op=manage_users&customer_id={$locked_customer->id}">Users &#0187;</a>
+	<a href="/?cl=customer&op=manage_customers_contacts&customer_id={$locked_customer->id}">Contacts &#0187;</a>
+	<a href="/?cl=kawacs&customer_id={$locked_customer->id}">Computers &#0187;</a>
+	<a href="/?cl=kawacs&op=manage_peripherals&customer_id={$locked_customer->id}">Peripherals &#0187;</a>
+	<a href="/?cl=customer&op=manage_customers_photos&customer_id={$locked_customer->id}">Customer photos &#0187;</a>
+	<a href="/?cl=klara&op=manage_access&customer_id={$locked_customer->id}">KLARA access info &#0187;</a>
+	<a href="/?cl=klara&op=manage_customer_internet_contracts&customer_id={$locked_customer->id}">Internet contracts &#0187;</a>
+	<a href="/?cl=klara&op=manage_access_phones&customer_id={$locked_customer->id}">KLARA access phones &#0187;</a>
+	<a href="/?cl=warranties&op=manage_warranties&customer_id={$locked_customer->id}">Warranties &#0187;</a>
+	<a href="/?cl=krifs&op=manage_tickets&customer_id={$locked_customer->id}">Tickets &#0187;</a>
+	<a href="/?cl=kalm&op=manage_licenses&customer_id={$locked_customer->id}">Software licenses &#0187;</a>
+	<div class="menusepar">&nbsp;</div>
+	<a href="/?cl=customer&op=customer_unlock">Unlock &#0187;</a>
+</div>
+
+{*
+<div id="dashboards_menu" class="menu" onMouseOver="tools_menu_display (true, 'dashboards_menu', 'adashboards')" onMouseOut="tools_menu_display (false, 'dashboards_menu', 'adashboards')" style="width: 240px; display:none;">
+	<a href="/?cl=customer_kawacs&amp;op=kawacs_backup_dashboard">Backup statuses dashboard &#0187;</a>
+	<a href="/?cl=customer_kawacs&amp;op=kawacs_antivirus_dashboard">Antivirus statuses dashboard &#0187;</a>
+</div>
+*}
+
+<!-- Default left-side menu for KAWACS section -->
+<td class="left_menu">
+
+	{if $current_user}
+		<!-- Displayed when there is a logged in user -->
+
+		{assign var="is_customer_user" value=$current_user->is_customer_user()}
+		{if !$is_customer_user}
+
+			{if $cnt_unread_notifications > 0}
+				{* These IDs are also used in ajax.js *}
+				<a href="/?cl=home&amp;op=notifications" class="menu_link" id="link_new_notifs"
+				><img src="/images/icons/flag_blue.png" style="float:left; margin: 0px; margin-top: 0px;"
+				/>You have <b id="main_elm_unread_notifs">{$cnt_unread_notifications}</b><br/>
+				new notification{if $cnt_unread_notifications>1}s{/if}</a>
+			{/if}
+
+			{if $locked_customer}
+				<a href="/?cl=customer&op=customer_edit&id={$locked_customer->id}" id="locked_cust" class="menu_link"
+					onMouseOver="tools_menu_display (true, 'toolbox_menu', 'locked_cust')" onMouseOut="tools_menu_display (false, 'toolbox_menu', 'locked_cust')"
+				><b>{$locked_customer->name} ({$locked_customer->id})</b></a>
+			{else}
+				<a href="/?cl=customer&op=customer_lock" class="menu_link">Lock customer &#0187;</a>
+			{/if}
+
+			<div class="text">
+
+				<b>Go directly to:</b>
+				<table>
+					<tr>
+						<form method="GET">
+							<input type="hidden" name="cl" value="kawacs" />
+							<input type="hidden" name="op" value="search_computer" />
+							<td>Comp.:</td>
+							<td><input type="text" name="search_text" size="10" value="" /></td>
+						</form>
+					</tr>
+					<tr>
+						<form method="GET">
+							<input type="hidden" name="cl" value="krifs" />
+							<input type="hidden" name="op" value="search_ticket" />
+							<td>Ticket:</td>
+							<td><input type="text" name="search_text" size="10" value="" /></td>
+						</form>
+					</tr>
+					<tr>
+						<form method="GET">
+							<input type="hidden" name="cl" value="krifs" />
+							<input type="hidden" name="op" value="search_po" />
+							<td>PO:</td>
+							<td><input type="text" name="search_text" size="10" value="" /></td>
+						</form>
+					</tr>
+					<tr>
+						<form method="GET">
+							<input type="hidden" name="cl" value="customer" />
+							<input type="hidden" name="op" value="search_customer" />
+							<td>Cust.:</td>
+							<td><input type="text" name="search_text" size="10" value="" /></td>
+						</form>
+					</tr>
+					<tr>
+						<form method="GET">
+							<input type="hidden" name="cl" value="krifs">
+							<input type="hidden" name="op" value="search_intervention">
+							<td>IR.:</td>
+							<td><input type="text" name="search_text" size="10" value=""></td>
+						</form>
+					</tr>
+					<tr>
+						<form method="GET">
+							<input type="hidden" name="cl" value="kawacs">
+							<input type="hidden" name="op" value="search_serial">
+							<td>Serial.:</td>
+							<td><input type="text" name="search_text" size="10" value=""></td>
+						</form>
+					</tr>
+				</table>
+			</div>
+
+			<div class="text">
+				<b>Tickets:</b><br>
+				<table width="100%">
+					<tr>
+						<td width="25%">You.</td>
+						<td width="25%">Inv.</td>
+						<td width="25%">All</td>
+						<td width="25%">Esc.</td>
+					</tr>
+					<tr>
+						<td><a href="/?cl=krifs&op=manage_tickets&user_id={$current_user->id}&view=2&customer_id=-1&escalated_only=0&status=-1&type=0&types_main_only=1">{$user_tickets.cnt_assigned}</a></td>
+						<td><a href="/?cl=krifs&op=manage_tickets&user_id={$current_user->id}&view=1&customer_id=-1&escalated_only=0&status=-1&type=0&types_main_only=1">{$user_tickets.cnt_involved}</a></td>
+						<td><a href="/?cl=krifs&op=manage_tickets&user_id=-1&view=1&customer_id=-1&escalated_only=0&status=-1&type=0&types_main_only=1">{$user_tickets.cnt_all}</a></td>
+						<td><a href="/?cl=krifs&op=manage_tickets&user_id=-1&view=1&customer_id=-1&escalated_only=1&status=-1&type=0&types_main_only=1">{$user_tickets.cnt_escalated}</a></td>
+					</tr>
+					<tr>
+						<td><a href="/?cl=krifs&op=manage_tickets&user_id={$current_user->id}&view=2&customer_id=-1&escalated_only=0&status=-1&type=0&types_main_only=0"><i>{$user_tickets.cnt_assigned_all}</i></a></td>
+						<td><a href="/?cl=krifs&op=manage_tickets&user_id={$current_user->id}&view=1&customer_id=-1&escalated_only=0&status=-1&type=0&types_main_only=0"><i>{$user_tickets.cnt_involved_all}</i></a></td>
+						<td><a href="/?cl=krifs&op=manage_tickets&user_id=-1&view=1&customer_id=-1&escalated_only=0&status=-1&type=0&types_main_only=0"><i>{$user_tickets.cnt_all_all}</i></a></td>
+						<td> </td>
+					</tr>
+				</table>
+				<br/>
+				<a href="/?cl=krifs&amp;op=manage_tasks&amp;user_id={$current_user->id}"><b>Schedule [{$user_tickets.cnt_tasks} tasks] &#0187;</b></a>
+
+				{assign var="now_working_ticket" value=$current_user->get_now_working()}
+				{if $now_working_ticket}
+				<br/>
+				<b>Now working on:</b><br/>
+				<a href="/?cl=krifs&amp;op=ticket_edit&amp;id={$now_working_ticket->id}">#{$now_working_ticket->id}: {$now_working_ticket->subject}</a>
+				{/if}
+			</div>
+
+			<div class="text">
+				<a href="/?cl=kawacs&op=kawacs_console"><b>KAWACS Console &#0187;</b></a><br>
+				<a href="/?cl=kawacs&op=manage_computers&customer_id=-2"><b>Computer alerts:</b></a><br>
+				{if $computer_alerts}
+					<table style="margin-bottom: 5px">
+						<tr>
+							{foreach from=$computer_alerts item=cnt key=level}
+								<td align="center" width="19">
+									<img src="/images/button_10.gif"
+									alt="{$ALERT_NAMES.$level}" title="{$ALERT_NAMES.$level}"
+									style="background: {$ALERT_COLORS.$level}" width="10" height="10">
+								</td>
+							{/foreach}
+						</tr>
+						<tr>
+							{foreach from=$computer_alerts item=cnt key=level}
+								<td align="center">[<b>{$cnt}</b>]</td>
+							{/foreach}
+						</tr>
+					</table>
+				{else}
+					[None]<br/>
+				{/if}
+				{if $active_blackouts}
+					<a href="/?cl=kawacs&amp;op=manage_blackouts"><b>Blackouts active:</b></a>&nbsp;<b>{$active_blackouts}</b><br/>
+				{/if}
+				{if $suspended_customers_alerts}
+					<a href="/?cl=customer&amp;op=customers_suspended_alerts"><b>Suspended cust.:</b></a>&nbsp;<b>{$suspended_customers_alerts}</b>
+				{/if}
+			</div>
+
+			<div class="text">
+				<a href="/?cl=home&op=notifications"><b>Your notifications:</b></a><br>
+				{if $user_notifications}
+					<table>
+						<tr>
+							{foreach from=$user_notifications item=cnt key=level}
+								<td align="center" width="19" nowrap>
+									<img src="/images/button_10.gif"
+									alt="{$ALERT_NAMES.$level}" title="{$ALERT_NAMES.$level}"
+									style="background: {$ALERT_COLORS.$level}" width="10" height="10">
+								</td>
+							{/foreach}
+						</tr>
+						<tr>
+							{foreach from=$user_notifications item=cnt key=level}
+								<td align="center">[<b>{$cnt}</b>]</td>
+							{/foreach}
+						</tr>
+					</table>
+				{else}
+					[None]<br/>
+				{/if}
+
+				{* Show if defined as alternate recipient for someone *}
+				{assign var="away_recipient_for" value=$current_user->get_away_recipient_for()}
+				{if $away_recipient_for}
+					<b><u>Away recipient for:</u></b>
+					{foreach from=$away_recipient_for item=away_recipient}
+						<br/>{$away_recipient->get_name()}
+					{/foreach}
+				{/if}
+			</div>
+
+			<div class="menu_separ">&nbsp;</div>
+		{/if}
+
+		<a href="/?cl=customer_krifs&op=manage_tickets" class="menu_link">Tickets</a>
+		<a href="/?cl=customer_krifs&op=manage_interventions" class="menu_link">IR</a>
+		{if $current_user->administrator or $current_user->allow_dashboard}
+		{*<a href="/?cl=customer_kawacs&op=kawacs_backup_dashboard" class="menu_link" id="adashboards" onMouseOver="tools_menu_display (true, 'dashboards_menu', 'adashboards')" onMouseOut="tools_menu_display (false, 'dashboards_menu', 'adashboards')">Dashboards &#0187;</a>*}
+		{/if}
+		{if $current_user->administrator or $current_user->has_kadeum}
+		<a href="/?cl=customer_kerm&op=manage_users" class="menu_link">AD Users</a>
+		{/if}
+		<div class="menu_separ">&nbsp;</div>
+		<a href="/?cl=home&op=notifications" class="menu_link">Notifications</a>
+		<a href="/?cl=home&op=user_area" class="menu_link">Your account</a>
+		<a href="/?cl=user&op=logout" class="menu_link">Logout</a>
+
+		<div class="text">
+			<b>Logged in as:</b><br/>
+			{$current_user->fname} {$current_user->lname}
+			{if $is_customer_user}
+				<br/><b>Customer:</b>
+				{foreach from=$user_customer item="cust"}
+					<br/>{$cust->name|escape}
+				{/foreach}
+			{/if}
+		</div>
+
+	{else}
+
+		<!-- Displayed when there is no logged in user -->
+		<a href="/user/login" class="menu_link">Login</a>
+	{/if}
+
+	<div class="text">
+		<a href="/?cl=home&amp;op=set_language&amp;lang={$smarty.const.LANG_FR}&amp;returl={$ret_url}"
+			><img src="/images/flag_fr.gif" width="20" height="13" alt="Fran&ccedil;ais" title="Fran&ccedil;ais"
+			style="border: 2px solid {if $CURENT_LANG==$smarty.const.LANG_FR} white {else} #DDDDDD {/if};"
+			/></a>
+		<a href="/?cl=home&amp;op=set_language&amp;lang={$smarty.const.LANG_EN}&amp;returl={$ret_url}"
+			><img src="/images/flag_en.gif" width="20" height="13" alt="English" title="English"
+			style="border: 2px solid {if $CURENT_LANG==$smarty.const.LANG_EN} white {else} #DDDDDD {/if};"
+			/></a>
+	</div>
+
+	<p>
+	<img src="/images/spacer.gif" class="spacer">
+    <p>
+    <a href="" id="clear_cache_lnk" style="margin-left:10px; text-decoration: none;">Refresh from cache</a>
+</td>
+<td><img src="/images/spacer.gif" width=15 height=1></td>

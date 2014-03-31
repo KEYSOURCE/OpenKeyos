@@ -1,0 +1,358 @@
+{assign var="paging_titles" value="KAWACS, Manage Removed Computers, View Removed Computer"}
+{assign var="paging_urls" value="/?cl=kawacs_removed, /?cl=kawacs_removed&op=manage_computers"}
+{include file="paging.html"}
+
+
+<h1>View Removed Computer : {$computer->netbios_name|escape} (#{$computer->id} : {$computer->asset_no})</h1>
+{if $computer->is_manual}
+	<h4 style="border:0px;">[Note: manually created computer]</h4>
+{/if}
+
+<p class="error">{$error_msg}</p>
+
+<form action="" method="POST">
+{$form_redir}
+
+<table class="list" width="98%">
+	<thead>
+	<tr>
+		<td width="30%">
+			Customer:<br/>
+			<a href="/?cl=customer&op=customer_edit&id={$customer->id}">{$customer->name} ({$customer->id})</a>
+			<br/>
+		</td>
+		<td width="30%">
+			Location:<br/>
+			{if $computer->location}
+			<a href="/?cl=customer&amp;op=location_edit&amp;id={$computer->location->id}&amp;returl={$ret_url}"
+			alt="{foreach from=$computer->location->parents item=parent}{$parent->name|escape} &#0187; {/foreach}{$computer->location->name|escape}"
+			title="{foreach from=$computer->location->parents item=parent}{$parent->name|escape} &#0187; {/foreach}{$computer->location->name|escape}"
+			>{$computer->location->name|escape}</a>
+			{else}
+				--
+			{/if}
+		</td>
+		<td width="20%" nowrap="nowrap">
+			Profile:
+			{if $computer->profile_id}
+				{assign var="profile_id" value=$computer->profile_id}
+				<a href="/?cl=kawacs&op=monitor_profile_edit&id={$profile_id}">{$profiles_list.$profile_id}</a>
+			{else}
+				<font class="error">[None]</font>
+			{/if}
+			<br/>
+			
+			Type:
+			{if $computer->type}
+				{assign var="computer_type" value=$computer->type}
+				{$COMP_TYPE_NAMES.$computer_type}
+			{else}
+				[None]
+			{/if}
+		</td>
+		<td width="10%" nowrap="nowrap">
+			Last contact:<br/>
+			{if $computer->last_contact}{$computer->last_contact|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}
+			{else}--
+			{/if}
+		</td>
+		<td width="10%" nowrap="nowrap" align="right">
+			Date removed:<br/>
+			{if $computer->date_removed}{$computer->date_removed|date_format:$smarty.const.DATE_FORMAT_SMARTY}
+			{else}--
+			{/if}
+		</td>
+	</tr>
+	</thead>
+</table>
+
+
+<table width="98%" class="list">
+	<tr>
+		<td width="120"><b>Removal reason:</b></td>
+		<td colspan="2">{$computer->reason_removed|escape|nl2br}</br></td>
+	</tr>
+	{if $computer->comments}
+	<tr>
+		<td width="120"><b>Comments:</b></td>
+		<td colspan="2">{$computer->comments|escape|nl2br}</br></td>
+	</tr>
+	{/if}
+</table>
+<p/>
+
+
+<script language="JavaScript" type="text/javascript">
+//<![CDATA
+
+// The names of available tabs
+var tabs = new Array ('reported_info', 'tools', 'notes', 'reporting');
+
+var computer_id = {$computer->id};
+
+{literal}
+// Retrieve a cookie value by name
+function getCookie (cookie_name)
+{
+	var nameEQ = cookie_name + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++)
+	{
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	return null;
+}
+
+// Set the active tab
+function showTab (tab_name)
+{
+	// Hide all tabs first. Also make sure the tab is in the list
+	found = false;
+	for (i=0; i<tabs.length; i++)
+	{
+		document.getElementById('tab_' + tabs[i]).style.display = 'none';
+		document.getElementById('tab_head_' + tabs[i]).className = 'tab_inactive';
+		if (tabs[i] == tab_name) found = true;
+	}
+	
+	if (!found) tab_name = tabs[0];
+	
+	document.getElementById('tab_'+tab_name).style.display = 'block';
+	document.getElementById('tab_head_'+tab_name).className = '';
+	
+	document.cookie = 'removed_computer_view_tab='+tab_name;
+	
+	return false;
+}
+
+{/literal}
+//]]>
+</script>
+
+<table class="tab_header"><tr>
+	<td id="tab_head_reported_info" class="tab_inactive"><a href="#" onclick="return showTab('reported_info');">Reported Info</a></td>
+	<td id="tab_head_tools" class="tab_inactive"><a href="#" onclick="return showTab('tools');">Tools</a></td>
+	<td id="tab_head_notes" class="tab_inactive"><a href="#" onclick="return showTab('notes');">Notes [{$notes|@count}]</a></td>
+	<td id="tab_head_reporting" class="tab_inactive"><a href="#" onclick="return showTab('reporting');">Reporting</a></td>
+</tr></table>
+
+<!-- Tab with computer reported information -->
+<div id="tab_reported_info" class="tab_content" style="display:none;">
+{assign var="category" value=""}
+<h2>Reported Information</h2>
+<br/>
+<table class="list" width="100%">
+	<thead>
+	<tr>
+		<td width="2%">ID</td>
+		<td width="15%">Name/Updated</td>
+		<td width="33%">Value</td>
+		<td width="2%">ID</td>
+		<td width="15%">Name/Updated</td>
+		<td width="33%">Value</td>
+	</tr>
+	</thead>
+	
+	<!-- Two-columns format -->
+	
+	{foreach from=$items item=item key=category_id name=items}
+		{if $category!=$item->itemdef->category_id}
+			{assign var="category" value=$item->itemdef->category_id}
+			</tr>
+			<tr class="head">
+				<td colspan="6">[ {$MONITOR_CAT[$category]} ]</td>
+			</tr>
+			<tr>
+			{if $smarty.foreach.items.iteration%2} {assign var="pass_line" value="0"}
+			{else} {assign var="pass_line" value="1"}
+			{/if}
+		{else}{if ($smarty.foreach.items.iteration+$pass_line)%2}<tr>{/if}{/if}
+			{assign var="rows" value=$item->val|@count}
+			{if $rows==0}{assign var="rows" value=1}{/if}
+			
+			{assign var="fields_count" value=$item->itemdef->struct_fields|@count}
+			{if $fields_count==0}{assign var="fields_count" value=1}{/if}
+			
+			{if $fields_count*$rows > 15}
+				{* <!-- If there are too many lines, put them in a textarea box --> *}
+				<td><b>{$item->item_id}</b></td>
+				<td>
+					{$item->itemdef->name}<br/>
+					{$item->reported|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}
+				</td>
+				<td>
+<textarea rows="7" cols="40" readonly wrap=off style="overflow: auto;" 
+	onDblClick="document.location = '/?cl=kawacs_removed&op=computer_view_item&id={$computer->id}&item_id={$item->itemdef->id}';"
+>{assign var="cnt_items" value=0}{foreach from=$item->val item=val key=nrc}{if $cnt_items++ < $smarty.const.MAX_COMPUTER_ITEMS_SHOWN}
+{if is_array($val->value)}
+-{foreach from=$val->value item=val_field key=val_key name=array_list}
+{if $smarty.foreach.array_list.iteration>1} {/if}{strip}
+		{$item->fld_names.$val_key}:&nbsp;{$item->get_formatted_value($nrc, $val_key)|escape}
+{/strip}
+{/foreach}
+{else}
+{$item->get_formatted_value($nrc)}
+{/if}
+{/if}{/foreach}{if count($item->val)>$smarty.const.MAX_COMPUTER_ITEMS_SHOWN}
+
+[There are over {$smarty.const.MAX_COMPUTER_ITEMS_SHOWN} items, double-click to see the rest]{/if}</textarea>
+				</td>
+				
+			{else}
+				{*<!-- There are only a few lines, show them as table rows -->*}
+				<td><b>{$item->item_id}</b></td>
+				<td>
+					{$item->itemdef->name}<br/>
+					{$item->reported|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}
+				</td>
+
+				<td onDblClick="document.location = '/?cl=kawacs_removed&op=computer_view_item&id={$computer->id}&item_id={$item->itemdef->id}';">
+				{foreach from=$item->val item=val key=nrc}
+					{if is_array($val->value)}
+						{assign var="item_fields" value=$item->itemdef->struct_fields}
+						{assign var="cnt" value=0}
+						
+						{foreach from=$val->value item=val_field key=val_key}
+							{if $item_fields.$cnt->type==$smarty.const.MONITOR_TYPE_FILE}
+								{* Don't escape the fields of type file, so the URL is correctly visible *}
+								{$item->fld_names.$val_key}:&nbsp;{$item->get_formatted_value($nrc, $val_key)}
+							{else}{$item->fld_names.$val_key}:&nbsp;{$item->get_formatted_value($nrc, $val_key)|escape}{/if}<br/><!-- {$cnt++} -->
+						{/foreach}
+					{else}{$item->get_formatted_value($nrc)|escape}{/if}
+					<br>
+				{/foreach}
+				</td>
+			{/if}
+	{/foreach}
+</table>
+<p/>
+</div>
+
+<!-- Tab with computer tools -->
+<div id="tab_tools" class="tab_content" style="display:none;">
+	<h2>Tools</h2>
+	<br/>
+	
+	<table width="100%">
+		<tr>
+		<td width="250">
+			<a href="/?cl=kawacs_removed&amp;op=computer_delete&amp;id={$computer->id}">Permanently delete computer &#0187;</a>
+			<p/>
+			
+			<a href="/?cl=kawacs_removed&amp;op=computer_restore&amp;id={$computer->id}">Restore computer to active status &#0187;</a>
+		</td>
+		</tr>
+	</table>
+</div>
+
+
+<!-- Tab with computer notes -->
+<div id="tab_notes" class="tab_content" style="display:none;">
+	<h2>Notes</h2>
+	<br/>
+	
+	[<a href="/?cl=kawacs_removed&amp;op=computer_note_add&amp;computer_id={$computer->id}">Add Note &#0187;</a>]
+	<p/>
+	
+	<table class="list" width="100%">
+		<thead>
+		<tr>
+			<td width="15%">Created</td>
+			<td width="20%">Created by</td>
+			<td width="55%">Note</td>
+			<td width="10%"> </td>
+		</tr>
+		</thead>
+		
+		{foreach from=$notes item=note}
+		<tr>
+			<td nowrap="nowrap">
+				<a href="/?cl=kawacs_removed&amp;op=computer_note_edit&amp;id={$note->id}"
+				>{$note->created|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}</a>
+			</td>
+			<td>
+				{assign var="user_id" value=$note->user_id}
+				{$users_list.$user_id}
+			</td>
+			<td>{$note->note|escape|nl2br}</td>
+			<td align="right" nowrap="nowrap">
+				<a href="/?cl=kawacs_removed&amp;op=computer_note_delete&amp;id={$note->id}"
+					onclick="return confirm('Are you really sure you want to delete this note?');"
+				>Delete &#0187;</a>
+			</td>
+		</tr>
+		{foreachelse}
+		<tr>
+			<td colspan="3" class="light_text">[No notes entered yet for this computer]</td>
+		</tr>
+		{/foreach}
+	</table>
+</div>
+
+<!-- Tab with reporting and discoveries info -->
+<div id="tab_reporting" class="tab_content" style="display:none;">
+	<h2>Reporting:</h2>
+	
+	<p/>
+	<table class="list" width="60%">
+		<thead>
+		<tr>
+			<td width="120">Last contact:</td>
+			<td class="post_highlight">
+				{if $computer->last_contact}{$computer->last_contact|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}
+				{else}--
+				{/if}
+			</td>
+		</tr>
+		</thead>
+		
+		<tr>
+			<td class="highlight">Remote IP:</td>
+			<td class="post_highlight">
+				{if $computer->remote_ip}{$computer->remote_ip}
+				{else}--
+				{/if}
+			</td>
+		</tr>
+		<tr>
+			<td class="highlight">Identification MAC:</td>
+			<td class="post_highlight">{$computer->mac_address|escape}</td>
+		</tr>
+		<tr>
+			<td class="highlight">Managing since:</td>
+			<td class="post_highlight">
+				{if $computer->date_created}{$computer->date_created|date_format:$smarty.const.DATE_FORMAT_SMARTY}
+				{else}--
+				{/if}
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href="/?cl=kawacs_removed&amp;op=computer_dates&amp;id={$computer->id}">Edit &#0187;</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="highlight">Date removed:</td>
+			<td class="post_highlight">
+				{if $computer->date_removed}{$computer->date_removed|date_format:$smarty.const.DATE_FORMAT_SMARTY}
+				{else}--
+				{/if}
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href="/?cl=kawacs_removed&amp;op=computer_dates&amp;id={$computer->id}">Edit &#0187;</a>
+			</td>
+		</tr>
+	</table>
+	<p/>
+</div>
+
+</form>
+
+
+<script language="JavaScript" type="text/javascript">
+//<![CDATA
+
+// Check what was the last selected tab, if any
+if (!(last_tab = getCookie('removed_computer_view_tab'))) last_tab = tabs[0];
+showTab (last_tab);
+
+//]]>
+</script>

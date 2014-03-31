@@ -1,0 +1,38 @@
+{assign var="paging_titles" value="KAWACS, Edit SNMP system object id"}
+{assign var="paging_urls" value="/?cl=kawacs"}
+{include file="paging.html"}
+
+
+<h1>Edit SNMP System Object Id</h1>
+
+<p class="error">{$error_msg}</p>
+
+<p>Below you can specify a descriptive name (device type) associated with a discovered SNMP system object id.</p>
+
+<form action="" method="POST" name="frm_t">
+{$form_redir}
+
+<table class="list" width="60%">
+	<thead>
+	<tr>
+		<td colspan="2">Enter the SNMP id and name below:</td>
+	</tr>
+	</thead>
+	
+	<tr>
+		<td class="highlight" width="180">SNMP system object id:</td>
+		<td class="post_highlight">
+			<input type="text" name="obj[snmp_sys_object_id]" size="60" value="{$obj->snmp_sys_object_id|escape}" />
+		</td>
+	</tr>
+	<tr>
+		<td class="highlight">Descriptive name:</td>
+		<td class="post_highlight">
+			<input type="text" name="obj[name]" size="60" value="{$obj->name|escape}" />
+		</td>
+	</tr>
+</table>
+<p/>
+<input type="submit" name="save" value="Save" class="button" />
+<input type="submit" name="cancel" value="Close" class="button" />
+</form>

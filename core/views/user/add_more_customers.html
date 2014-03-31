@@ -1,0 +1,84 @@
+{assign var="paging_titles" value="User Administration, Edit user, Add more customers"}
+{assign var="paging_urls" value=$user->id|string_format:"/?cl=user, /?cl=user&op=user_edit&id=%d"}
+{include file="paging.html"}
+
+<script language="JavaScript" type="text/javascript">
+//<![CDATA[
+{literal}
+	function addCustomer()
+	{
+		var frm = document.forms['amc_frm'];
+		var list_customers = frm.elements['available_customers'];
+		var list_added_customers = frm.elements['added_customers[]'];
+		
+		if (list_customers.selectedIndex >= 0)
+		{
+			opt = new Option (list_customers.options[list_customers.selectedIndex].text, list_customers.options[list_customers.selectedIndex].value);
+			list_added_customers.options[list_added_customers.options.length] = opt;
+			list_customers.options[list_customers.selectedIndex] = null;
+		}	
+	}
+	function removeCustomer()
+	{
+		var frm = document.forms['amc_frm'];
+		var list_customers = frm.elements['available_customers'];
+		var list_added_customers = frm.elements['added_customers[]'];
+		
+		if (list_added_customers.selectedIndex >= 0)
+		{
+			opt = new Option (list_added_customers.options[list_added_customers.selectedIndex].text, list_added_customers.options[list_added_customers.selectedIndex].value);
+			list_customers.options[list_customers.options.length] = opt;
+			list_added_customers.options[list_added_customers.selectedIndex] = null;
+		}
+	}
+	function selectAllAddedCustomers()
+	{
+		var frm = document.forms['amc_frm'];
+		var list_added_customers = frm.elements['added_customers[]'];
+		for (var i=0; i<list_added_customers.options.length; i++) list_added_customers.options[i].selected = true;
+		
+		return true;
+	}
+{/literal}
+//]]>
+</script>
+
+<h1>Add more customer accounts to {$user->fname|escape} {$user->lname|escape} (# {$user->id})</h1>
+<p class="error">{$error_msg}</p>
+<p>
+	From the available list of customers select the accounts that should be added to this user
+</p>
+<form action="" method="POST" name="amc_frm" onsubmit="return selectAllAddedCustomers();">
+{$form_redir}
+<table class="list" width="80%">
+	<thead>
+	<tr>
+		<td colspan="2">User: &nbsp;&nbsp;&nbsp;#{$user->id}: {$user->fname|escape} {$user->lname|escape}</td>
+	</tr>
+	</thead>
+	
+	<tr>
+		<td>
+			Available customers:<br/>
+			<select name="available_customers" multiple size="18" style="width: 250px;" ondblclick="addCustomer();">
+				{foreach from=$all_customers key=customer_id item=customer_name}
+				{if !in_array($customer_id,$current_customers)}
+				<option value="{$customer_id}">{$customer_name|escape}</option>
+				{/if}
+				{/foreach}
+			</select>
+		</td>
+		<td class="post_highlight">
+			Added customer accounts:<br/>
+			<select name="added_customers[]" multiple size="18" style="width: 250px;" ondblclick="removeCustomer();">
+				{foreach from=$customers_list item=customer}
+				<option value="{$customer->id}">{$customer->name|escape}</option>
+				{/foreach}
+			</select>
+		</td>
+	</tr>
+</table>
+<p></p>
+<input type="submit" name="save" value="Save">
+<input type="submit" name="cancel" value="Cancel">
+</form>

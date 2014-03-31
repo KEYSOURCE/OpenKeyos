@@ -1,0 +1,44 @@
+{assign var="paging_titles" value="KAWACS, SNMP system object ids"}
+{assign var="paging_urls" value="/?cl=kawacs"}
+{include file="paging.html"}
+
+
+<h1>SNMP System Objects Ids</h1>
+
+<p class="error">{$error_msg}</p>
+
+<p>
+Below you can find the list of known SNMP system object IDs, which can be used
+for showing the devices types for networks discoveries.
+</p>
+
+[ <a href="/?cl=discovery&amp;op=snmp_sysobjid_add">Add new name &#0187;</a> ]
+<p/>
+
+<table class="list" width="80%">
+	<thead>
+	<tr>
+		<td width="200">SNMP system object id</td>
+		<td>Descriptive name</td>
+		<td width="120"> </td>
+	</tr>
+	</thead>
+	
+	{foreach from=$objects item=obj}
+	<tr>
+		<td nowrap="nowrap">
+			<a href="/?cl=discovery&amp;op=snmp_sysobjid_edit&amp;id={$obj->id}">{$obj->snmp_sys_object_id|escape}</a>
+		</td>
+		<td>{$obj->name|escape}</td>
+		<td align="right" nowrap="nowrap">
+			<a href="/?cl=discovery&amp;op=snmp_sysobjid_delete&amp;id={$obj->id}"
+			onclick="return confirm('Are you sure you want to delete this?');">Delete &#0187;</a>
+		</td>
+	</tr>
+	{foreachelse}
+	<tr>
+		<td colspan="2" class="light_text">[No names defined]</td>
+	</tr>
+	{/foreach}
+</table>
+<p/>

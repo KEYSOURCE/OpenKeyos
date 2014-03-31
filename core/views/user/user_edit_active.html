@@ -1,0 +1,114 @@
+{assign var="user_id" value=$user->id}
+{assign var="paging_titles" value="Users Administration, Edit User, Edit Active Status"}
+{assign var="paging_urls" value="/?cl=user,/?cl=user&op=user_edit&id=$user_id"}
+{include file="paging.html"}
+
+<script language="JavaScript" type="text/javascript">
+//<![CDATA[
+
+var orig_stat = {$user->active};
+var stat_active = {$smarty.const.USER_STATUS_ACTIVE};
+var stat_inactive = {$smarty.const.USER_STATUS_INACTIVE};
+var stat_away_business = {$smarty.const.USER_STATUS_AWAY_BUSINESS};
+var stat_away_holiday = {$smarty.const.USER_STATUS_AWAY_HOLIDAY};
+
+{literal}
+
+function statusChanged ()
+{
+	frm = document.forms['frm_t'];
+	list_stats = frm.elements['user[active]'];
+	sel_stat = list_stats.options[list_stats.selectedIndex].value;
+	row_alternate = document.getElementById ('row_recipient');
+	
+	if (sel_stat == stat_active || sel_stat == stat_inactive)
+	{
+		row_alternate.style.display = 'none';
+	}
+	else
+	{
+		row_alternate.style.display = '';
+	}
+}
+
+
+// Called when "Save" is pressed. If the user status is changed to "Inactive", ask confirmation
+function confirmInactive ()
+{
+	ret = true;
+	
+	frm = document.forms['frm_t'];
+	list_stats = frm.elements['user[active]'];
+	sel_stat = list_stats.options[list_stats.selectedIndex].value;
+	
+	if (sel_stat == stat_inactive && orig_stat != sel_stat)
+	{
+		ret = confirm('Are you sure you want to make the user inactive? If you do so, he will be removed from ALL notifications recipients and ALL groups.');
+	}
+	
+	return ret;
+}
+
+
+{/literal}
+//]>
+</script>
+
+
+<h1>Edit Active Status</h1>
+
+<p class="error">{$error_msg}</p>
+
+<form action="" method="POST" name="frm_t">
+{$form_redir}
+
+<table class="list" width="95%">
+	<thead>
+	<tr>
+		<td width="20%">User:</td>
+		<td width="80%" class="post_highlight">
+			#{$user->id}: {$user->get_name()}
+		</td>
+	</tr>
+	</thead>
+	
+	<tr>
+		<td class="highlight">Active:</td>
+		<td class="post_highlight">
+			{if count($away_recipient_for) > 0}
+				The status of the user can't be modified because he is "Away" recipient for:<br/>
+				{foreach from=$away_recipient_for item=away_for_user}
+					
+					{$away_for_user->get_name()|escape}<br/>
+				{/foreach}
+			{else}
+				<select name="user[active]" onchange="statusChanged();">
+					{html_options options=$USER_STATUSES selected=$user->active}
+				</select>
+			{/if}
+		</td>
+	</tr>
+	<tr id="row_recipient" style="display:none;">
+		<td class="highlight" nowrap="nowrap">Redirect notifications to:</td>
+		<td class="post_highlight">
+			<select name="user[away_recipient_id]">
+				<option value="0">[None]</option>
+				{html_options options=$users_list selected=$user->away_recipient_id}
+			</select>
+		</td>
+	</tr>
+</table>
+<p/>
+
+{if count($away_recipient_for) == 0}
+<input type="submit" name="save" class="button" value="Save" onclick="return confirmInactive();"/>
+{/if}
+<input type="submit" name="cancel" class="button" value="Close" />
+
+</form>
+
+<script language="JavaScript" type="text/javascript">
+//<![CDATA[
+	statusChanged ();
+//]>
+</script>

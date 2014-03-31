@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html SYSTEM "{$http_base_url|escape}/phplib/xml/html4-all.ent">
+
+{if $interventions}
+<export
+xmlns="{$http_base_url|escape}"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="{$http_base_url|escape}/?cl=erp&amp;op=interventions_export_schema">
+	<export_id>{$export->id}</export_id>
+	<confirmation_file_url>{$export->get_confirmation_file_url()|escape}</confirmation_file_url>
+	<confirmation_import_url>{$export->get_confirmation_import_url()|escape}</confirmation_import_url>
+	<retransfer_url>{$export->get_retransfer_url()|escape}</retransfer_url>
+
+	<intervention_reports>
+	{foreach from=$interventions item=intervention}
+		<intervention_report>
+			<intervention_report_id>{$intervention->id}</intervention_report_id>
+			<customer_id>{$intervention->customer->erp_id}</customer_id>
+			<subject>{$intervention->subject|escape}</subject>
+			<creation_date>{$intervention->created}</creation_date>
+			<creation_date_string>{$intervention->created|date_format:$smarty.const.DATE_FORMAT_SHORT_SMARTY}</creation_date_string>
+
+			<invoicing>
+				{foreach from=$intervention->lines item=line}
+				{assign var="location_id" value=$line->location_id}
+				<invoicing_line>
+					<intervention_date>{$line->intervention_date}</intervention_date>
+					<intervention_date_string>{$line->intervention_date|date_format:$smarty.const.DATE_FORMAT_SHORT_SMARTY}</intervention_date_string>
+
+					{if $line->action_type->special_type==$smarty.const.ACTYPE_SPECIAL_TRAVEL}
+						<action_type>{$smarty.const.ERP_TRAVEL_ID}</action_type>
+					{else}
+						<action_type>{$line->action_type->erp_id}</action_type>
+					{/if}
+					<engineer_id>{if $line->user_id}{$line->user->erp_id}{/if}</engineer_id>
+					{if $line->customer_order_id}
+						<order_num>{if !$line->customer_order->for_subscription}{$line->customer_order->get_erp_num()}{/if}</order_num>
+						<subscription_num>{if $line->customer_order->for_subscription}{$line->customer_order->get_erp_num()}{/if}</subscription_num>
+					{else}
+						<order_num/>
+						<subscription_num/>
+					{/if}
+					<location>{$locations_list.$location_id}</location>
+					<on_site>{if $line->location->on_site or  $line->action_type->special_type==$smarty.const.ACTYPE_SPECIAL_TRAVEL}yes{else}no{/if}</on_site>
+					<work_hours>{$line->get_work_time_hours()}</work_hours>
+					<billable>{if $line->billable}yes{else}no{/if}</billable>
+					<price_type>{if $line->action_type->price_type == $smarty.const.PRICE_TYPE_HOURLY}hourly{else}fixed{/if}</price_type>
+					<bill_amount>{$line->get_bill_amount_hours()}</bill_amount>
+					<tbb_amount>{$line->get_tbb_amount_hours()}</tbb_amount>
+					<billing_unit_minutes>{if $line->action_type->price_type==$smarty.const.PRICE_TYPE_HOURLY}{$line->action_type->billing_unit}{/if}</billing_unit_minutes>
+				</invoicing_line>
+				{/foreach}
+			</invoicing>
+
+			<reporting>
+				{foreach from=$intervention->details item=detail}
+				{assign var="location_id" value=$detail->location_id}
+				<reporting_detail>
+					<ticket_id>{$detail->ticket_id}</ticket_id>
+					<ticket_subject>{$detail->get_ticket_subject()}</ticket_subject>
+					<ticket_detail_id>{$detail->id}</ticket_detail_id>
+					<action_type>{$detail->action_type->erp_id}</action_type>
+					<engineer_id>{$detail->user->erp_id}</engineer_id>
+					<engineer_act_id>{$detail->user->erp_id_service}</engineer_act_id>
+					<work_hours>{$detail->work_time|minutes2hours}</work_hours>
+					<time_in>{$detail->time_in}</time_in>
+					<time_in_string>{$detail->time_in|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}</time_in_string>
+
+					{if $detail->customer_order_id}
+						<order_num>{if !$detail->customer_order->for_subscription}{$detail->customer_order->get_erp_num()}{/if}</order_num>
+						<subscription_num>{if $detail->customer_order->for_subscription}{$detail->customer_order->get_erp_num()}{/if}</subscription_num>
+					{else}
+						<order_num/>
+						<subscription_num/>
+					{/if}
+
+					<location>{$locations_list.$location_id}</location>
+					<on_site>{if $detail->location->on_site}yes{else}no{/if}</on_site>
+				</reporting_detail>
+				{/foreach}
+
+				{* Create also reporting_detail elements for travel items as well *}
+				{foreach from=$intervention->lines item=line}
+				{if $line->action_type->special_type==$smarty.const.ACTYPE_SPECIAL_TRAVEL}
+				<reporting_detail>
+					<ticket_id/>
+					<ticket_subject/>
+					<ticket_detail_id/>
+					<action_type>{$line->user->erp_id_travel}</action_type>
+					<engineer_id>{$line->user->erp_id}</engineer_id>
+					<engineer_act_id>{$line->user->erp_id_travel}</engineer_act_id>
+					<work_hours>1</work_hours>
+					<time_in>{$line->intervention_date}</time_in>
+					<time_in_string>{$line->intervention_date|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}</time_in_string>
+					<order_num/>
+					<subscription_num/>
+					<location>{$line->location->name|escape}</location>
+					<on_site>{if $line->location->on_site}yes{else}no{/if}</on_site>
+				</reporting_detail>
+				{/if}
+				{/foreach}
+			</reporting>
+
+		</intervention_report>
+
+	{/foreach}
+	</intervention_reports>
+</export>
+{else}
+<export/>
+{/if}

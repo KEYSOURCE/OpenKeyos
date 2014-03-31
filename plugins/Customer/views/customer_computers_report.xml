@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html SYSTEM "xml/html4-all.ent">
+
+<reports_set>
+    <customer_id>{$customer->id}</customer_id>
+    <customer_name>{$customer->name}</customer_name>
+    <main_title>{$filter.title}</main_title>
+    
+    <section>
+        <title>Workstations</title>
+        <report>
+            {foreach from=$workstations item=workstation}
+            <workstation>
+                <id>{$workstation.id}</id>
+                <name>{$workstation.name}</name>
+                <warranty_start>{$workstation.warranty_start|date_format:$smarty.const.DATE_FORMAT_SMARTY}</warranty_start>
+                <warranty_end>{$workstation.warranty_end|date_format:$smarty.const.DATE_FORMAT_SMARTY}</warranty_end>
+                <items>
+                    {foreach from=$workstation.items item=mi}
+                        <item>
+                            <item_name>{$mi.name}</item_name>
+                            {assign var="item" value=$mi.values}                            
+                            {foreach from=$item item=mix}                                                          
+                                    <{$mix.name}>{$mix.val|escape}</{$mix.name}>                            
+                            {/foreach}                            
+                        </item>
+                    {/foreach}
+                </items>
+            </workstation>
+            {/foreach}
+        </report>
+    </section>
+    <section>
+        <title>Servers</title>
+        <report>
+            {foreach from=$servers item=server}
+            <server>
+                <id>{$server.id}</id>
+                <name>{$server.name}</name>
+                <warranty_start>{$server.warranty_start|date_format:$smarty.const.DATE_FORMAT_SMARTY}</warranty_start>
+                <warranty_end>{$server.warranty_end|date_format:$smarty.const.DATE_FORMAT_SMARTY}</warranty_end>
+                <items>
+                    {foreach from=$server.items item=mi}
+                        <item>
+                            <item_name>{$mi.name}</item_name>
+                            {assign var="item" value=$mi.values}                            
+                            {foreach from=$item item=mix}                                                          
+                                    <{$mix.name}>{$mix.val|escape}</{$mix.name}>                            
+                            {/foreach}                            
+                        </item>
+                    {/foreach}
+                </items>
+            </server>
+            {/foreach}
+        </report>
+    </section>
+    <section>
+        <title>Unspecified type</title>
+        <report>
+            {foreach from=$unspec item=workstation}
+            <unspec_type>
+                <id>{$workstation.id}</id>
+                <name>{$workstation.name}</name>
+                <warranty_start>{$workstation.warranty_start|date_format:$smarty.const.DATE_FORMAT_SMARTY}</warranty_start>
+                <warranty_end>{$workstation.warranty_end|date_format:$smarty.const.DATE_FORMAT_SMARTY}</warranty_end>
+                <items>
+                    {foreach from=$workstation.items item=mi}
+                        <item>
+                            <item_name>{$mi.name}</item_name>
+                            {assign var="item" value=$mi.values}                            
+                            {foreach from=$item item=mix}                                                          
+                                    <{$mix.name}>{$mix.val|escape}</{$mix.name}>                            
+                            {/foreach}                            
+                        </item>
+                    {/foreach}
+                </items>
+            </unspec_type>
+            {/foreach}
+        </report>
+    </section>
+</reports_set>

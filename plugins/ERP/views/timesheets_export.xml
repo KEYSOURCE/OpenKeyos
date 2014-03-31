@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html SYSTEM "phplib/xml/html4-all.ent">
+
+{if $timesheets}
+<export 
+xmlns="{$http_base_url|escape}"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="{$http_base_url|escape}/?cl=erp&amp;op=timesheets_export_schema">
+	<export_id>{$export->id}</export_id>
+	<confirmation_file_url>{$export->get_confirmation_file_url()|escape}</confirmation_file_url>
+	<confirmation_import_url>{$export->get_confirmation_import_url()|escape}</confirmation_import_url>
+	<retransfer_url>{$export->get_retransfer_url()|escape}</retransfer_url>
+
+	<timesheets>
+	{foreach from=$timesheets item=timesheet}
+		{assign var="user_id" value=$timesheet->user->id}
+		<timesheet>
+			<timesheet_id>{$timesheet->id}</timesheet_id>
+			<engineer_id>{$timesheet->user->erp_id}</engineer_id>
+			<timesheet_date>{$timesheet->date}</timesheet_date>
+			<timesheet_date_string>{$timesheet->date|date_format:$smarty.const.DATE_FORMAT_SHORT_SMARTY}</timesheet_date_string>
+			
+			{foreach from=$timesheet->details item=detail}
+			{assign var="location_id" value=$detail->location_id}
+			{** Include only details which are not linked to ticket details (except travels to/from customer) *}
+			{if !$detail->ticket_detail_id or 
+			  ($detail->ticket_detail_id and ($detail->detail_special_type==$smarty.const.TS_SPECIAL_TRAVEL_TO or 
+			  $detail->detail_special_type==$smarty.const.TS_SPECIAL_TRAVEL_FROM ))
+			}
+			<timesheet_detail>
+				<timesheet_detail_id>{$detail->id}</timesheet_detail_id>
+				<customer_id>{$detail->customer->erp_id}</customer_id>
+				<time_in>{$detail->time_in}</time_in>
+				<time_in_string>{$detail->time_in|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}</time_in_string>
+				<work_time>{$detail->get_duration_hours()}</work_time>
+				<location>{$locations_list.$location_id}</location>
+				<on_site>{if $detail->location->on_site}yes{else}no{/if}</on_site>
+				{if $detail->activity->is_travel}
+					<is_travel>yes</is_travel>
+					<activity>{$timesheet->user->erp_id_travel}</activity>
+				{else}
+					<is_travel>no</is_travel>
+					<activity>{$detail->activity->users_codes.$user_id}</activity>
+				{/if}
+				<activity_name>{$detail->activity->erp_name|escape}</activity_name>
+				<comments>{$detail->comments|escape}</comments>
+			</timesheet_detail>
+			{/if}
+			{/foreach}
+		</timesheet>
+	{/foreach}
+	</timesheets>
+</export>
+{else}
+<export/>
+{/if}

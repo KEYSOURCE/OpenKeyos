@@ -1,0 +1,14 @@
+A l'attention de {$recipient->fname} {$recipient->lname},
+
+Ceci est une notification concernant l'expiration du contrat Internet suivant:
+
+Fournisseur d'accés Internet: {$notification->linked_object->get_provider_name()}
+Contrat: {$notification->linked_object->get_provider_contract_name()}
+Date de fin: {$notification->linked_object->end_date|date_format:$smarty.const.DATE_FORMAT_LONG_SMARTY}
+Etat: {$notification->linked_object->get_expiration_string()}
+
+Pour plus de détails veuillez contacter Keysource.
+
+
+Bien à  vous,
+L'équipe KeyOS

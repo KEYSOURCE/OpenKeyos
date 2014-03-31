@@ -1,0 +1,62 @@
+{assign var="paging_titles" value="KAWACS, Manage Removed Computers, Remove Multiple Computers"}
+{assign var="paging_urls" value="/?cl=kawacs_removed, /?cl=kawacs_removed&op=manage_computers"}
+{include file="paging.html"}
+
+<script language="JavaScript" type="text/javascript">
+//<![CDATA[
+{literal}
+
+function doCkAll ()
+{
+	var frm = document.forms['frm_t'];
+	var ckboxes = frm.elements['computer_id[]'];
+	var ck_main = frm.elements['ck_all'];
+	
+	for (var i=0; i<ckboxes.length; i++)
+	{
+		ckboxes[i].checked = ck_main.checked;
+	}
+}
+
+{/literal}
+//]]>
+</script>
+
+<h1>Remove Multiple Computers</h1>
+
+<p class="error">{$error_msg}</p>
+
+<p>On this page you can select one or more computers to remove for this customer.</p>
+
+<p><b>Removing</b> a computer means marking it as not being in use anymore. Make sure
+you do this <b>ONLY</b> for computers which are indeed not in use and which do not
+send anymore reports through Kawacs Agent.</p>
+
+<p>After you select the computers you want and you click <b>Remove</b>, you will 
+be directed to a new page asking for confirmation and for entering the removal reason.</p>
+
+<form action="" method="POST" name="frm_t">
+{$form_redir}
+
+<table class="list" width="60%">
+	<thead>
+	<tr>
+		<td width="20">
+			<input type="checkbox" name="ck_all" class="checkbox" onclick="doCkAll ();" />
+		</td>
+		<td>Customer: {$customer->name|escape} ({$customer->id})</td>
+	</tr>
+	</thead>
+	
+	{foreach from=$computers_list key=computer_id item=computer_name}
+	<tr>
+		<td width="20"><input type="checkbox" name="computer_id[]" value="{$computer_id}" class="checbox" /></td>
+		<td>#{$computer_id}: {$computer_name|escape}</td>
+	</tr>
+	{/foreach}
+</table>
+<p/>
+
+<input type="submit" name="save" value="Remove selected" class="button" />
+<input type="submit" name="cancel" value="Cancel" class="button" />
+</form>

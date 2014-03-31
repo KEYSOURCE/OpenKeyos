@@ -1,0 +1,17 @@
+NEED_CUSTOMER = Please specify the customer.
+NEED_COMPUTER = Please specify the computer.
+NEED_IPS = Please specify the IP addresses.
+NEED_VALID_RANGE = Please specify a valid range of IP addresses.
+
+NEED_CUSTOMER_UNIQUE = There is already a settings object for this customer.
+NEED_UNIQUE_COMP_IPS = There is already a setting with the same computer and the same IP range.
+
+NEED_WMI_CREDENTIALS = If you want to enable WMI, you need to specify a login name and a password.
+TOO_MANY_IPS = The specified IP range is too wide, the limit is %s IPs per range.
+NEED_COMPUTER_WINDOWS_AGENT = The selected computer doesn't appear to run the Windows Kawacs Agent, so it can't do network discoveries.
+
+MATCH_NEEDS_IDENTIFIABLE = To specify Keyos matching the device must by identifiable by name or MAC, or must be specified to have fixed IP.
+
+NEED_SNMP_ID = Please specify the SNMP ID.
+NEED_SNMP_NAME = Pleas specify the corresponding name.
+NEED_UNIQUE_SNMP_ID = This SNMP system object ID is already in the database.

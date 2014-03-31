@@ -1,0 +1,43 @@
+{assign var="paging_titles" value="Users Administration, Manage ACL Items, Add Item"}
+{assign var="paging_urls" value="/?cl=kalm, /?cl=kalm&op=manage_acl_items"}
+{include file="paging.html"}
+
+<h1>Add ACL Item</h1>
+<p>
+<font class="error">{$error_msg}</font>
+<p>
+
+<form action="" method="POST">
+{$form_redir}
+
+<table class="list" width="95%">
+	<thead>
+	<tr>
+		<td colspan="2">ACL item definition</td>
+	</tr>
+	</thead>
+	
+	<tr>
+		<td width="20%">Name: </td>
+		<td>
+			<input type="text" name="item[name]" value="{$item->name}" size="30">
+		</td>
+	</tr>
+	<tr>
+		<td>Category: </td>
+		<td>
+			<select name="item[category_id]">
+				<option value="">[Select category]</option>
+				{html_options options=$categories selected=$item->category_id}
+			</select>
+		</td>
+	</tr>
+	
+</table>
+
+<p>
+
+<input type="submit" name="save" value="Save">
+<input type="submit" name="cancel" value="Cancel">
+
+</form>

@@ -1,0 +1,158 @@
+{assign var="paging_titles" value="KAWACS, Manage Network Discoveries, Edit Settings"}
+{assign var="paging_urls" value="/?cl=kawacs, /?cl=discovery&op=manage_discoveries"}
+{include file="paging.html"}
+
+
+<h1>Edit Network Discovery Settings</h1>
+
+<p class="error">{$error_msg}</p>
+
+<p>Below you can edit the network discovery settings for this customer.</p>
+
+<form action="" method="POST" name="frm_t">
+{$form_redir}
+
+<table class="list" width="60%">
+	<thead>
+	<tr>
+		<td width="120">Customer:</td>
+		<td class="post_highlight">#{$customer->id}: {$customer->name|escape}</td>
+	</tr>
+	</thead>
+	
+	<tr>
+		<td class="highlight">Discoveries enabled: </td>
+		<td class="post_highlight">
+			<select name="setting[disable_discoveries]">
+				<option value="0">Yes</option>
+				<option value="1" {if $setting->disable_discoveries}selected{/if}>No</option>
+			</select>
+			{if count($setting->details)==0}
+			<b>NOTE:</b> Even if discoveries are marked as enabled, you also need to
+			specify below the computer(s) who will do the discoveries.
+			{/if}
+		</td>
+	</tr>
+	<tr>
+		<td class="highlight">Comments: </td>
+		<td class="post_highlight">
+			<textarea name="setting[comments]" rows="4" cols="60">{$setting->comments|escape}</textarea>
+		</td>
+	</tr>
+</table>
+<p/>
+<input type="submit" name="save" value="Save" class="button" />
+<input type="submit" name="cancel" value="Close" class="button" />
+</form>
+<p/>
+
+<h3>Computers &amp; IP Ranges</h3>
+
+<p>Below you have the computers which have been designated to perform network discoveries and
+the IP ranges on which the discoveries should be done.</p>
+
+<table class="list" width="98%">
+	<thead>
+	<tr>
+		<td width="160">Computer</td>
+		<td width="60">Enabled</td>
+		<td>IP Range</td>
+		<td nowrap="nowrap">Last discovery</td>
+		<td>Duration</td>
+		<td width="80">Results</td>
+		<td width="140" align="right" nowrap="nowrap">
+			[ <a href="/?cl=discovery&amp;op=discovery_detail_add&amp;customer_id={$customer->id}">Add new item &#0187;</a> ]
+		</td>
+	</tr>
+	</thead>
+	
+	{foreach from=$setting->details item=detail}
+	<tr>
+		<td nowrap="nowrap">
+			<a href="/?cl=discovery&amp;op=discovery_detail_edit&amp;id={$detail->id}&amp;customer_id={$customer->id}"
+			>#{$detail->computer_id}: {$detail->computer_name|escape}</a>
+		</td>
+		<td>{if $detail->enabled}Yes{else}No{/if}</td>
+		<td nowrap="nowrap">
+			{$detail->ip_start} - {$detail->ip_end}
+			({$detail->ip_start|@count_ips:$detail->ip_end} IPs)
+			
+			<br/>
+			SNMP: {if $detail->disable_snmp}Disabled{else}Enabled{/if}&nbsp;&nbsp;&nbsp;
+			WMI: {if $detail->disable_wmi}Disabled{else}Enabled{/if}
+			
+			{if $detail->comments}
+			<br/><i>{$detail->comments|escape|nl2br}</i>
+			{/if}
+		</td>
+		<td nowrap="nowrap">
+			{if $detail->last_discovery}
+				{$detail->last_discovery|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}
+				{if $detail->discovery_errors}<br/><i class="warning">Warning: discovery errors</i>{/if}
+			{else}-
+			{/if}
+			<br/>
+			{if !$detail->request_update}
+				<a href="/?cl=discovery&amp;op=discovery_request_make&amp;detail_id={$detail->id}"
+				onclick="return confirm('Do you want to request a discovery on this IP range?');"
+				>Request now &#0187;</a>
+			{else}
+				<b>Discovery request pending</b><br/>
+				<a href="/?cl=discovery&amp;op=discovery_request_cancel&amp;detail_id={$detail->id}"
+				>Cancel request &#0187;</a>
+			{/if}
+		</td>
+		<td nowrap="nowrap">
+			{if $detail->last_discovery and $detail->duration}{$detail->duration} sec.
+			{else}-
+			{/if}
+		</td>
+		<td nowrap="nowrap">
+			<a href="/?cl=discovery&amp;op=manage_discoveries&amp;customer_id={$detail->customer_id}&amp;detail_id={$detail->id}">View &#0187;</a>
+		</td>
+		<td nowrap="nowrap" align="right">
+			<a href="/?cl=discovery&amp;op=discovery_detail_delete&amp;id={$detail->id}"
+			onclick="return confirm('Are you sure you want to remove this item? This will also delete the related discoveries.');"
+			>Remove &#0187;</a>
+		</td>
+	</tr>
+	{foreachelse}
+	<tr>
+		<td colspan="8" class="light_text">[No computers and IP ranges defined]</td>
+	</tr>
+	{/foreach}
+</table>
+<p/>
+
+
+{if count($networks) > 0}
+<h3>Networks</h3>
+
+<p>For reference, below you have all the networks available for this customer, 
+determined from the network information reported by all of the customer's computers.<br/>
+The column with computers numbers shows the number of Keyos computers found for each 
+network, NOT the number of computers discovered on the network.
+</p>
+
+<table class="list" width="98%">
+	<thead>
+	<tr>
+		<td width="120">Network address</td>
+		<td width="120">Network mask</td>
+		<td>IPs range</td>
+		<td width="140">Computers number</td>
+	</tr>
+	</thead>
+	
+	{foreach from=$networks item=net}
+	<tr>
+		<td>{$net.network_address}</td>
+		<td>{$net.network_mask}</td>
+		<td nowrap="nowrap">
+			{$net.ip_min} - {$net.ip_max} ({$net.hosts_number} IPs)
+		</td>
+		<td>{$net.computers|@count} computers</td>
+	</tr>
+	{/foreach}
+</table>
+{/if}

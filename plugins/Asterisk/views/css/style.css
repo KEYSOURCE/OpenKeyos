@@ -1,0 +1,59 @@
+#caller_information_div{
+    height: auto;
+    width: 1000px;
+}
+#phone_info_div{
+    width: 320px;
+    height: auto;
+    border: 1px #333 solid;    
+    float: left;
+}
+#user_info_div{
+    width: 320px;
+    height: auto;
+    border: 1px #333 solid;
+    margin-left: 5px;
+    float: left;
+}
+#customer_info_div{
+    width: 320px;
+    height: auto;
+    border: 1px #333 solid;
+    margin-left: 5px;
+    float: left;
+}
+.prehead{
+    background-color: #efefef; 
+    font-weight: bold;    
+}
+#actions{
+    width: 1000px;
+    height: 200px;
+    border: 1px solid #eee;
+    margin-top: 10px;
+}
+
+button :hover{
+    cursor: crosshair;
+}
+#customer_contacts_and_contracts{
+    height: auto;
+    width: 1000px;
+    margin: 10px 0;
+}
+#customer_contacts_info{
+    width: 484px;
+    border: 1px solid #999;
+    max-height: 300px;
+    float: left;
+    overflow: auto;
+    margin-right: 5px;
+}
+#customer_contracts_info{
+    width: 484px;
+    border: 1px solid #999;
+    max-height: 300px;
+    overflow: auto;
+    float: left;
+    margin-left: 5px;
+}

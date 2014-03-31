@@ -1,0 +1,63 @@
+{assign var="paging_titles" value="Users Administration, Manage ACL Roles, Add Role"}
+{assign var="paging_urls" value="/?cl=kalm, /?cl=kalm&op=manage_acl_roles"}
+{include file="paging.html"}
+
+<h1>Add ACL Role</h1>
+<p>
+<font class="error">{$error_msg}</font>
+<p>
+
+<form action="" method="POST">
+{$form_redir}
+
+<table class="list" width="95%">
+	<thead>
+	<tr>
+		<td colspan="2">ACL role definition</td>
+	</tr>
+	</thead>
+	
+	<tr>
+		<td width="20%">Name: </td>
+		<td>
+			<input type="text" name="role[name]" value="{$role->name}" size="30">
+		</td>
+	</tr>
+	<tr>
+		<td>Type: </td>
+		<td>
+			<select name="role[type]">
+				{html_options options=$ACL_ROLE_TYPES selected=$role->type}
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>Permissions: </td>
+		<td>
+			<table border=0>
+				{foreach from=$categories_items item=items key=category_id}
+				<tr>
+					<td><b>{$categories_list.$category_id} : </b></td>
+					
+					<td>
+						{foreach from=$items item=item}
+							<input type="checkbox" class="checkbox" name="role[items_list][]" value="{$item->id}"
+								{if in_array($item->id, $role->items_list)}checked{/if}
+							>
+							{$item->name}<br>
+						{/foreach}
+					</td>
+				</tr>
+				{/foreach}
+			</table>
+		</td>
+	</tr>
+	
+</table>
+
+<p>
+
+<input type="submit" name="save" value="Save">
+<input type="submit" name="cancel" value="Cancel">
+
+</form>

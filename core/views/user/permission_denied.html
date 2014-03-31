@@ -1,0 +1,19 @@
+{assign var="paging_titles" value="Permission Denied"}
+{assign var="paging_urls" value=""}
+{include file="paging.html"}
+
+<h1>Permission Denied</h1>
+<p>
+
+<font class="error">
+Sorry, you don't have enough permissions to perform this operation.
+</font>
+<p>
+
+{if $error_msg}
+	<font class="error">Reason: {$error_msg}</font>
+	<p>
+{/if}
+
+<a href="#" onClick="window.history.back()">&#0171; Back</a>&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="{$goto}"">Try again &#0187;</a>

@@ -1,0 +1,17 @@
+User-Agent: *
+Disallow: /
+Disallow: /uploads/
+Disallow: /tmp/
+Disallow: /updates/
+Disallow: /files/
+Disallow: /classes/
+Disallow: /classes_display/
+Disallow: /crontab/
+Disallow: /CVS/
+Disallow: /dnl/
+Disallow: /_external/
+Disallow: /phplib/
+Disallow: /logs/
+Disallow: /monitor_items_files/
+Disallow: /_smarty/
+Disallow: /javascript/ 

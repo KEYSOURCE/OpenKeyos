@@ -1,0 +1,1 @@
+[KeyOS] Expiration du contrat Internet pour {$notification->linked_object->get_name()}

@@ -1,0 +1,240 @@
+{assign var="paging_titles" value="User Area"}
+{include file="paging.html"}
+
+<h1>Welcome, {$current_user->fname} {$current_user->lname}</h1>
+<p/>
+
+<table width="80%" class="list">
+	<thead>
+	<tr>
+		<td width="160" nowrap="nowrap">Your current information</td>
+		<td nowrap="nowrap" class="post_highlight">[ <a href="/?cl=user&op=account_edit">Edit account &#0187;</a> ]</td>
+	</tr>
+	</thead>
+	<tr>
+		<td class="highlight">Login name:</td>
+		<td class="post_highlight">{$current_user->login}</td>
+	</tr>
+	<tr>
+		<td class="highlight">First name:</td>
+		<td class="post_highlight" colspan="2">{$current_user->fname}</td>
+	</tr>
+	<tr>
+		<td class="highlight">Last name:</td>
+		<td class="post_highlight" colspan="2">{$current_user->lname}</td>
+	</tr>
+	<tr>
+		<td class="highlight">E-mail:</td>
+		<td class="post_highlight" colspan="2">{$current_user->email}</td>
+	</tr>
+	<tr>
+		<td class="highlight">Phone numbers:</td>
+		<td class="post_highlight" colspan="2">
+			<table width="80%">
+				<tr>
+					<td><b>Number</b></td>
+					<td><b>Type</b></td>
+					<td><b>Comments</b></td>
+					<td width="100"> </td>
+					{foreach from=$current_user->phones item=phone key=phoneid}
+						<tr>
+							<td nowrap>{$phone->phone}</td>
+							<td>
+								{assign var="type" value=$phone->type}
+								{$PHONE_TYPES.$type}
+							</td>
+							<td>{$phone->comment|escape}</td>
+							<td align="right" nowrap="nowrap">
+								<a href="/?cl=user&op=phone_edit&id={$phone->id}">Edit</a> |
+								<a href="/?cl=user&op=phone_delete&id={$phone->id}"
+									onClick="return confirm('Are you sure you want to delete this phone number?');"
+								>Delete</a>
+							</td>
+						</tr>
+					
+					{foreachelse}
+						<tr><td colspan="4">
+						[There are no phone numbers defined]
+						</td></tr>
+					{/foreach}
+				</tr>
+			</table>
+			<p>
+			<a href="/?cl=user&op=phone_add&user_id={$current_user->id}">Add phone number &#0187;</a>
+		</td>
+	</tr>
+	<tr>
+		<td class="highlight">Preferred language:</td>
+		<td class="post_highlight">
+			{assign var="language" value=$current_user->language}
+			{$LANGUAGES.$language}
+		</td>
+	</tr>
+	<tr>
+		<td class="highlight">Receive newsletter:</td>
+		<td class="post_highlight">	
+			{if $current_user->newsletter} Yes
+			{else} No
+			{/if}
+		</td>
+	</tr>
+	
+	{if $current_user->type == $smarty.const.USER_TYPE_KEYSOURCE}
+	<tr>
+		<td class="highlight">Exchange account:</td>
+		<td class="post_highlight">
+			{if $current_user->exchange}
+				{$current_user->exchange->exch_login|escape} / {$current_user->exchange->exch_email|escape}
+			{else}
+				[n/a]
+			{/if}
+			
+			&nbsp;&nbsp;&nbsp;|
+			<a href="/?cl=user&amp;op=user_edit_exchange&amp;id={$current_user->id}">Edit &#0187;</a>
+		</td>
+	</tr>
+	{/if}
+</table>
+<p>
+
+{if !$current_user->is_customer_user()}
+	<h2>Today's Scheduled Tasks</h2>
+	<p>
+	{if $tasks}
+		<table class="list" width="90%">
+			<thead>
+			<tr>
+				<td width="60">Time</td>
+				<td width="80">Location</td>
+				<td width="120">Organizer</td>
+				<td>Customer</td>
+				<td>Ticket</td>
+			</tr>
+			</thead>
+			
+			{foreach from=$tasks item=task}
+			<tr>
+				<td nowrap="nowrap">
+					<a href="/?cl=krifs&amp;op=task_edit&amp;id={$task->id}&amp;returl={$ret_url}"
+					>{$task->date_start|date_format:$smarty.const.HOUR_FORMAT_SELECTOR}
+					-
+					{$task->date_end|date_format:$smarty.const.HOUR_FORMAT_SELECTOR}</a>
+				</td>
+				<td nowrap="nowrap">
+					{assign var="location_id" value=$task->location_id}
+					{$locations_list.$location_id}
+				</td>
+				<td>
+					{assign var="task_user_id" value=$task->user_id}
+					{$users_list.$task_user_id}
+				</td>
+				<td>
+					{assign var="customer_id" value=$task->customer_id}
+					{$customers_list.$customer_id} ({$customer_id})
+				</td>
+				<td>
+					<a href="/?cl=krifs&amp;op=ticket_edit&amp;id={$task->ticket_id}"># {$task->ticket_id}</a>:
+					{$task->ticket_subject|escape}
+					{if $task->customer_location_id}
+						<br/>
+						<a href="/?cl=customer&amp;op=location_edit&amp;id={$task->customer_location_id}&amp;returl={$ret_url}"
+						>{$task->customer_location_name|escape}&nbsp;&#0187;</a>
+					{/if}
+					{if $task->attendees_ids}
+						<br/>Attendees: 
+						{foreach from=$task->attendees_ids item=attendee_id name=attendees}
+						{$users_list.$attendee_id}{if !$smarty.foreach.attendees.last}, {/if}
+						{/foreach}
+					{/if}
+					{if $task->comments}
+						<br/><i>{$task->comments|escape}</i>
+					{/if}
+				</td>
+			</tr>
+			{/foreach}
+		</table>
+	{else}
+		[No tasks scheduled for today]
+	{/if}
+	<p>
+
+	<h2>Favorite Customers</h2>
+	<p>
+	
+	{if $favorite_customers_list}
+	
+		<a href="/?cl=user&op=user_edit_favorite_customers&id={$current_user->id}&ret=user_area">Edit favorite customers list &#0187;</a>
+		<table class="list" width="90%">
+			<thead>
+			<tr>
+				<td width="10">ID</td>
+				<td>Name</td>
+				<td>Kawacs</td>
+				<td>Krifs</td>
+				<td>Kerm</td>
+			</tr>
+			</thead>
+			
+			{foreach from=$favorite_customers_list item=customer_name key=customer_id}
+			<tr>
+				<td><a href="/?cl=customer&op=customer_edit&id={$customer_id}">{$customer_id}</a></td>
+				<td><a href="/?cl=customer&op=customer_edit&id={$customer_id}">{$customer_name}</a></td>
+				<td>
+					<a href="/?cl=kawacs&op=manage_computers&customer_id={$customer_id}">View computers &#0187;</a>
+				</td>
+				<td>
+					<a href="/?cl=krifs&op=manage_tickets&customer_id={$customer_id}">View tickets &#0187;</a>
+				</td>
+				<td>
+					<a href="/?cl=kerm&op=manage_ad_computers&customer_id={$customer_id}">View AD Computers &#0187;</a>
+				</td>
+			</tr>
+			{/foreach}
+		</table>
+	{else}
+		[None selected yet] :: 
+		<a href="/?cl=user&op=user_edit_favorite_customers&id={$current_user->id}&ret=user_area">Edit favorite customers list &#0187;</a>
+	{/if}
+	<p>
+	
+	
+	{if $current_user->restrict_customers}
+		<h2>Assigned Customers</h2>
+		<p>
+		<table class="list" width="80%">
+			<thead>
+			<tr>
+				<td width="10">ID</td>
+				<td>Name</td>
+				<td>Kawacs</td>
+				<td>Krifs</td>
+				<td>Kerm</td>
+				<td>From group<td>
+			</tr>
+			</thead>
+			
+			{foreach from=$assigned_customers_list item=customer_name key=customer_id}
+			<tr>
+				<td><a href="/?cl=customer&op=customer_edit&id={$customer_id}">{$customer_id}</a></td>
+				<td><a href="/?cl=customer&op=customer_edit&id={$customer_id}">{$customer_name}</a></td>
+				<td>
+					<a href="/?cl=kawacs&op=manage_computers&customer_id={$customer_id}">View computers &#0187;</a>
+				</td>
+				<td>
+					<a href="/?cl=krifs&op=manage_tickets&customer_id={$customer_id}">View tickets &#0187;</a>
+				</td>
+				<td>
+					<a href="/?cl=kerm&op=manage_ad_computers&customer_id={$customer_id}">View AD Computers &#0187;</a>
+				</td>
+				<td>
+					{if $group_assigned_customers_list.$customer_id}
+						{$group_assigned_customers_list.$customer_id->group_name}
+					{/if}
+				</td>
+			</tr>
+			{/foreach}
+		</table>
+	{/if}
+	
+{/if}
+<p>

@@ -1,0 +1,40 @@
+{if $ret}
+	{assign var="paging_titles" value="Users Administration, Edit User, Add Phone Number"}
+	{assign var="paging_urls" value="/?cl=user, /?cl=user&op=user_edit&id=$user_id"}
+{else}
+	{assign var="paging_titles" value="Utilisateur, Ajouter un numéro de telephone"}
+	{assign var="paging_urls" value="./cl=home&op=user_area"}
+	
+{/if}
+{include file="paging.html"}
+
+<h1>Ajouter numéro de telephone</h1>
+
+<p class="error">{$error_msg}</p>
+
+<form action="" method="post">
+{$form_redir}
+
+<table>
+	<tr>
+		<td>Numéro:</td>
+		<td><input type="text" name="phone[phone]" value="" /></td>
+	</tr>
+	<tr>
+		<td>Type:</td>
+		<td>
+			<select name="phone[type]" value="">
+				{html_options options=$phone_types}
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>Remarque:</td>
+		<td><input type="text" name="phone[comment]" value="" /></td>
+	</tr>
+</table>
+<p/>
+
+<input type="submit" name="save" value="Sauver" class="button" />
+<input type="submit" name="cancel" value="Annuler" class="button" />
+</form>

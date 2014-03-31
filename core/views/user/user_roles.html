@@ -1,0 +1,69 @@
+{assign var="paging_titles" value="Users Administration, User, Roles"}
+{assign var="paging_urls" value="/?cl=user, /?cl=user&op=manage_users"}
+{include file="paging.html"}
+
+<h1>Roles : {$user->fname} {$user->lname}</h1>
+<p>
+<font class="error">{$error_msg}</font>
+<p>
+
+<form action="" method="POST" name="roles_form">
+{$form_redir}
+
+<table class="list" width="95%">
+	<thead>
+	<tr>
+		<td colspan="2">Select the assigned roles</td>
+	</tr>
+	</thead>
+	
+	{foreach from=$roles item=role}
+	<tr>
+		<td>
+			<input type="checkbox" class="checkbox" name="user[roles_list][]" value="{$role->id}"
+				{if in_array($role->id, $user->roles_list)} checked {/if}
+			>
+			{$role->name}<br>
+		</td>
+	</tr>
+	{/foreach}
+	
+	<tr class="head">
+		<td colspan="2">Special</td>
+	</tr>
+	<tr>
+		<td>
+			<input type="checkbox" class="checkbox" name="user[administrator]" value="1"
+				{if $user->administrator} checked {/if}
+				onChange="check_admin (this.checked)"
+			</input>
+			Administrator
+		</td>
+	</tr>
+</table>
+
+<p>
+
+<input type="submit" name="save" value="Save">
+<input type="submit" name="cancel" value="Close">
+
+</form>
+
+{literal}
+<script language="JavaScript">
+
+function check_admin (checked)
+{
+	frm = document.forms['roles_form'];
+	for (i=0; i<frm.elements['user[roles_list][]'].length; i++)
+	{
+		frm.elements['user[roles_list][]'][i].checked = checked;
+		frm.elements['user[roles_list][]'][i].disabled = checked;
+	}
+}
+{/literal}
+{if $user->administrator}check_admin(true){/if}
+{literal}
+
+</script>
+{/literal}

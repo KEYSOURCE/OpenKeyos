@@ -1,0 +1,19 @@
+		</td>
+		{if $right_menu != ''}
+			{include file="$left_menu"}
+		{/if}
+	</tr>
+	
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 class="footer">
+	<tr>
+		<td>&nbsp;&nbsp;Copyright &copy; 2004 <a href="http://www.keysource.be">Keysource</td>
+		<td align="right">&nbsp;</td>
+
+	</tr>
+</table>
+
+<p/>
+</body>
+</html>

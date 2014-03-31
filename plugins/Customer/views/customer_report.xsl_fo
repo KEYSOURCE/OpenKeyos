@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html [
+  <!ENTITY % HTMLlat1 PUBLIC
+  "-//W3C/ENTITIES Latin 1 for XHTML//EN"
+  "html4-all.ent">
+  %HTMLlat1;
+]>
+
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+		xmlns:fo="http://www.w3.org/1999/XSL/Format"
+                version="1.0">
+		
+<xsl:import href="layout_styles.xsl_fo"/>
+<xsl:import href="layout_page.xsl_fo"/>
+<xsl:import href="report_outstanding_tickets.xsl_fo"/>
+<xsl:import href="report_computers.xsl_fo"/>
+<xsl:import href="report_peripherals.xsl_fo"/>
+<xsl:import href="report_warranties.xsl_fo"/>
+<xsl:import href="report_software.xsl_fo"/>
+<xsl:import href="report_all_software.xsl_fo"/>
+<xsl:import href="report_licenses.xsl_fo"/>
+<xsl:import href="report_users.xsl_fo"/>
+<xsl:import href="report_free_space.xsl_fo"/>
+<xsl:import href="report_backups.xsl_fo"/>
+<xsl:import href="report_av_status.xsl_fo"/>
+<xsl:import href="report_av_hist.xsl_fo"/>
+
+
+<xsl:template name="template_selector">
+	<fo:block id="{generate-id(.)}" xsl:use-attribute-sets="page-title" break-before="page"><xsl:value-of select="title"/></fo:block>
+	
+	<xsl:choose>
+		<xsl:when test="type='outstanding_tickets'">
+			<xsl:call-template name="outstanding_tickets"/>
+		</xsl:when>
+	
+		<xsl:when test="type='computers'">
+			<xsl:call-template name="computers"/>
+		</xsl:when>
+		
+		<xsl:when test="type='peripherals'">
+			<xsl:call-template name="peripherals"/>
+		</xsl:when>
+		
+		<xsl:when test="type='warranties'">
+			<xsl:call-template name="warranties"/>
+		</xsl:when>
+		
+		<xsl:when test="type='software'">
+			<xsl:call-template name="software"/>
+		</xsl:when>
+		
+		<xsl:when test="type='all_software'">
+			<xsl:call-template name="all_software"/>
+		</xsl:when>
+		
+		<xsl:when test="type='licenses'">
+			<xsl:call-template name="licenses"/>
+		</xsl:when>
+		
+		<xsl:when test="type='users'">
+			<xsl:call-template name="users"/>
+		</xsl:when>
+		
+		<xsl:when test="type='free_space'">
+			<xsl:call-template name="free_space"/>
+		</xsl:when>
+		
+		<xsl:when test="type='backups'">
+			<xsl:call-template name="backups"/>
+		</xsl:when>
+		
+		<xsl:when test="type='av_status'">
+			<xsl:call-template name="av_status"/>
+		</xsl:when>
+		
+		<xsl:when test="type='av_hist'">
+			<xsl:call-template name="av_hist"/>
+		</xsl:when>
+	</xsl:choose>
+</xsl:template>
+
+<!-- The root element in the XML data -->
+<xsl:template match="/">
+<!-- <xsl:template match="/report"> -->
+
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+	<!-- Page layout -->
+	<xsl:call-template name="page_layout"/>
+	
+	<fo:page-sequence master-name="contents" initial-page-number="1">
+		
+		<!-- Page header and footer -->
+		<xsl:call-template name="page_header"/>
+		<xsl:call-template name="page_footer"/>
+		
+		<!-- Page content -->
+		<fo:flow flow-name="xsl-region-body">
+		
+			<!-- Cover page, if requested -->
+			<xsl:if test="/reports_set/show_cover_page = 'yes'">
+				<fo:block break-after="page">
+					<fo:block xsl:use-attribute-sets="document-title">
+						<xsl:value-of select="/reports_set/main_title"/> 
+					</fo:block>
+				</fo:block>
+			</xsl:if>
+			
+			<!-- size reduction factor: 0.64 -->
+		
+			<!-- Table of contents, if requested -->
+			<xsl:if test="/reports_set/show_contents = 'yes'">
+				<fo:block>
+				<fo:block xsl:use-attribute-sets="page-title">
+					Table of Contents
+				</fo:block>
+				<fo:block space-after="7pt"></fo:block>
+				
+				<fo:block text-indent="25pt" font-size="11pt" line-height="20pt">
+					<xsl:for-each select="/reports_set/section">
+						<xsl:if test="/reports_set/show_section_cover_pages = 'yes'">
+							<fo:block text-align-last="justify" xsl:use-attribute-sets="TOC-1">
+								<fo:basic-link internal-destination="{generate-id()}"><xsl:value-of select="title"/>
+								<fo:leader leader-pattern="dots" keep-with-next.within-line="always" />
+								<fo:page-number-citation ref-id="{generate-id()}"/>
+								</fo:basic-link>
+							</fo:block>
+						</xsl:if>
+						<xsl:if test="/reports_set/show_section_cover_pages != 'yes'">
+							<fo:block text-align-last="justify" xsl:use-attribute-sets="TOC-1">
+								<fo:basic-link internal-destination="{generate-id(report[1])}"><xsl:value-of select="title"/>
+								<fo:leader leader-pattern="dots" keep-with-next.within-line="always" />
+								<fo:page-number-citation ref-id="{generate-id(report[1])}"/>
+								</fo:basic-link>
+							</fo:block>
+						</xsl:if>
+						
+						<xsl:for-each select="report">
+							<fo:block text-align-last="justify" xsl:use-attribute-sets="TOC-2">
+								<fo:basic-link internal-destination="{generate-id()}"><xsl:value-of select="title"/>
+								<fo:leader leader-pattern="dots" keep-with-next.within-line="always" />
+								<fo:page-number-citation ref-id="{generate-id()}"/>
+								</fo:basic-link>
+							</fo:block>
+							
+							<xsl:if test="type='free_space'">
+								<xsl:for-each select="report_data/partitions/partition">
+									<fo:block text-align-last="justify" xsl:use-attribute-sets="TOC-3">
+										<fo:basic-link internal-destination="{generate-id()}">
+										<xsl:value-of select="computer_name"/> -
+										<xsl:value-of select="partition_name"/>
+										<fo:leader leader-pattern="dots" keep-with-next.within-line="always" />
+										<fo:page-number-citation ref-id="{generate-id()}"/>
+										</fo:basic-link>
+									</fo:block>
+								</xsl:for-each>
+							</xsl:if>
+							
+							<xsl:if test="type='av_hist'">
+								<xsl:for-each select="report_data/updates_age/update">
+									<fo:block text-align-last="justify" xsl:use-attribute-sets="TOC-3">
+										<fo:basic-link internal-destination="{generate-id()}">
+										<xsl:value-of select="computer_name"/>
+										<fo:leader leader-pattern="dots" keep-with-next.within-line="always" />
+										<fo:page-number-citation ref-id="{generate-id()}"/>
+										</fo:basic-link>
+									</fo:block>
+								</xsl:for-each>
+							</xsl:if>
+							
+						</xsl:for-each>
+						
+					</xsl:for-each>
+				</fo:block>
+				</fo:block>
+			</xsl:if>
+			
+			<!-- Parsing when a set of reports is passed in XML using file references -->
+			<!--
+			<xsl:for-each select="document(/reports_set/report_file)/report">
+				<xsl:call-template name="template_selector"/>
+			</xsl:for-each>
+			-->
+			
+			<!-- Parsing when report(s) are passed in a single XML file -->
+			<xsl:for-each select="/reports_set/section">
+				<xsl:if test="/reports_set/show_section_cover_pages = 'yes'">
+					<fo:block id="{generate-id(.)}" xsl:use-attribute-sets="page-title" break-before="page"><xsl:value-of select="title"/></fo:block>
+				</xsl:if>
+				
+				<xsl:for-each select="report">
+					<xsl:call-template name="template_selector"/>
+				</xsl:for-each>
+			</xsl:for-each>
+			
+			<fo:block> </fo:block>
+			
+		</fo:flow>
+	</fo:page-sequence>
+
+</fo:root>
+</xsl:template>
+
+</xsl:stylesheet>

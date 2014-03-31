@@ -1,0 +1,70 @@
+.NormaGrey{
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    color:#7D7D7D;
+}
+.NormaGreyBold{
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    font-weight:bold;
+    color:#7D7D7D;
+    text-align:center;
+}
+.NormaGreyMini{
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:10px;
+    color:#7D7D7D;
+}
+.NormaGreyMiniBold{
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:10px;
+    font-weight:bold;
+    color:#7D7D7D;
+}
+.NormaWhiteBold1{
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    font-weight:bold;
+    color:#FFFFFF;
+    text-align:center;
+}
+.NormaGreyBIG{
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:16px;
+    font-weight:bold;
+    color:#7D7D7D;
+}
+#satisf_customer_container{
+    width: 700px;    
+    height: auto;
+    padding-bottom: 20px;
+    border: 1px solid black;
+    box-shadow: 5px 5px 2px #888;
+    -moz-box-shadow: 5px 5px 2px #888;
+    -webkit-box-shadow: 5px 5px 2px #888;
+    margin: auto;
+}
+#logo_container{
+    width: 680px;
+    height: 60px;
+    float: left;
+    margin: 10px;
+    background-image: url(../img/logo.gif);
+    background-repeat: no-repeat;
+    border: 0px solid;
+}
+#ticket_title{
+    float: right;     
+    margin-top: 35px; 
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:16px;
+    font-weight:bold;
+    color:#7D7D7D;
+}
+#thanks_container{
+    width: 700px;
+    height: auto;
+    padding: 4px 0;
+    background-image: url(../img/color_bar.jpg);    
+    background-repeat: repeat-x;
+}

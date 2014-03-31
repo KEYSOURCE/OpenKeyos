@@ -1,0 +1,68 @@
+{assign var="paging_titles" value="Users Administration, Account Managers"}
+{assign var="paging_urls" value="/?cl=user"}
+{include file="paging.html"}
+
+<h1>Account Managers</h1>
+
+<p class="error">{$error_msg}</p>
+
+<p>Below you have the users and the customers for which they have been designated as
+account managers. In bold letters are the customers for which those respective users
+are the default account managers.</p>
+
+<p>Customers not listed here will use the default account manager.</p>
+
+<form action="" method="POST" name="frm_t">
+{$form_redir}
+
+<b>User:</b>
+<select name="filter[user_id]" onchange="document.forms['frm_t'].submit ();">
+	<option value="">[All users]</option>
+	{html_options options=$users_list selected=$filter.user_id}
+</select>
+</form>
+<p/>
+
+<table class="list" width="80%">
+	<thead>
+	<tr>
+		<td>User</td>
+		<td>Customers</td>
+		<td width="140"> </td>
+	</tr>
+	</thead>
+	
+	{foreach from=$accounts_managers key=user_id item=customers}
+	{if !$filter.user_id or ($filter.user_id and $filter.user_id==$user_id)}
+	<tr>
+		<td><a href="/?cl=user&amp;op=user_edit&amp;id={$user_id}">{$users_list.$user_id}</a></td>
+		<td>
+			{foreach from=$customers key=customer_id item=is_default}
+				{if $is_default}<b>{/if}
+				{$customers_list.$customer_id} ({$customer_id})<br/>
+				{if $is_default}</b>{/if}
+			{/foreach}
+		</td>
+		<td align="right" nowrap="nowrap">
+			<a href="/?cl=user&amp;op=account_manager_edit&amp;user_id={$user_id}">Edit assigned customers &#0187;</a>
+		</td>
+	</tr>
+	{/if}
+	{foreachelse}
+	<tr>
+		<td colspan="3" class="light_text">[No customers]</td>
+	</tr>
+	{/foreach}
+	
+	{assign var="user_id" value=$filter.user_id}
+	{if $filter.user_id and !isset($accounts_managers.$user_id)}
+	<tr>
+		<td><a href="/?cl=user&amp;op=user_edit&amp;id={$user_id}">{$users_list.$user_id}</a></td>
+		<td class="light_text">[No assigned customers]</td>
+		<td align="right" nowrap="nowrap">
+			<a href="/?cl=user&amp;op=account_manager_edit&amp;user_id={$user_id}">Edit assigned customers &#0187;</a>
+		</td>
+	</tr>
+	{/if}
+</table>
+<p/>

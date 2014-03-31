@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<reports_set>
+	<show_cover_page>yes</show_cover_page>
+	<show_contents>yes</show_contents>
+	<show_section_cover_pages>yes</show_section_cover_pages>
+	<main_title>Eucomed Report</main_title>
+	
+	<!--
+	<report_file>test1.xml</report_file>
+	<report_file>test2.xml</report_file>
+	-->
+
+
+
+<section>
+	<title>Technical information</title>
+	<report>
+		<title>Outstanding Tickets</title>
+		<type>outstanding_tickets</type>
+
+		<report_data>
+			<filter>
+				<customer_id>23</customer_id>
+				<customer_name>Eucomed</customer_name>
+				<interval>23 Mar 2005</interval>
+				<tickets>23</tickets>
+				<generated>24 Mar 2005</generated>
+				<generated_readable>24 Mar 2005</generated_readable>
+			</filter>
+			<tickets>
+				<ticket id="23">
+					<id>23</id>
+					<subject>Subject 23</subject>
+				</ticket>
+				<ticket id="24">
+					<id>24</id>
+					<subject>Subject 24</subject>
+				</ticket>
+			</tickets>
+		</report_data>
+	</report>
+	<report>
+		<title>Computers</title>
+		<type>computers</type>
+		
+		<report_data>
+			<computers>
+				<computer id="332">
+					<id>332</id>
+					<name>KS-SERVER</name>
+					<customer_id>6</customer_id>
+					<customer_name>Keysource</customer_name>
+					
+				</computer>
+				<computer id="333">
+					<id>333</id>
+					<name>KS-MAIL</name>
+					<customer_id>6</customer_id>
+					<customer_name>Keysource</customer_name>
+				</computer>
+			</computers>
+		</report_data>
+	</report>
+</section>
+
+<section>
+	<title>Support</title>
+	
+	<report>
+		<title>Computers</title>
+		<type>computers</type>
+		
+		<report_data>
+			<computers>
+				<computer id="332">
+					<id>332</id>
+					<name>KS-SERVER</name>
+					<customer_id>6</customer_id>
+					<customer_name>Keysource</customer_name>
+					
+				</computer>
+				<computer id="333">
+					<id>333</id>
+					<name>KS-MAIL</name>
+					<customer_id>6</customer_id>
+					<customer_name>Keysource</customer_name>
+				</computer>
+			</computers>
+		</report_data>
+	</report>
+</section>
+</reports_set>

@@ -1,0 +1,121 @@
+{assign var="paging_titles" value="KB, View KB, Add Category"}
+{assign var="paging_urls" value="/?cl=kb, .?cl=kb&op=manage_kb_categories"}
+{include file="paging.html"}
+<style type="text/css">
+    @import "./kskb.css";
+</style>
+<script language="javascript" type="text/javascript" src="/javascript/ajax.js"></script>
+<script language="javascript" type="text/javascript">
+//<[CDATA[
+{literal}
+	function getSubcategories()
+	{
+		var selElem = document.getElementById("kbcat[hasParent]");		
+		getKbSubcategories(selElem.value);
+	}
+	
+	function pickOtherCategory()
+	{
+		{/literal}
+		var container = document.getElementById("cat_select_container");
+		var new_html = "<select name=\"kbcat[hasParent]\" id=\"kbcat[hasParent]\" onchange=\"getSubcategories()\">";
+		new_html += "<option value=\"-1\">[Select category]</option>";
+		{foreach from=$categories_list item="cat_title" key="cat_id"}
+		new_html += "<option label='{$cat_title}' value='{$cat_id}'>{$cat_title}</option>";
+		{/foreach}
+		new_html += "</select>";
+		container.innerHTML = new_html;
+		{literal}
+	}
+{/literal}
+//]]>
+</script>
+<p class="error">{$error_msg}</p>
+<form name="frmKBAddCat" enctype="multipart/form-data" action="" method="post">
+{$form_redir}
+<table border="0" style="width: 98%" cellpadding="0" cellspacing="0">
+    <tr valign="top">
+        <td style="width: 180px">
+            <div id="leftSideBox_related">
+                <div id="categTree_pnlBox" class="MagazineArticleCtrlBox">
+                    <div class="MagazineArticleCtrlHeader">Categories Tree</div>														
+                    <div id="editCategoryItem" style="padding: 3px 3px 3px 15px; margin: 0px; width: 140px">	
+                            <a class="ArtLink" href="#">
+                                Edit this category
+                            </a>
+                            <br />   
+                    </div>                                                                                
+                    <span id="categs_lblShow"></span>
+                </div>
+            </div>
+        </td>
+		<td>
+			<div class="FeatureHeadline">Add new KnowledgeBase category</div>
+			<p>
+			<div>
+			<p>
+					<a href="?cl=kb&op=manage_kb_categories">All KB Categories</a>
+			</p>	
+			</div>
+			<table class="list" width="98%">
+				<thead>
+					<tr>
+						<td colspan=2>New category data</td>
+					</tr>
+				</thead>
+				<tr>
+					<td class="highlight" width="30%">
+						<b>Title:</b>
+					</td>
+					<td class="posthighlight" width="70%">
+						<input type="text" name="kbcat[hasTitle]" id="kbcat[hasTitle]" value="{$saved_data[hasTitle]}" size="50">
+					</td>
+				</tr>
+				<tr>
+					<td class="highlight" width="30%">
+						<b>Description:</b>
+					</td>
+					<td class="posthighlight" width="70%">
+						<textarea type="text" name="kbcat[hasDescription]" id="kbcat[hasDescription]" cols="50" rows="10">{$saved_data[hasDescription]}</textarea>
+					</td>
+				</tr>
+				<tr>
+					<td class="highlight" width="30%">
+						<b>Tags:</b>
+					</td>
+					<td class="posthighlight" width="70%">
+						<input type="text" name="kbcat[hasKeywords]" id="kbcat[hasKeywords]" value="{$saved_data[hasKeywords]}" size="50">
+					</td>
+				</tr>
+				<tr>
+					<td class="highlight" width="30%">
+						<b>Parent category:</b>
+					</td>
+					<td class="posthighlight" width="70%">
+						<div id="cat_select_container">
+						<input type='hidden' name='kbCatParent' id='kbCatParent' value='{if $category}{$category->id}{else}-1{/if}' />
+						<b>{if $category}{$category->hasTitle}{/if}</b>&nbsp;&nbsp;
+						<select name="kbcat[hasParent]" id="kbcat[hasParent]" onchange="getSubcategories()" >
+							<option value="-1">[Select category]</option>
+							{html_options options=$categories_list selected=$saved_data[hasParent]}
+						</select>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="highlight" width="30%">
+						<b>Image</b>
+					</td>
+					<td class="post_highlight" width="70%">
+						<input type="file" name="photo_file" value="Browse" />	
+					</td> 
+				</tr>
+			</table>
+			<p />
+
+			<input type="submit" name="save" value="Save">
+			<input type="submit" name="cancel" value="Cancel">
+		</td>
+    </tr>
+</table>    
+</form>

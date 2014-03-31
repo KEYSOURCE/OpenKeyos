@@ -1,0 +1,47 @@
+{assign var="paging_titles" value="Users Administration, Generic Notifications Recipients"}
+{assign var="paging_urls" value="/?cl=user"}
+{include file="paging.html"}
+
+<h1>Generic Notifications Recipients</h1>
+
+<p class="error">{$error_msg}</p>
+
+Specify below which users will receive the notifications for different classes of 
+notifications when a specific notification recipient is not defined.
+<p>
+
+<table class="list" width="60%">
+	<thead>
+	<tr>
+		<td>Notifications class</td>
+		<td>Recipients</td>
+		<td> </td>
+	</tr>
+	</thead>
+	
+	{foreach from=$NOTIF_OBJ_CLASSES item=class_name key=class_id}
+	<tr>
+		<td width="30%"><b>{$class_name}</b></td>
+		<td>
+		{foreach from=$users item=user_name key=user_id}
+			{if is_array($recipients.$class_id)}
+				{if in_array ($user_id, $recipients.$class_id)}
+				
+					{if $default_recipients.$class_id == $user_id}<b>{/if}
+					
+					{$user_name} {$user->fname} {$user->lname}<br>
+					
+					{if $default_recipients.$class_id == $user_id}</b>{/if}
+				{/if}
+			{/if}
+		{/foreach}
+		</td>
+		
+		<td align="right">
+			<a href="/?cl=user&op=notification_recipients_edit&class_id={$class_id}">Edit&nbsp;&#0187;</a>
+		</td>
+	</tr>
+
+
+	{/foreach}
+</table>

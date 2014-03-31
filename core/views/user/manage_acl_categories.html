@@ -1,0 +1,46 @@
+{assign var="paging_titles" value="Users Administration, Manage ACL Categories"}
+{assign var="paging_urls" value="/?cl=user"}
+{include file="paging.html"}
+
+
+<h1>Manage ACL Categories</h1>
+<p>
+<font class="error">{$error_msg}</font>
+<p>
+
+<a href="/?cl=user&op=acl_category_add">Add category &#0187;</a>
+<p>
+
+<table class="list" width="98%">
+	<thead>
+	<tr>
+		<td>ID</td>
+		<td>Name</td>
+		<td>ACL Items</td>
+		<td> </td>
+	</tr>
+	</thead>
+	
+	{foreach from=$acl_categories item=category}
+		<tr>
+			<td>{$category->id}</td>
+			<td>{$category->name}</td>
+			<td>
+				{foreach from=$category->get_items_list() item=item}
+					{$item}<br>
+				{/foreach}
+			</td>
+			<td>
+				<a href="/?cl=user&op=acl_category_delete&id={$category->id}"
+					onClick="return confirm ('Are you sure you want to delete this category?');"
+				>Delete</a>
+			</td>
+		</tr>
+	{foreachelse}
+		<tr>
+			<td colspan="3">[There are no ACL categories defined yet]</td>
+		</tr>
+	{/foreach}
+
+</table>
+<p>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html [
+<!ENTITY % HTMLlat1 PUBLIC
+"-//W3C/ENTITIES Latin 1 for XHTML//EN"
+"html4-all.ent">
+%HTMLlat1;
+]>
+<!-- New document created with EditiX at Wed Jul 02 15:24:29 EEST 2008 -->
+
+<xsl:stylesheet 
+	version="1.0" 
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	xmlns:fo="http://www.w3.org/1999/XSL/Format">
+	<xsl:import href="layout.xsl" />
+	<xsl:import href="layout_page.xslt"/>
+	<xsl:import href="individual_timesheet_report.xslt" />
+	<xsl:output method="xml" indent="yes"/>
+	<xsl:template match="/">
+		<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" >
+		     <fo:layout-master-set>
+                                <fo:simple-page-master master-name="cover" page-width="21.5cm" page-height="27.9cm" margin-bottom="2cm" margin-left="2cm" margin-right="2cm" margin-top="0.5cm">
+                                     <fo:region-body margin-top="3.5cm"/>
+                                     <fo:region-before extent="2cm"/>
+                                     <fo:region-after extent="1cm"/>
+                                </fo:simple-page-master>
+                               <fo:simple-page-master master-name="page" margin-left="2cm" margin-right="2cm" margin-top="0.5cm" margin-bottom="0.25cm" page-height="27.9cm" page-width="21.5cm">
+                                     <fo:region-body margin-top="3.5cm" margin-bottom="1cm"/>
+                                     <fo:region-before extent="2cm"/>
+                                     <fo:region-after extent="1cm"/>
+                               </fo:simple-page-master>
+                               <fo:page-sequence-master master-name="contents">
+                                     <fo:single-page-master-reference master-reference="cover"/>
+                                     <fo:repeatable-page-master-reference master-reference="page"/>
+                               </fo:page-sequence-master>
+                           </fo:layout-master-set>
+                                                 
+                           <fo:page-sequence master-reference="contents" initial-page-number="1" >
+                                  <xsl:call-template name="page_header"/>
+                                  <xsl:call-template name="page_footer"/>
+                                  <fo:flow flow-name="xsl-region-body">
+                          	<fo:block break-after="page" >
+                          	      <fo:block xsl:use-attribute-sets="document-title">
+                          	      	<xsl:value-of select="/reports/document_title"/>
+                          	      </fo:block>                          	     
+                          	      <fo:block xsl:use-attribute-sets="document-title1">                          	      	
+                          	      	Period: <xsl:value-of select="/reports/period"/>
+                          	      </fo:block>
+                          	</fo:block>
+                          	<xsl:for-each select="reports/report">
+       			     <fo:block id="{generate-id(.)}" break-before="page"  xsl:use-attribute-sets="page-title" >
+       			       <xsl:value-of select="user_name"/>       			       
+       			     </fo:block>
+       			     <fo:block  break-after="page"  xsl:use-attribute-sets="page-title" >
+       			       Period: <xsl:value-of select="/reports/period"/>       			  
+       			     </fo:block>			
+       			     <xsl:call-template name="individual_report" />
+                                 </xsl:for-each>
+		           </fo:flow>
+                           </fo:page-sequence>                           		      
+		</fo:root>		
+	</xsl:template>
+
+</xsl:stylesheet>

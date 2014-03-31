@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html [
+  <!ENTITY % HTMLlat1 PUBLIC
+  "-//W3C/ENTITIES Latin 1 for XHTML//EN"
+  "html4-all.ent">
+  %HTMLlat1;
+]>
+{assign var="am" value=$customer->account_manager}
+{assign var="am_info" value=$ACCOUNT_MANAGERS_INFO.$am}
+<intervention_report>
+<logo>{$ACCOUNT_MANAGERS_LOGOS.$am}</logo>
+<footer>
+		<name>{$am_info.name}</name>
+		<address>{$am_info.address}</address>
+		<city>{$am_info.city}</city>
+		<country>{$am_info.country}</country>
+		<phone>{$am_info.phone}</phone>
+		<fax>{$am_info.fax}</fax>
+		<email>{$am_info.email}</email>
+		<web>{$am_info.web}</web>
+		<rcb>{$am_info.rcb}</rcb>
+		<bbl>{$am_info.bbl}</bbl>
+		<fortis>{$am_info.fortis}</fortis>
+</footer>
+<info>
+	<customer id="{$customer->id}">
+		<name>{$customer->name|escape}</name>
+	</customer>
+
+	<filter>
+		<show>{$filter.show}</show>
+		<view>{$filter.view}</view>
+	</filter>
+</info>
+
+<intervention id="{$intervention->id}">
+	<subject>{$intervention->subject|escape}</subject>
+	<work_time>{if $intervention->work_time}{$intervention->work_time|@format_interval_minutes}{else}--{/if}</work_time>
+	<bill_time>{if $intervention->bill_time}{$intervention->bill_time|@format_interval_minutes}{else}--{/if}</bill_time>
+</intervention>
+
+
+<details>
+{foreach from=$intervention->details item=detail}
+	{assign var="price_type" value=$detail->action_type->price_type}
+	<detail id="{$detail->id}" {if $detail->private}privat="yes"{/if}>
+		<time_in>{if $detail->time_in}{$detail->time_in|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}{else}--{/if}</time_in>
+		<time_out>{if $detail->time_out}{$detail->time_out|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}{else}--{/if}</time_out>
+		<work_time>{if $detail->work_time}{$detail->work_time|@format_interval_minutes}{else}--{/if}</work_time>
+		<bill_time>{if $detail->bill_time}{$detail->bill_time|@format_interval_minutes}{else}--{/if}</bill_time>
+		<user id="{$detail->user_id}">{if $detail->user_id}{$detail->user->get_name()}{/if}</user>
+		{assign var="location_id" value=$detail->location_id}
+		<location id="{$location_id}">{$locations_list.$location_id}</location>
+		{assign var="action_type_id" value=$detail->activity_id}
+		<action_type id="{$activity_id}">{$action_types.$action_type_id}</action_type>
+		<private>{if $detail->private}yes{else}no{/if}</private>
+
+		<billable>{if $detail->billable and ($price_type==$smarty.const.PRICE_TYPE_HOURLY or ($price_type==$smarty.const.PRICE_TYPE_FIXED and !$detail->is_continuation))}Yes{else}No{/if}</billable>
+		<pricing>{if $price_type==$smarty.const.PRICE_TYPE_HOURLY}Hourly{else}Fixed{/if}</pricing>
+		<ticket id="{$detail->ticket_id}">
+			{assign var="ticket_id" value=$detail->ticket_id}
+			{assign var="ticket" value=$intervention->tickets.$ticket_id}
+			<subject>{$ticket->subject|escape}</subject>
+
+			{if $detail->private and $filter.view=='customer'}
+				<comments>Technical support</comments>
+			{else}
+				<comments>
+					{$detail->br2nl_comment()}              
+				</comments>
+			{/if}
+		</ticket>
+	</detail>
+{/foreach}
+</details>
+
+<tickets>
+{foreach from=$intervention->tickets item=ticket key=ticket_id}
+	<ticket id="{$ticket->id}">
+		<subject>{$ticket->subject|escape}</subject>
+		<time_in>{if $ticket->time_in}{$ticket->time_in|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}{else}--{/if}</time_in>
+		<time_out>{if $ticket->time_out}{$ticket->time_out|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}{else}--{/if}</time_out>
+		<work_time>{if $ticket->work_time}{$ticket->work_time|@format_interval_minutes}{else}--{/if}</work_time>
+		<bill_time>{if $ticket->bill_time}{$ticket->bill_time|@format_interval_minutes}{else}--{/if}</bill_time>
+	</ticket>
+{/foreach}
+</tickets>
+
+</intervention_report>

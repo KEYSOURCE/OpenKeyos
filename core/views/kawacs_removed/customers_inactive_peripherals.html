@@ -1,0 +1,47 @@
+{assign var="paging_titles" value="KAWACS, Inactive Customers with Active Peripherals"}
+{assign var="paging_urls" value="/?cl=kawacs_removed"}
+{include file="paging.html"}
+
+<h1>Inactive Customers with Active Peripherals</h1>
+
+<p class="error">{$error_msg}</p>
+
+<p>Below you have the list of customers which are marked as inactive but who still
+have active peripherals. Where possible, it is advisable that these customers' peripherals
+to be marked as <b>Removed</b>, so they won't be present anymore in the active
+peripherals database.</p>
+
+<table class="list" width="60%">
+	<thead>
+	<tr>
+		<td width="220">Customer</td>
+		<td>Peripherals</td>
+		<td width="120"> </td>
+	</tr>
+	</thead>
+	
+	{foreach from=$customers_peripherals key=customer_id item=peripherals_count}
+	<tr>
+		<td>
+			<a href="/?cl=customer&amp;op=customer_edit&amp;id={$customer_id}"
+			>{$customers_list.$customer_id|escape} ({$customer_id})</a>
+		</td>
+		<td>{$peripherals_count|number_format:0}</td>
+		<td nowrap="nowrap" align="right">
+			<a href="/?cl=kawacs_removed&amp;op=remove_multi_peripherals&amp;customer_id={$customer_id}">Remove Peripherals &#0187;</a>
+		</td>
+	</tr>
+	{foreachelse}
+	<tr>
+		<td colspan="3" class="light_text">[No inactive customers with active peripherals]</td>
+	</tr>
+	{/foreach}
+	
+	{if $tot_peripherals_count > 0}
+	<tr class="head">
+		<td>Total peripherals:</td>
+		<td>{$tot_peripherals_count|number_format:0}</td>
+		<td> </td>
+	</tr>
+	{/if}
+</table>

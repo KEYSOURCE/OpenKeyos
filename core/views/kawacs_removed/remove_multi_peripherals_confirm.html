@@ -1,0 +1,54 @@
+{assign var="paging_titles" value="KAWACS, Manage Removed Peripherals, Remove Multiple Peripherals"}
+{assign var="paging_urls" value="/?cl=kawacs_removed, /?cl=kawacs_removed&op=manage_peripherals"}
+{include file="paging.html"}
+
+<script language="JavaScript" src="/javascript/CalendarPopup.js" type="text/javascript"></script>
+
+<h1>Confirm Removing Multiple Peripherals</h1>
+
+<p class="error">{$error_msg}</p>
+
+<p>Please confirm below that you want to remove these peripherals.</p>
+
+<form action="" method="POST" name="frm_t">
+{$form_redir}
+
+<table class="list" width="70%">
+	<thead>
+	<tr>
+		<td width="140">Customer:</td>
+		<td class="post_highlight">{$customer->name|escape} ({$customer->id})</td>
+	</tr>
+	</thead>
+	
+	<tr>
+		<td class="highlight">Removal date:</td>
+		<td class="post_highlight">
+			<input type="text" size="12" name="removal[date_removed]"
+				value="{$removal->date_removed|date_format:$smarty.const.DATE_FORMAT_SELECTOR}"
+			/>
+			{literal}
+			<a href="#" onclick="showCalendarSelector('frm_t', 'removal[date_removed]'); return false;" name="anchor_calendar" id="anchor_calendar"
+				><img src="./images/icon_cal.gif" alt="calendar" border=0 style="vertical-align: middle"></a>
+			{/literal}
+		</td>
+	</tr>
+	<tr>
+		<td class="highlight">Removal reason:</td>
+		<td class="post_highlight"><textarea name="removal[reason_removed]" rows="5" cols="60">{$removal->reason_removed}</textarea></td>
+	</tr>
+	
+	<tr>
+		<td class="highlight">Peripherals to remove:</td>
+		<td class="post_highlight">
+			{foreach from=$peripherals_ids item=peripheral_id}
+			#{$peripheral_id}: {$peripherals_list.$peripheral_id|escape}<br/>
+			{/foreach}
+		</td>
+	</tr>
+</table>
+<p/>
+
+<input type="submit" name="save" value="Remove peripherals" class="button" />
+<input type="submit" name="cancel" value="Cancel" class="button" />
+</form>

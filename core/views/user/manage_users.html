@@ -1,0 +1,224 @@
+{assign var="paging_titles" value="Users Administration, Users"}
+{assign var="paging_urls" value="/?cl=user"}
+{include file="paging.html"}
+
+<script language="JavaScript" type="text/javascript">
+//<![CDATA[
+{literal}
+function changePage (start_page)
+{
+	frm = document.forms['manage_users']
+	
+	if (start_page < 0)
+	{
+		pages = frm.elements['filter_start']
+		start_page = pages.options[pages.selectedIndex].value
+	}
+	frm.elements['filter[start]'].value = start_page
+	frm.submit ()
+}
+{/literal}
+//]]>
+</script>
+
+
+<h1>Users</h1>
+
+<p class="error">{$error_msg}</p>
+
+<form action="" method="POST" name="manage_users">
+{$form_redir}
+<input type="hidden" name="order_by_bk" value="{$filter.order_by}" />
+<input type="hidden" name="order_dir_bk" value="{$filter.order_dir}" />
+
+<table width="98%">
+	<tr>
+		<td width="75%" nowrap="nowrap">
+			View: 
+			<select name="filter[type]" onchange="document.forms['manage_users'].submit();">
+				{html_options options=$USER_ONLY_TYPES selected=$filter.type}
+			</select>
+			
+			{if $filter.type == $smarty.const.USER_TYPE_CUSTOMER}
+				<select name="filter[customer_id]"  onchange="document.forms['manage_users'].submit();">
+					<option value="">[All customers]</option>
+					{html_options options=$customers_list selected=$filter.customer_id}
+				</select>
+			{/if}
+			
+			<select name="filter[active]" onchange="document.forms['manage_users'].submit();">
+				<option value="{$smarty.const.USER_FILTER_ALL}" {if $filter.active==$smarty.const.USER_FILTER_ALL}selected{/if}>[All]</option>
+				<option value="{$smarty.const.USER_FILTER_ACTIVE_AWAY}" {if $filter.active==$smarty.const.USER_FILTER_ACTIVE_AWAY}selected{/if}>[Active and away]</option>
+				{html_options options=$USER_STATUSES selected=$filter.active}
+			</select>
+		</td>
+		<td nowrap="nowrap" align="right">
+			{if $users_count > $filter.limit}
+				{if $filter.start > 0}
+					<a href="#" onclick="changePage({$start_prev});">&#0171; Previous</a>
+				{else}
+					<font class="light_text">&#0171; Previous</font>
+				{/if}
+				
+				<select name="filter_start" onchange="changePage (-1)">
+					{html_options options=$pages selected=$filter.start}
+				</select>
+				<input type="hidden" name="filter[start]" value="{$filter.start}">
+				
+				{if $filter.start + $filter.limit < $users_count}
+					<a href="#" onclick="changePage({$start_next});">Next &#0187;</a>
+				{else}
+					<font class="light_text">Next &#0187;</font>
+				{/if}
+				|
+			{/if}
+			Per page:
+			<select name="filter[limit]"  onchange="document.forms['manage_users'].submit();">
+				{html_options options=$PER_PAGE_OPTIONS selected=$filter.limit} 
+			</select>
+		</td>
+	</tr>
+</table>
+</form>
+
+<p><a href="/?cl=user&op=user_add{if $filter.type==$smarty.const.USER_TYPE_CUSTOMER}&customer_id={$filter.customer_id}{/if}">Add user &#0187;</a></p>
+
+<table class="list" width="98%">
+	<thead>
+	<tr>
+		<td class="sort_text" style="width: 1%; white-space: no-wrap;">{strip}
+			<a href="{$sort_url}&order_by=id&order_dir={if $filter.order_by=='id' and $filter.order_dir=='ASC'}DESC{else}ASC{/if}"
+			>ID</a>{if $filter.order_by=='id'}&nbsp;<img src="/images/{if $filter.order_dir=='ASC'}up{else}down{/if}.gif" width="11" height="6">{/if}
+		{/strip}</td>
+		
+		<td class="sort_text" style="white-space: no-wrap; width: 20%;">{strip}
+			<a href="{$sort_url}&order_by=name&order_dir={if $filter.order_by=='name' and $filter.order_dir=='ASC'}DESC{else}ASC{/if}"
+			>Name</a>{if $filter.order_by=='name'}&nbsp;<img src="/images/{if $filter.order_dir=='ASC'}up{else}down{/if}.gif" width="11" height="6">{/if}
+		{/strip}</td>
+		
+		<td class="sort_text" style="white-space: no-wrap; width: 10%;">{strip}
+			<a href="{$sort_url}&order_by=login&order_dir={if $filter.order_by=='login' and $filter.order_dir=='ASC'}DESC{else}ASC{/if}"
+			>Login</a>{if $filter.order_by=='login'}&nbsp;<img src="/images/{if $filter.order_dir=='ASC'}up{else}down{/if}.gif" width="11" height="6">{/if}
+		{/strip}</td>
+		
+		{if $filter.type == $smarty.const.USER_TYPE_KEYSOURCE}
+		<td class="sort_text" style="white-space: no-wrap; width: 10%;">{strip}
+			<a href="{$sort_url}&order_by=erp_id&order_dir={if $filter.order_by=='erp_id' and $filter.order_dir=='ASC'}DESC{else}ASC{/if}"
+			>ERP ID</a>{if $filter.order_by=='erp_id'}&nbsp;<img src="/images/{if $filter.order_dir=='ASC'}up{else}down{/if}.gif" width="11" height="6">{/if}
+		{/strip}</td>
+		{/if}
+		
+		{if $filter.type == $smarty.const.USER_TYPE_CUSTOMER}
+			<td class="sort_text" style="white-space: no-wrap; width: 20%;">{strip}
+			<a href="{$sort_url}&order_by=customer&order_dir={if $filter.order_by=='customer' and $filter.order_dir=='ASC'}DESC{else}ASC{/if}"
+			>Customer</a>{if $filter.order_by=='customer'}&nbsp;<img src="/images/{if $filter.order_dir=='ASC'}up{else}down{/if}.gif" width="11" height="6">{/if}
+			{/strip}</td>
+		{/if}
+		
+		{if $filter.type == $smarty.const.USER_TYPE_KEYSOURCE}
+			<td class="sort_text" style="white-space: no-wrap; width: 4%;">{strip}
+			<a href="{$sort_url}&order_by=restrict_customers&order_dir={if $filter.order_by=='restrict_customers' and $filter.order_dir=='ASC'}DESC{else}ASC{/if}"
+			>Restrict<br>cust.</a>{if $filter.order_by=='restrict_customers'}&nbsp;<img src="/images/{if $filter.order_dir=='ASC'}up{else}down{/if}.gif" width="11" height="6">{/if}
+			{/strip}</td>
+		{/if}
+		
+		<td class="sort_text" style="white-space: no-wrap; width: 4%;">{strip}
+			<a href="{$sort_url}&order_by=active&order_dir={if $filter.order_by=='active' and $filter.order_dir=='ASC'}DESC{else}ASC{/if}"
+			>Status</a>{if $filter.order_by=='active'}&nbsp;<img src="/images/{if $filter.order_dir=='ASC'}up{else}down{/if}.gif" width="11" height="6">{/if}
+		{/strip}</td>
+		
+		<td class="sort_text" style="white-space: no-wrap; width: 10%;">{strip}
+			<a href="{$sort_url}&order_by=email&order_dir={if $filter.order_by=='email' and $filter.order_dir=='ASC'}DESC{else}ASC{/if}"
+			>Email</a>{if $filter.order_by=='email'}&nbsp;<img src="/images/{if $filter.order_dir=='ASC'}up{else}down{/if}.gif" width="11" height="6">{/if}
+		{/strip}</td>
+		
+		<td width="15%">Phone</td>
+		<td>Roles</td>
+		<td> </td>
+	</tr>
+	</thead>
+	
+	{foreach from=$users item=user}
+		<tr>
+			<td><a href="/?cl=user&op=user_edit&id={$user->id}">{$user->id}</a></td>
+			<td>
+				<a href="/?cl=user&op=user_edit&id={$user->id}">{$user->fname} {$user->lname}</a>
+				{if $user->is_away()}
+					<br/>
+					Away, redirect to:
+					{assign var="away_recipient_id" value=$user->away_recipient_id}
+					{$users_list.$away_recipient_id}
+				{/if}
+			</td>
+			<td>{$user->login|escape}</td>
+			
+			{if $filter.type == $smarty.const.USER_TYPE_KEYSOURCE}
+				<td>{$user->erp_id|escape}</td>
+			{/if}
+			
+			{if $filter.type == $smarty.const.USER_TYPE_CUSTOMER}
+			<td>
+				{assign var="user_customers" value=$user->get_users_customer_list()}
+				{foreach from=$user_customers item="cust_id"}
+				{$customers_list.$cust_id}<br />
+				{/foreach}
+			</td>
+			{/if}
+			
+			{if $filter.type == $smarty.const.USER_TYPE_KEYSOURCE}
+			<td align="center">
+				{if $user->restrict_customers}Yes{else}No{/if}
+			</td>
+			{/if}
+			
+			<td>
+				{assign var="active" value=$user->active}
+				{$USER_STATUSES.$active}
+			</td>
+			<td>{$user->email}</td>
+			<td nowrap="nowrap">
+				{* Show only a brief list of phone numbers 
+				{foreach from=$user->phones item=phone}
+					{assign var="phone_type" value=$phone->type}
+					{$PHONE_TYPES.$phone_type}: {$phone->phone}
+					{if $phone->comment}
+						<br><i>{$phone->comment}</i>
+					{/if}
+					<br>
+				{/foreach}
+				*}
+				{foreach from=$user->phones item=phone}
+					{$phone->phone}
+					<br/>
+				{/foreach}
+			</td>
+			<td>
+				<a href="/?cl=user&op=user_roles&id={$user->id}">
+				{if !$user->administrator}
+					{foreach from=$user->roles item=role}
+						{$role->name}<br/>
+					{foreachelse}
+						[none]
+					{/foreach}
+				{else}
+					Administrator
+				{/if}
+				</a>
+			</td>
+			
+			
+			<td align="right" nowrap="nowrap">
+				<a href="/?cl=user&op=user_delete&id={$user->id}"
+					onclick="return confirm ('Are you sure you want to delete this user?');"
+				>Delete  &#0187;</a>
+				
+			</td>
+		</tr>
+	{foreachelse}
+		<tr>
+			<td colspan="4">[There are no users created yet]</td>
+		</tr>
+	{/foreach}
+
+</table>
+<p/>

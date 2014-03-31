@@ -1,0 +1,42 @@
+{assign var="paging_titles" value="Users Administration, Groups, Add Group"}
+{assign var="paging_urls" value="/?cl=user, /?cl=user&op=manage_groups"}
+{include file="paging.html"}
+
+<h1>Add Group</h1>
+<p>
+<font class="error">{$error_msg}</font>
+<p>
+
+<form action="" method="POST">
+{$form_redir}
+
+<table class="list" width="95%">
+	<thead>
+	<tr>
+		<td colspan=2>
+			Group information
+		</td>
+	</tr>
+	</thead>
+	
+	<tr>
+		<td>Name:</td>
+		<td><input type="text" name="group[fname]" value="{$group->login}" size="30"></td>
+	</tr>
+	<tr>
+		<td>Type:</td>
+		<td>
+			<select name="group[type]">
+				{html_options options=$GROUP_ONLY_TYPES selected=$group->type}
+			</select>
+
+		</td>
+	</tr>
+</table>
+
+<p>
+
+<input type="submit" name="save" value="Save">
+<input type="submit" name="cancel" value="Cancel">
+
+</form>

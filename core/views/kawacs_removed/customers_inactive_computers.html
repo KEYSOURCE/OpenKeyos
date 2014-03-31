@@ -1,0 +1,47 @@
+{assign var="paging_titles" value="KAWACS, Inactive Customers with Active Computers"}
+{assign var="paging_urls" value="/?cl=kawacs_removed"}
+{include file="paging.html"}
+
+<h1>Inactive Customers with Active Computers</h1>
+
+<p class="error">{$error_msg}</p>
+
+<p>Below you have the list of customers which are marked as inactive but who still
+have active computers. Where possible, it is advisable that these customers' computers
+to be marked as <b>Removed</b>, so they won't be present anymore in the active
+computers database.</p>
+
+<table class="list" width="60%">
+	<thead>
+	<tr>
+		<td width="220">Customer</td>
+		<td>Computers</td>
+		<td width="120"> </td>
+	</tr>
+	</thead>
+	
+	{foreach from=$customers_computers key=customer_id item=computers_count}
+	<tr>
+		<td>
+			<a href="/?cl=customer&amp;op=customer_edit&amp;id={$customer_id}"
+			>{$customers_list.$customer_id|escape} ({$customer_id})</a>
+		</td>
+		<td>{$computers_count|number_format:0}</td>
+		<td nowrap="nowrap" align="right">
+			<a href="/?cl=kawacs_removed&amp;op=remove_multi_computers&amp;customer_id={$customer_id}">Remove Computers &#0187;</a>
+		</td>
+	</tr>
+	{foreachelse}
+	<tr>
+		<td colspan="3" class="light_text">[No inactive customers with active computers]</td>
+	</tr>
+	{/foreach}
+	
+	{if $tot_computers_count > 0}
+	<tr class="head">
+		<td>Total computers:</td>
+		<td>{$tot_computers_count|number_format:0}</td>
+		<td> </td>
+	</tr>
+	{/if}
+</table>

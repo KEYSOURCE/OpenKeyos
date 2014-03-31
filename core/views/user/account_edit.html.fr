@@ -1,0 +1,72 @@
+{assign var="paging_titles" value="Utilisateur, Editer Les Informations"}
+{assign var="paging_urls" value="/?cl=home&op=user_area"}
+{include file="paging.html"}
+
+<h1>Editer Les Informations</h1>
+<p class="error">{$error_msg}</p>
+
+<form action="" method="POST">
+{$form_redir}
+
+<table class="list" width="95%">
+	<thead>
+	<tr>
+		<td colspan="2">Paramètres de votre connexion</td>
+	</tr>
+	</thead>
+	
+	<tr>
+		<td class="highlight" width="140">Login: </td>
+		<td class="post_highlight"><input type="text" name="user[login]" value="{$user->login}" size="30" /></td>
+	</tr>
+	<tr>
+		<td class="highlight">Mot de passe: </td>
+		<td class="post_highlight"><input type="password" name="user[password]" value="{$user->password}" size="30" /></td>
+	</tr>
+	<tr>
+		<td class="highlight">Confirmez votre mot de passe: </td>
+		<td class="post_highlight"><input type="password" name="user[password_confirm]" value="{$user->password_confirm}" size="30" /></td>
+	</tr>
+	
+	
+	<tr class="head">
+		<td colspan="2">Informations personelles</td>
+	</tr>
+	
+	<tr>
+		<td class="highlight">Prénom: </td>
+		<td class="post_highlight"><input type="text" name="user[fname]" value="{$user->fname}" size="30" /></td>
+	</tr>
+	<tr>
+		<td class="highlight">Nom de famille: </td>
+		<td class="post_highlight"><input type="text" name="user[lname]" value="{$user->lname}" size="30" /></td>
+	</tr>
+	<tr>
+		<td class="highlight">E-mail: </td>
+		<td class="post_highlight"><input type="text" name="user[email]" value="{$user->email}" size="30" /></td>
+	</tr>
+	<tr>
+		<td class="highlight">Votre langue: </td>
+		<td class="post_highlight">
+			<select name="user[language]">
+				{html_options options=$LANGUAGES selected=$user->language}
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="highlight">Recevoir la lettre d'information: </td>
+		<td class="post_highlight">
+			<select name="user[newsletter]">
+				<option value="0">Non</option>
+				<option value="1" {if $user->newsletter} selected {/if}>Oui</option>
+			</select>
+		</td>
+	</tr>
+	
+</table>
+<p/>
+
+<input type="submit" name="save" value="Sauver" class="button" />
+<input type="submit" name="cancel" value="Annuler" class="button" />
+
+</form>

@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html [
+  <!ENTITY % HTMLlat1 PUBLIC
+  "-//W3C/ENTITIES Latin 1 for XHTML//EN"
+  "html4-all.ent">
+  %HTMLlat1;
+]>
+
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+		xmlns:fo="http://www.w3.org/1999/XSL/Format"
+                version="1.0">
+
+<xsl:variable name="pagewidth" select="21.5"/>
+<xsl:variable name="bodywidth" select="19"/>
+
+<!-- Some styles to use in document -->
+<xsl:attribute-set name="page-title">
+	<xsl:attribute name="space-before">6pt</xsl:attribute>
+	<xsl:attribute name="space-after">18pt</xsl:attribute>
+	<xsl:attribute name="text-align">left</xsl:attribute>
+	<xsl:attribute name="font-size">20pt</xsl:attribute>
+	<xsl:attribute name="border-bottom-color">#709D19</xsl:attribute>
+	<xsl:attribute name="border-bottom-width">0.1mm</xsl:attribute>
+	<xsl:attribute name="border-bottom-style">solid</xsl:attribute>
+	<xsl:attribute name="padding-before">1mm</xsl:attribute>
+	<xsl:attribute name="font-weight">bold</xsl:attribute>
+	<xsl:attribute name="color">#709D19</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:attribute-set name="section-title">
+	<xsl:attribute name="space-before">10pt</xsl:attribute>
+	<xsl:attribute name="space-after">10pt</xsl:attribute>
+	<xsl:attribute name="font-size">14pt</xsl:attribute>
+	<xsl:attribute name="font-weight">bold</xsl:attribute>
+	<xsl:attribute name="color">#709D19</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:attribute-set name="pre-like">
+	<xsl:attribute name="white-space-collapse">false</xsl:attribute>
+	<xsl:attribute name="linefeed-treatment">preserve</xsl:attribute>
+	<xsl:attribute name="white-space-treatment">preserve</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:attribute-set name="table-cell-list">
+	<xsl:attribute name="padding">2mm</xsl:attribute>
+	<xsl:attribute name="font-size">9pt</xsl:attribute>	
+	<xsl:attribute name="border-top-color">grey</xsl:attribute> 
+	<xsl:attribute name="border-top-width">0.1mm</xsl:attribute>
+	<xsl:attribute name="border-top-style">solid</xsl:attribute>
+
+	<!-- <fo:table-cell padding="2mm" text-align="left" border-top-color="grey" border-top-width="0.1mm" border-top-style="solid"> -->
+</xsl:attribute-set>
+
+<xsl:attribute-set name="table-head-list">
+	<xsl:attribute name="padding">2mm</xsl:attribute>
+	<xsl:attribute name="font-size">9pt</xsl:attribute>	
+	<xsl:attribute name="font-weight">bold</xsl:attribute>
+	<xsl:attribute name="background-color">#DDDDDD</xsl:attribute> 
+	<xsl:attribute name="border-top-color">grey</xsl:attribute> 
+	<xsl:attribute name="border-top-width">0.1mm</xsl:attribute>
+	<xsl:attribute name="border-top-style">solid</xsl:attribute>
+</xsl:attribute-set>
+
+<!-- The root element in the XML data -->
+<xsl:template match="/report">
+
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+	<!-- Page layout -->
+	<fo:layout-master-set>
+		<fo:simple-page-master master-name="leftPage"
+			page-height="27.9cm"
+			page-width="21.5cm"
+			margin-left="1cm"
+			margin-right="2cm"
+			margin-top="2cm"
+			margin-bottom="1cm">
+			<fo:region-before extent="2cm"/>
+			<fo:region-after extent="1cm"/>
+			<fo:region-body 
+				margin-top="3cm"
+				margin-bottom="1cm" />
+		</fo:simple-page-master>
+
+		<fo:simple-page-master master-name="rightPage"
+			page-height="27.9cm"
+			page-width="21.5cm"
+			margin-left="2cm"
+			margin-right="1cm"
+			margin-top="1cm"
+			margin-bottom="0.5cm">
+			<fo:region-before extent="2cm"/>
+			<fo:region-after extent="1cm"/>
+			<fo:region-body 
+				margin-top="3cm"
+				margin-bottom="1cm" />
+		</fo:simple-page-master>
+
+		<fo:page-sequence-master master-reference="contents">
+			<fo:repeatable-page-master-alternatives>
+				<fo:conditional-page-master-reference
+					master-reference="leftPage"
+					odd-or-even="odd"/>
+				<fo:conditional-page-master-reference
+					master-reference="rightPage"
+					odd-or-even="even"/>
+			</fo:repeatable-page-master-alternatives>
+		</fo:page-sequence-master>
+
+	</fo:layout-master-set>
+
+	<fo:page-sequence master-name="contents" initial-page-number="1">
+		<xsl:apply-templates />
+		
+		<!-- Page header -->
+		<fo:static-content flow-name="xsl-region-before">
+			<fo:block font-family="Arial" font-size="10pt" text-align="center">
+				<xsl:attribute name="border-bottom-color">black</xsl:attribute>
+				<xsl:attribute name="border-bottom-width">0.1mm</xsl:attribute>
+	
+	
+				<fo:table table-layout="fixed" width="100%">
+				<fo:table-column column-width="9cm"/>
+				<fo:table-column column-width="9cm"/>
+				<fo:table-body>
+					<fo:table-row>
+						<fo:table-cell text-align="left">
+							<fo:external-graphic src="file:images/logo.gif" width="200pt" height="46pt"/>
+						</fo:table-cell>
+						<fo:table-cell text-align="right">
+							<fo:block>
+								
+							</fo:block>
+						</fo:table-cell>
+					</fo:table-row>
+				</fo:table-body>
+				</fo:table>
+			</fo:block>
+		</fo:static-content>
+
+		<!-- Page footer -->
+		<fo:static-content flow-name="xsl-region-after">
+			<fo:block font-family="Arial" font-size="10pt" text-align="center">
+				Page <fo:page-number />
+			</fo:block>
+		</fo:static-content>
+		
+		
+		<!-- Page content -->
+		<fo:flow flow-name="xsl-region-body">
+		
+			<fo:block xsl:use-attribute-sets="page-title">Outstanding Tickets</fo:block>
+		
+			<fo:table table-layout="fixed" width="100%">
+				<fo:table-column column-width="4cm"/>
+				<fo:table-column column-width="14cm"/>
+				<fo:table-body>
+					<fo:table-row>
+						<fo:table-cell>
+							<fo:block font-weight="bold">Customer:</fo:block>
+						</fo:table-cell>
+						<fo:table-cell>
+							<fo:block><xsl:value-of select="/report/filter/customer_name"/></fo:block>
+						</fo:table-cell>
+					</fo:table-row>
+					<fo:table-row>
+						<fo:table-cell>
+							<fo:block font-weight="bold">Interval:</fo:block>
+						</fo:table-cell>
+						<fo:table-cell>
+							<fo:block><xsl:value-of select="/report/filter/interval"/></fo:block>
+						</fo:table-cell>
+					</fo:table-row>
+					<fo:table-row>
+						<fo:table-cell>
+							<fo:block font-weight="bold">Status:</fo:block>
+						</fo:table-cell>
+						<fo:table-cell>
+							<fo:block><xsl:value-of select="/report/filter/status_name"/></fo:block>
+						</fo:table-cell>
+					</fo:table-row>
+					
+					<xsl:if test="/report/filter/escalated_only">
+					<fo:table-row>
+						<fo:table-cell>
+							<fo:block font-weight="bold">Escalated only:</fo:block>
+						</fo:table-cell>
+						<fo:table-cell>
+							<fo:block>Yes</fo:block>
+						</fo:table-cell>
+					</fo:table-row>
+					</xsl:if>
+					
+					<fo:table-row>
+						<fo:table-cell>
+							<fo:block font-weight="bold">Tickets:</fo:block>
+						</fo:table-cell>
+						<fo:table-cell>
+							<fo:block><xsl:value-of select="/report/filter/tickets"/></fo:block>
+						</fo:table-cell>
+					</fo:table-row>
+					<fo:table-row>
+						<fo:table-cell>
+							<fo:block font-weight="bold">Generated:</fo:block>
+						</fo:table-cell>
+						<fo:table-cell>
+							<fo:block><xsl:value-of select="/report/filter/generated_readable"/></fo:block>
+						</fo:table-cell>
+					</fo:table-row>
+				</fo:table-body>
+			</fo:table>
+				
+			<fo:block xsl:use-attribute-sets="section-title">Tickets list</fo:block>
+			
+			<fo:table table-layout="fixed" width="100%">
+				<fo:table-column column-width="proportional-column-width(0.1)"/>
+				<fo:table-column column-width="proportional-column-width(0.4)"/>
+				
+				<xsl:if test="/report/filter/customer_id = ''">
+					<fo:table-column column-width="proportional-column-width(0.2)"/>
+				</xsl:if>
+				
+				<fo:table-column column-width="proportional-column-width(0.1)"/> <!-- priority -->
+				
+				<xsl:if test="/report/filter/show_private">
+					<fo:table-column column-width="proportional-column-width(0.05)"/> <!-- private -->
+				</xsl:if>
+				
+				<xsl:if test="/report/filter/show_assigned">
+					<fo:table-column column-width="proportional-column-width(0.1)"/> <!-- assigned -->
+				</xsl:if>
+				
+				<fo:table-column column-width="proportional-column-width(0.1)"/> <!-- status -->
+				
+				<xsl:if test="/report/filter/show_created">
+					<fo:table-column column-width="proportional-column-width(0.1)"/> <!-- created -->
+				</xsl:if>
+				
+				<xsl:if test="/report/filter/show_updated">
+					<fo:table-column column-width="proportional-column-width(0.1)"/> <!-- updated -->
+				</xsl:if>
+				
+				<!-- <fo:table-cell padding="2mm" text-align="left" border-top-color="grey" border-top-width="0.1mm" border-top-style="solid"> -->
+				
+				<fo:table-header>
+					<fo:table-row>
+						<fo:table-cell xsl:use-attribute-sets="table-head-list">
+							<fo:block>ID</fo:block>
+						</fo:table-cell>
+						<fo:table-cell xsl:use-attribute-sets="table-head-list">
+							<fo:block>Subject</fo:block>
+						</fo:table-cell>
+						
+						<xsl:if test="/report/filter/customer_id = ''">
+							<fo:table-cell xsl:use-attribute-sets="table-head-list">
+								<fo:block>Customer</fo:block>
+							</fo:table-cell>
+						</xsl:if>
+						
+						<fo:table-cell xsl:use-attribute-sets="table-head-list">
+							<fo:block>Priority</fo:block>
+						</fo:table-cell>
+						
+						<xsl:if test="/report/filter/show_private">
+							<fo:table-cell xsl:use-attribute-sets="table-head-list">
+								<fo:block>Priv.</fo:block>
+							</fo:table-cell>
+						</xsl:if>
+						
+						<xsl:if test="/report/filter/show_assigned">
+							<fo:table-cell xsl:use-attribute-sets="table-head-list">
+								<fo:block>Assign.</fo:block>
+							</fo:table-cell>
+						</xsl:if>
+						
+						<fo:table-cell xsl:use-attribute-sets="table-head-list">
+							<fo:block>Status</fo:block>
+						</fo:table-cell>
+						
+						<xsl:if test="/report/filter/show_created">
+							<fo:table-cell xsl:use-attribute-sets="table-head-list">
+								<fo:block>Created</fo:block>
+							</fo:table-cell>
+						</xsl:if>
+						
+						<xsl:if test="/report/filter/show_updated">
+							<fo:table-cell xsl:use-attribute-sets="table-head-list">
+								<fo:block>Updated</fo:block>
+							</fo:table-cell>
+						</xsl:if>
+					</fo:table-row>
+				</fo:table-header>
+				
+				<fo:table-body>
+					<xsl:for-each select="/report/tickets/ticket">
+						<fo:table-row>
+							<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+								<fo:block font-weight="bold">
+									<xsl:value-of select="id"/>
+								</fo:block>
+								<fo:block>
+									<xsl:value-of select="type_name"/>
+								</fo:block>
+							</fo:table-cell>
+							<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+								<fo:block font-weight="bold">
+									<xsl:value-of select="subject"/>
+								</fo:block>
+								<xsl:if test="escalated > 0">
+									<fo:block color="#BB0000">
+									Escalated: <xsl:value-of select="escalated_readable"/>
+									</fo:block>
+								</xsl:if>
+							</fo:table-cell>
+							
+							<xsl:if test="/report/filter/customer_id = ''">
+								<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+									<fo:block><xsl:value-of select="customer_name"/></fo:block>
+								</fo:table-cell>
+							</xsl:if>
+							
+							<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+								<fo:block><xsl:value-of select="priority_name"/></fo:block>
+							</fo:table-cell>
+							
+							<xsl:if test="/report/filter/show_private">
+								<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+									<fo:block>
+										<xsl:if test="private = 0">N</xsl:if>
+										<xsl:if test="private = 1">Y</xsl:if>
+									</fo:block>
+								</fo:table-cell>
+							</xsl:if>
+							
+							
+							<xsl:if test="/report/filter/show_assigned">
+								<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+									<fo:block><xsl:value-of select="assigned_name"/></fo:block>
+								</fo:table-cell>
+							</xsl:if>
+							
+							<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+								<fo:block><xsl:value-of select="status_name"/></fo:block>
+							</fo:table-cell>
+							
+							<xsl:if test="/report/filter/show_created">
+								<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+									<fo:block><xsl:value-of select="created_readable"/></fo:block>
+								</fo:table-cell>
+							</xsl:if>
+							
+							<xsl:if test="/report/filter/show_updated">
+								<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+									<fo:block><xsl:value-of select="updated_readable"/></fo:block>
+								</fo:table-cell>
+							</xsl:if>
+						</fo:table-row>
+						
+						<xsl:if test="ticket_details">
+							<fo:table-row>
+								<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+								</fo:table-cell>
+								
+								<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+									<xsl:attribute name="number-columns-spanned"><xsl:value-of select="/report/filter/detail_span"/></xsl:attribute>
+									
+									<fo:table table-layout="fixed" width="100%">
+									<fo:table-column column-width="proportional-column-width(0.4)"/>
+									<fo:table-column column-width="proportional-column-width(0.6)"/>
+									<fo:table-body>
+									<xsl:for-each select="ticket_details/ticket_detail">
+										<fo:table-row>
+										
+											<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+												<fo:block font-weight="bold">
+													<xsl:value-of select="created_readable"/>,
+													<xsl:value-of select="user_name"/>
+												</fo:block>
+												<fo:block><xsl:value-of select="status_name"/></fo:block>
+											</fo:table-cell>
+											<fo:table-cell xsl:use-attribute-sets="table-cell-list">
+												<xsl:if test="assigned_name">
+													<fo:block font-weight="bold">
+													Assigned to: <xsl:value-of select="assigned_name"/>
+													</fo:block>
+												</xsl:if>
+												
+												<fo:block>
+													<xsl:value-of select="comments"/>
+												</fo:block>
+											</fo:table-cell>
+											
+										</fo:table-row>
+									</xsl:for-each>
+									</fo:table-body>
+									</fo:table>
+								
+								</fo:table-cell>
+							</fo:table-row>
+						</xsl:if>
+						
+					</xsl:for-each>
+				</fo:table-body>
+			</fo:table>
+			
+		</fo:flow>
+	</fo:page-sequence>
+
+</fo:root>
+</xsl:template>
+
+</xsl:stylesheet>

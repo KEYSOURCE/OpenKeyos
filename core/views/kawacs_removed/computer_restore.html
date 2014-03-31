@@ -1,0 +1,51 @@
+{assign var="computer_id" value=$computer->id}
+{assign var="paging_titles" value="KAWACS, Manage Removed Computers, Restore Removed Computer"}
+{assign var="paging_urls" value="/?cl=kawacs_removed, /?cl=kawacs_removed&op=manage_computers"}
+{include file="paging.html"}
+
+<h1>Restore Removed Computer</h1>
+
+<font class="error">{$error_msg}</font>
+
+<p>Here you can restore a removed computer back to active status. <b>After</b> you do this, make sure that Kawacs Agent will be installed on the computer.</p>
+
+<form action="" method="POST" name="frm_t">
+{$form_redir}
+
+<table class="list" width="60%">
+	<thead>
+	<tr>
+		<td width="120">Computer:</td>
+		<td class="post_highlight">#{$computer->id}: {$computer->netbios_name|escape}</td>
+	</tr>
+	</thead>
+	
+	<tr>
+		<td class="highlight">Customer:</td>
+		<td class="post_highlight">{$customer->name|escape} ({$customer->id})</td>
+	</tr>
+	
+	<tr>
+		<td class="highlight">Managing since:</td>
+		<td class="post_highlight">
+			{if $computer->date_created}{$computer->date_created|date_format:$smarty.const.DATE_FORMAT_SMARTY}
+			{else}--
+			{/if}
+		</td>
+	</tr>
+	<tr>
+		<td class="highlight">Date removed:</td>
+		<td class="post_highlight">
+			{if $computer->date_removed}{$computer->date_removed|date_format:$smarty.const.DATE_FORMAT_SMARTY}
+			{else}--
+			{/if}
+		</td>
+	</tr>
+</table>
+<p/>
+
+<input type="submit" name="save" value="Reactivate" class="button" 
+onclick="return confirm('Are you sure you want to reactivate this computer?');"
+/>
+<input type="submit" name="cancel" value="Cancel" class="button" />
+</form>

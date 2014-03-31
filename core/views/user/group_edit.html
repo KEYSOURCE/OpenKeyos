@@ -1,0 +1,148 @@
+{assign var="paging_titles" value="Users Administration, Groups, Edit Group"}
+{assign var="paging_urls" value="/?cl=user, /?cl=user&op=manage_groups"}
+{include file="paging.html"}
+
+
+{literal}
+<script language="JavaScript">
+
+function selectAllMembers ()
+{
+	frm = document.forms['group_frm']
+	mbr_list = frm.elements['group[members_list][]']
+	
+	for (i=0; i<mbr_list.options.length; i++)
+	{
+		mbr_list.options[i].selected = true
+	}
+}
+
+function addMember ()
+{
+	frm = document.forms['group_frm']
+	mbr_list = frm.elements['group[members_list][]']
+	users_list = frm.elements['available_users']
+	
+	if (users_list.selectedIndex >= 0)
+	{
+		opt = new Option (users_list.options[users_list.selectedIndex].text, users_list.options[users_list.selectedIndex].value, false, false)
+		
+		mbr_list.options[mbr_list.options.length] = opt
+		users_list.options[users_list.selectedIndex] = null
+	}
+}
+
+function removeMember ()
+{
+	frm = document.forms['group_frm']
+	mbr_list = frm.elements['group[members_list][]']
+	users_list = frm.elements['available_users']
+	
+	if (mbr_list.selectedIndex >= 0)
+	{
+		opt = new Option (mbr_list.options[mbr_list.selectedIndex].text, mbr_list.options[mbr_list.selectedIndex].value, false, false)
+		
+		users_list.options[users_list.options.length] = opt
+		mbr_list.options[mbr_list.selectedIndex] = null
+	}
+}
+
+</script>
+{/literal}
+
+
+
+
+<h1>Edit Group</h1>
+<p />
+<font class="error">{$error_msg}</font>
+<p />
+
+<form action="" method="POST" name="group_frm" onSubmit="selectAllMembers(); return true;">
+{$form_redir}
+
+<table class="list" width="95%">
+	<thead>
+	<tr>
+		<td colspan=3>
+			Group information
+		</td>
+	</tr>
+	</thead>
+	
+	<tr>
+		<td width="20%">Name:</td>
+		<td colspan="2"><input type="text" name="group[fname]" value="{$group->fname}" size="30"></td>
+	</tr>
+	<tr>
+		<td>Type:</td>
+		<td colspan="2">
+			{assign var="group_type" value=$group->type}
+			{$GROUP_ONLY_TYPES.$group_type}
+		</td>
+	</tr>
+	<tr>
+		<td>Active:</td>
+		<td colspan="2">
+			<select name="group[active]">
+				<option value="1" {if $group->active}selected{/if}>Yes</option>
+				<option value="0" {if !$group->active}selected{/if}>No</option>
+			</select>
+		</td>
+	</tr>
+	
+	<tr class="head">
+		<td colspan="3">Members</td>
+	</tr>
+	
+	<tr>
+		<td>Members:</td>
+		
+		<td width="40%">
+			Current members:
+			<br>
+			
+			<select name="group[members_list][]" size=16 style="width: 200px;" multiple onDblClick="removeMember();">
+				{html_options options=$group->get_members_list()}
+			</select>
+		</td>
+		
+		<td width="40%">
+			Available users:
+			<br>
+			
+			<select name="available_users" size=16  style="width: 200px;" multiple onDblClick="addMember();">
+				{html_options options=$available_users}
+			</select>
+		
+		</td>
+	
+	</tr>
+	
+	{if $group->type == $smart.const.USER_TYPE_KEYSOURCE_GROUP}
+	<tr class="head">
+		<td colspan="3">Assigned customers</td>
+	</tr>
+	<tr>
+		<td>
+			Customers:<br>
+			<a href="/?cl=user&op=group_edit_assigned_customers&id={$group->id}">Edit list &#0187;</a>
+		</td>
+		<td colspan="2">
+			{foreach from=$assigned_customers item=customer_name key=customer_id}
+				{$customer_name} ({$customer_id})<br>
+			{foreachelse}
+				[None]
+			{/foreach}
+		</td>
+	</tr>
+	{/if}
+	
+	
+</table>
+
+<p />
+<input type="submit" name="save" value="Save">
+<input type="submit" name="cancel" value="Close">
+
+</form>

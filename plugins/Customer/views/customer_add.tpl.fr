@@ -1,0 +1,59 @@
+{assign var="paging_titles" value="Customers, Manage Customers, Add Customer"}
+{assign var="paging_urls" value="/?cl=customer"}
+{include file="paging.html"}
+
+<h1>Ajouter client</h1>
+<p>
+<font class="error">{$error_msg}</font>
+<p>
+
+<form action="" method="POST">
+{$form_redir}
+
+<table class="list" width="95%">
+	<thead>
+	<tr>
+		<td colspan="2">Informations client</td>
+	</tr>
+	</thead>
+	
+	<tr>
+		<td>Nom: </td>
+		<td><input type="text" name="customer[name]" value="{$customer->name}" size="30"></td>
+	</tr>
+	
+	<tr class="head">
+		<td colspan="2">Services</td>
+	</tr>
+	
+	<tr>
+		<td>Kawacs: </td>
+		<td>
+			<select name="customer[has_kawacs]">
+				<option value="0">Non</option>
+				<option value="1" {if $customer->has_kawacs}selected{/if}>Oui</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>Krifs: </td>
+		<td>
+			<select name="customer[has_krifs]">
+				<option value="0">Non</option>
+				<option value="1" {if $customer->has_krifs}selected{/if}>Oui</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>temps SLA: </td>
+		<td><input type="text" name="customer[sla_hours]" value="{$customer->sla_hours}" size="6"> heures</td>
+	</tr>
+		
+</table>
+
+<p>
+
+<input type="submit" name="save" value="Save">
+<input type="submit" name="cancel" value="Cancel">
+
+</form>

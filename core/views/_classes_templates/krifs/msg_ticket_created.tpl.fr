@@ -1,0 +1,34 @@
+{if $recipient!=null}
+	{assign var="is_usr_recip" value=1}
+{else}
+	{assign var="is_usr_recip" value=0}
+{/if}
+{if $is_usr_recip==1}A l'attention de {$recipient->fname} {$recipient->lname},{/if}
+
+{if $is_reminder}
+Ceci est un rappel pour vous signaler que le ticket suivant a été créé:
+{else}
+Le ticket suivant a été créé:
+{/if}
+
+N°: {$notification->linked_object->id}
+Sujet: {$notification->linked_object->subject}
+Client: {$notification->linked_object->customer->name}
+Statut: {$notification->linked_object->status}
+Lien: https://{$notification->object_url}
+
+{assign var="last_entry_index" value=$notification->linked_object->last_entry_index}
+{assign var="last_entry" value=$notification->linked_object->details.$last_entry_index}
+{if $is_usr_recip==1}
+{if !$recipient->is_customer_user()}
+Créé par: {assign var="user_id" value=$last_entry->user_id}{$users_list.$user_id}
+Assigné à : {assign var="assigned_id" value=$last_entry->assigned_id}{$users_list.$assigned_id}
+{/if}
+{/if}
+{if $last_entry->comments}
+Commentaires: 
+{$last_entry->comments}
+{/if}
+
+Bien à  vous,
+Le systéme KeyOS

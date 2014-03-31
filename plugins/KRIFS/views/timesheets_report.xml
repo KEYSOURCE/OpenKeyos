@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html SYSTEM "xml/html4-all.ent">
+
+<reports>
+      <document_title>Keysource operators timesheets</document_title>
+      <period>{$filter.date_from|date_format:$smarty.const.DATE_FORMAT_SELECTOR} - {$filter.date_to|date_format:$smarty.const.DATE_FORMAT_SELECTOR}</period>
+      {foreach from=$timesheets item="_tsheet" key="uid"}
+      <report>
+      	<user_id>{$uid}</user_id>
+      	<user_name>{$users_list.$uid|escape}</user_name>
+      	<timesheets>
+      		{foreach from=$_tsheet key=day item=timesheet}
+      		<timesheet>
+      		       <id>{if $timesheet->id}[{$timesheet->id}]{else}--{/if}</id>
+      		       <date>{$day|date_format:$smarty.const.DATE_FORMAT_SMARTY}</date>
+      		       <day>{$day|date_format:"%a"}</day>
+      		       <status>{assign var="status" value=$timesheet->status} {$TIMESHEET_STATS.$status}</status>
+      		       <defined_time>
+      		       	{assign var="defined_work_time" value=$timesheet->get_defined_work_time()}
+			{if $defined_work_time}
+				{$defined_work_time|@format_interval_minutes}
+			{else}
+				--
+			{/if}
+		       </defined_time>
+      		       <total_time>
+      		       	{assign var="work_time" value=$timesheet->get_work_time()}
+			{if $work_time}
+				{$work_time|@format_interval_minutes}
+			{else}
+				--
+			{/if}
+      		       </total_time>
+      		       <details>
+      		           {foreach from=$timesheet->hours item=interval}
+      		       	<detail>
+      		       	      <hour>{$interval->time_in|date_format:$smarty.const.HOUR_FORMAT_SMARTY} -  {$interval->time_out|date_format:$smarty.const.HOUR_FORMAT_SMARTY}</hour>
+      		       	      {if isset($interval->detail_idx)}
+				{assign var="idx" value=$interval->detail_idx}
+				{assign var="detail" value=$timesheet->details.$idx}
+      		       	      <activity>
+      		       	      	{if $detail->ticket_detail_id}
+      		       	   		{assign var="action_type_id" value=$detail->ticket_detail->activity_id}
+					{$action_types_list.$action_type_id}
+				{else}
+					{assign var="activity_id" value=$detail->activity_id}
+					{$activities.$activity_id}
+				{/if}
+      		       	      </activity>
+      		       	      <location>
+      		       	      	{assign var="location_id" value=$detail->location_id}
+				{$locations_list.$location_id}
+      		       	      </location>
+      		       	      <customer>
+      		       	      	{assign var="customer_id" value=$detail->customer_id}
+				{$customers_list.$customer_id|escape} (# {$customer_id})
+      		       	      </customer>
+      		       	      <ticket_detail>
+      		       	      {if $detail->ticket_detail_id}
+			           # {$detail->ticket_detail->id}:
+			           {$detail->ticket->subject|escape}			
+				{$detail->ticket_detail->comments|escape|nl2br}
+			      {else}
+				{$detail->comments|escape|nl2br}
+			      {/if}
+      		       	      </ticket_detail>
+			 {else}
+			      <activity>
+			      </activity>
+			      <location>
+			      </location>
+			      <customer>
+			      </customer>
+			      <ticket_detail>
+			      </ticket_detail>
+      		       	 {/if}
+      		       	</detail>
+			{/foreach}	
+      		       </details>
+
+      		</timesheet>      		
+		{/foreach}
+      	</timesheets>
+      </report>
+      {/foreach}
+
+</reports>

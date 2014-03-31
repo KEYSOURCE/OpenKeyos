@@ -1,0 +1,65 @@
+{assign var="paging_titles" value="KAWACS, Manage Removed AD Printers, Remove Multiple AD Printers"}
+{assign var="paging_urls" value="/?cl=kawacs_removed, /?cl=kawacs_removed&op=manage_ad_printers"}
+{include file="paging.html"}
+
+<script language="JavaScript" type="text/javascript">
+//<![CDATA[
+{literal}
+
+function doCkAll ()
+{
+	var frm = document.forms['frm_t'];
+	var ckboxes = frm.elements['ad_printer_id[]'];
+	var ck_main = frm.elements['ck_all'];
+	
+	for (var i=0; i<ckboxes.length; i++)
+	{
+		ckboxes[i].checked = ck_main.checked;
+	}
+}
+
+{/literal}
+//]]>
+</script>
+
+<h1>Remove Multiple AD Printers</h1>
+
+<p class="error">{$error_msg}</p>
+
+<p>On this page you can select one or more AD Printers to remove for this customer.
+Note that only "orphan" AD Printers are shown, meaning those AD Printers which 
+are not present anymore in the reported AD data.</p>
+
+<p><b>Removing</b> an AD Printer means marking it as not being in use anymore. After you select 
+the computers you want and you click <b>Remove</b>, you will be directed to a new page asking 
+for confirmation and for entering the removal reason.</p>
+
+<form action="" method="POST" name="frm_t">
+{$form_redir}
+
+<table class="list" width="60%">
+	<thead>
+	<tr>
+		<td width="20">
+			<input type="checkbox" name="ck_all" class="checkbox" onclick="doCkAll ();" />
+		</td>
+		<td>Customer: {$customer->name|escape} ({$customer->id})</td>
+	</tr>
+	</thead>
+	
+	{foreach from=$ad_printers item=ad_printer}
+	<tr>
+		<td width="20"><input type="checkbox" name="ad_printer_id[]" value="{$ad_printer->id}" class="checkbox" /></td>
+		<td>{$ad_printer->name|escape}</td>
+	</tr>
+	{foreachelse}
+	<tr>
+		<td colspan="2" class="light_text">[No orphan AD Printers]</td>
+	</tr>
+	{/foreach}
+</table>
+<p/>
+
+<input type="submit" name="save" value="Remove selected" class="button" />
+<input type="submit" name="cancel" value="Cancel" class="button" />
+</form>

@@ -1,0 +1,63 @@
+
+{if $ret == 'customer'}
+	{assign var="customer_id" value=$customer->id}
+	{assign var="paging_titles" value="Customers, Manage Customers, Edit Customer, Customer Recipients - Customer"}
+	{assign var="paging_urls" value="/?cl=customers, /?cl=customers, /?cl=customer&op=customer_edit&id=$customer_id"}
+{else}
+	{assign var="paging_titles" value="Users Administration, Notifications Recipients - Customers, Edit"}
+	{assign var="paging_urls" value="/?cl=user, /?cl=user&op=manage_customer_recipients"}
+{/if}
+{include file="paging.html"}
+
+
+<h1>Edit Notifications Recipients (Customers) : {$customer->name}</h1>
+
+<p class="error">{$error_msg}</p>
+
+<form action="" method="POST">
+{$form_redir}
+
+<p>Specify below which <b>customer user(s)</b> will receive notifications for this customer.</p>
+
+{assign var="customer_id" value=$customer->id}
+<table class="list" width="60%">
+	<thead>
+	<tr>
+		<td>Users:</td>
+		<td>Default</td>
+	</tr>
+	</thead>
+	
+	{foreach from=$users item=user}
+	<tr>
+		<td>
+			<input type="checkbox" name="recipients[]" value="{$user->id}"
+				{if is_array($recipients.$customer_id)}
+					{if in_array ($user->id, $recipients.$customer_id)}checked{/if}
+				{/if}
+			/>
+			{$user->get_name()}
+
+		</td>
+		<td>
+			<input type="radio" name="is_default" value="{$user->id}"
+				{if $default_recipients.$customer_id == $user->id}checked{/if}
+			/>
+		</td>
+	</tr>
+	
+	{foreachelse}
+	<tr>
+		<td colspan="2">
+		<p class="error">WARNING! There are no users defined for this customer!</p>
+		</td>
+	</tr>
+	{/foreach}
+	
+</table>
+<p/>
+
+<input type="submit" name="save" value="Save"/>
+<input type="submit" name="cancel" value="Close"/>
+
+</form>

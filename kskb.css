@@ -1,0 +1,175 @@
+	.ArticleListingContainer li
+	{
+		margin-bottom:5px;
+		color:#039;
+		list-style-type: none;
+	}
+	.ArticleListingContainer_art li
+	{
+		margin-bottom:5px;
+		color:#666;
+		list-style-type: none;
+		border-bottom: 1px solid #666;
+	}
+	.ArticleListingContainer_info li
+	{
+		margin-bottom:5px;
+		color:#666;
+		list-style-type: none;		
+	}
+	.td33
+	{
+		width: 33%; 
+	}
+	.borderCollapse
+	{
+		border:0;
+		padding:0;
+		border-collapse:collapse;
+		width:100%;
+	}
+	a.ArtLink
+	{
+		text-decoration:none;
+		color:#666666;
+	}
+	a.ArtLink:hover
+	{
+		text-decoration:underline;
+		color:#666666;
+	}
+	div.MagazineArticleCtrlBox
+	{
+		width:156px;
+		padding:3px 2px 3px 2px;
+		border-right:#751a29 1px solid;
+		border-top:#751a29 1px solid;
+		margin-bottom:7px;
+		border-left:#751a29 1px solid;
+		border-bottom:#751a29 1px solid;
+	}
+	div.MagazineArticleCtrlHeader
+	{
+		font-weight:bold;
+		color:#666666;
+		font-family:'Segoe UI','Verdana';
+		text-align:center;
+		font-size:16px;
+		padding-bottom:2px;
+		padding-right:0;
+		padding-left:0;
+		margin:0 0 3px;
+		padding-top:0;
+		border-bottom:#751a29 1px solid;
+		font-variant:small-caps;
+	}
+	div.MagazineArticleCtrlPopUp
+	{
+		font-weight:bold;
+		color:#dd7c3b;
+		font-family:'Segoe UI','Verdana';
+		text-align:center;
+		font-size:16px;
+		padding-bottom:2px;
+		padding-right:0;
+		padding-left:0;
+		margin:0 0 3px;
+		padding-top:0;
+		border-bottom:#293c63 1px solid;
+	}
+	.MagazineArticleCtrlpopupMenu
+	{
+		position:absolute;
+		visibility:hidden;
+		background-color:#f5f7f8;
+		opacity:.9;
+		border:1px outset white;
+		padding:5px;
+		z-index:1000;
+	}
+	.MagazineArticleCtrlpopupHover
+	{
+		background-color:#edc3bd;
+		border-right:#dd7c3b 1px solid;
+	}
+	.BostonPostCard,.BostonPostCardNoTopMargin
+	{
+		border-left:1px solid #bbb;
+		border-right:1px solid #bbb;
+		border-bottom:1px solid #bbb;
+		border-top:0 solid transparent;
+		background-image:url('./images/box_BG_repeater.jpg');
+		background-repeat:repeat-x;
+		background-position:top;
+		background-color:#fff;
+		margin-top:5px;
+		margin-left:5px;
+		margin-right:5px;
+		margin-bottom:10px;
+		padding-top:10px;
+		padding-left:5px;
+		padding-right:5px;
+		padding-bottom:10px;
+	}
+	.BostonPostCardNoTopMargin{margin-top:0}
+	.RightAdRail .BostonPostCard,.RightAdRail .BostonPostCardNoTopMargin
+	{
+		margin-right:0;
+		margin-left:0;
+	}
+	.BostonPostCard *{margin-top:0}
+	.BostonPostCard h3 a,.BostonPostCard h3 a:visited
+	{
+		color:#00f;
+		text-decoration:none;
+	}
+	.BostonPostCard h3 a:hover,.BostonPostCard a:hover
+	{
+		color:#f60;
+		text-decoration:none;
+	}
+	.BostonPostCard a,.BostonPostCard a:visited,.BostonPostCardNoTopMargin a,.BostonPostCardNoTopMargin a:visited
+	{
+		color:#00f;
+		text-decoration:none;
+	}
+	.BostonBoxContent
+	{
+		margin: 5px;
+		margin-bottom: 0;
+		padding: 3px;
+	}
+	.BostonBoxContent table
+	{
+		width: 100%;
+		margin: 0;
+		padding: 0;
+	}
+	.FeatureHeadline
+	{
+		font-weight: bold;
+		font-size: 30px;
+		line-height: 30px;
+		color: #000;
+		font-family:"Segoe UI", Arial;
+		text-transform: none;
+		font-variant: normal;
+		font-style: normal;
+		margin-bottom: 6px;		
+	}
+	.imageColumn
+	{
+		padding: 0 2px 0 12px;
+		vertical-align: top;
+	}
+	.textColumn
+	{
+		padding: 0;
+		width: 100%;
+	}
+	.more
+	{
+		font-size: 70%;
+		padding: 7px!important;
+		vertical-align: baseline;
+	}

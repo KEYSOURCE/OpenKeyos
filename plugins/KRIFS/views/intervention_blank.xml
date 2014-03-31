@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<intervention_report>
+{assign var="am" value=$customer->account_manager}
+{assign var="am_info" value=$ACCOUNT_MANAGERS_INFO.$am}
+<logo>{$ACCOUNT_MANAGERS_LOGOS.$am}</logo>
+<footer>
+		<name>{$am_info.name}</name>
+		<address>{$am_info.address}</address>
+		<city>{$am_info.city}</city>
+		<country>{$am_info.country}</country>
+		<phone>{$am_info.phone}</phone>
+		<fax>{$am_info.fax}</fax>
+		<email>{$am_info.email}</email>
+		<web>{$am_info.web}</web>
+		<rcb>{$am_info.rcb}</rcb>
+		<bbl>{$am_info.bbl}</bbl>
+		<fortis>{$am_info.fortis}</fortis>
+</footer>
+<info>
+	<user>{$user->fname} {$user->lname}</user>
+	<customer id="{$customer->id}">
+		<name>{$customer->name|escape}</name>
+	</customer>
+</info>
+
+<intervention id="{$intervention->id}">
+	<subject>{$intervention->subject|escape}</subject>
+	<work_time>{if $intervention->work_time}{$intervention->work_time|@format_interval_minutes}{else}--{/if}</work_time>
+	<bill_time>{if $intervention->bill_time}{$intervention->bill_time|@format_interval_minutes}{else}--{/if}</bill_time>
+</intervention>
+</intervention_report>

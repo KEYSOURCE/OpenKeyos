@@ -1,0 +1,32 @@
+{assign var="paging_titles" value="KAWACS, Manage Removed Computers, View Removed Computer, Add Computer Note"}
+{assign var="computer_id" value=$computer->id}
+{assign var="paging_urls" value="/?cl=kawacs_removed, /?cl=kawacs_removed&op=manage_computers, /?cl=kawacs_removed&op=computer_view&id=$computer_id"}
+{include file="paging.html"}
+
+<h1>Add Note for Removed Computer</h1>
+
+<p class="error">{$error_msg}</p>
+
+<form action="" method="POST">
+{$form_redir}
+
+<table class="list" width="70%">
+	<thead>
+	<tr>
+		<td width="15%">Computer:</td>
+		<td class="post_highlight">#{$computer->id}: {$computer->netbios_name|escape}</td>
+	</tr>
+	</thead>
+	
+	<tr>
+		<td class="highlight">Note:</td>
+		<td class="post_highlight">
+			<textarea name="note[note]" cols="80" rows="12">{$note->note|escape}</textarea>
+		</td>
+	</tr>
+</table>
+<p/>
+
+<input type="submit" name="save" value="Add" class="button" />
+<input type="submit" name="cancel" value="Cancel" class="button" />
+</form>

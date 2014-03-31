@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+targetNamespace="{$http_base_url|escape}"
+xmlns="{$http_base_url|escape}">
+
+<xs:annotation>
+<xs:documentation>
+	Schema for exporting timesheets from the Keyos system.
+</xs:documentation>
+</xs:annotation>
+
+<xs:element name="export">
+	<xs:annotation>
+	<xs:documentation>
+		An "export" element represents an export batch, which is composed of zero or more
+		timesheets. In case there are no timesheets to export, the "export_id" element will 
+		not be present.
+		The export batch will include only the timesheets which have been closed in the Keyos 
+		system. Before the XML file is sent from the Keyos server, all those timesheets will be 
+		marked as "pending", until the ERP system confirms that the export batch has been 
+		succesfully processed.
+	</xs:documentation>
+	</xs:annotation>
+	
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element name="export_id" type="xs:integer" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+				<xs:documentation>
+				Each export batch will have a unique numeric ID in the Keyos system.
+				If the XML file contains an "export" element with no "export_id" element, this means
+				there are no timesheets currently waiting to be exported.
+				Also, if there is no "export_id" element, then the "export" element will not 
+				have any other child elements either.
+				</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="confirmation_file_url" type="xs:anyURI" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+				<xs:documentation>
+				This is the URL which the ERP system will use for confirming that the XML file has been
+				correctly downloaded. In order to do that, the ERP system will have to append to the
+				URL the MD5 checksum of the downloaded file (Note that this URL alreay contains an empty 
+				parameter called "md5").
+				When the URL is accessed this way, Keyos will reply with the strings "ok" or "incorrect"
+				if the checksum is correct or not.
+				If the checksum is incorrect, the XML file can be re-downloaded using the URL specified
+				in the "retransfer_url" element.
+				</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="confirmation_import_url" type="xs:anyURI" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+				<xs:documentation>
+				This is the URL which the ERP system will use for confirming that the correct values have
+				been imported from the XML file. In order to do that, the ERP system will have to add to the
+				URL the following parameters: "cnt_timesheets" - the number of timesheets processed and
+				"work_time_sum" - the sum of all the work_time fields from all timesheets. For example:
+				?cl=erp&amp;op=timesheets_confirm_import&amp;id=41&amp;cnt_timesheets=2&amp;work_time_sum=10.30
+				When the URL is accessed this way, Keyos will reply with the strings "ok" or "incorrect"
+				if the values are correct or not. If they are correct, then all the timesheets
+				from the import batch will be marked as being centralized in the ERP system.
+				</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="retransfer_url" type="xs:anyURI" minOccurs="0"  maxOccurs="1">
+				<xs:annotation>
+				<xs:documentation>
+				This is the URL which can be used by the ERP system to fetch another copy of the XML file,
+				in case a download has failed.
+				</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="timesheets" minOccurs="0"  maxOccurs="1">
+				<xs:annotation>
+				<xs:documentation>
+				This element contains the timesheets exported in this batch.
+				</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+				<xs:sequence>
+					<xs:element name="timesheet" type="timesheet" minOccurs="1"/>
+				</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:element>
+
+<xs:complexType name="timesheet">
+	<xs:all>
+		<xs:element name="timesheet_id" type="xs:integer" use="required">
+			<xs:annotation>
+			<xs:documentation>
+			The unique numeric ID of the timesheet from the Keyos system.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="engineer_id" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The ERP ID of the user to which the timesheet belongs to.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="timesheet_date" type="xs:date"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The date (in Unix timestamp format) when the activity was performed.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="timesheet_date_string" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The date (as dd/mm/yy string) when the activity was performed
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="timesheet_detail" type="timesheet_detail" minOccurs="0" maxOccurs="unbound">
+			<xs:annotation>
+			<xs:documentation>
+			There will be one "timesheet_detail" element for each timesheet entry which is NOT
+			linked to a ticket. 
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+	</xs:all>
+</xs:complexType>
+
+<xs:complexType name="timesheet_detail">
+	<xs:all>
+		<xs:element name="timesheet_detail_id" type="xs:integer" use="required">
+			<xs:annotation>
+			<xs:documentation>
+			The unique numeric ID of the timesheet entry from the Keyos system.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="customer_id" type="xs:string" use="required">
+			<xs:annotation>
+			<xs:documentation>
+			The ERP ID of the customer for which the activity was performed.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="time_in" type="xs:date"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The start time (in Unix timestamp format) of the activity
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="time_in_string" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The start time (as dd/mm/yy string) of the activity
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="work_time" type="xs:decimal"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The total number of hours that the engineer has worked for this activity.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="location" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The name of the location where the activity was performed.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="on_site" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			Specifies 'yes' or 'no' if the location should be considered on-site or not.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="is_travel" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			Specifies 'yes' or 'no' if the activity was travel or not.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="activity" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			If this activity was not a travel (see "is_travel" parameter), then this element
+			contains the ERP ID ("s.s_id" table field in Mercator) of the activity.
+			If the activity was a travel, then this element contains the engineer's "travel action type ID".
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="activity_name" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			The name of the activity performed.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+		<xs:element name="comments" type="xs:string"  minOccurs="1"  maxOccurs="1">
+			<xs:annotation>
+			<xs:documentation>
+			Additional comments added by the engineer to the timesheet entry.
+			</xs:documentation>
+			</xs:annotation>
+		</xs:element>
+	</xs:all>
+</xs:complexType>
+
+</xs:schema>

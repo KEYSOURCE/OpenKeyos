@@ -1,0 +1,83 @@
+{assign var="paging_titles" value="Notifications, View Notification"}
+{assign var="paging_urls" value="/?cl=home&op=notifications"}
+{include file="paging.html"}
+
+{assign var="is_customer_user" value=$current_user->is_customer_user()}
+
+<h1>View Notification</h1>
+
+<p class="error">{$error_msg}</p>
+
+<form action="" method="POST" name="frm_t">
+{$form_redir}
+
+<table class="list" width="70%">
+	<thead>
+	<tr>
+		<td colspan="2">Notification details</td>
+	</tr>
+	</thead>
+	
+	<tr>
+		<td class="highlight" width="15%">ID:</td>
+		<td class="post_highlight"># {$notification->id}</td>
+	</tr>
+	<tr>
+		<td class="highlight">Subject:</td>
+		<td class="post_highlight">{$notification->text|escape}</td>
+	</tr>
+	<tr>
+		<td class="highlight">Raised:</td>
+		<td class="post_highlight">{$notification->raised|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}</td>
+	</tr>
+	<tr>
+		<td class="highlight">Raised last:</td>
+		<td class="post_highlight">{$notification->raised_last|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}</td>
+	</tr>
+	<tr>
+		<td class="highlight">Linked to:</td>
+		<td class="post_highlight">
+			{if $notification->object_id and $notification->object_class}
+				{if $notification->object_class==NOTIF_OBJ_CLASS_COMPUTER and $is_customer_user}
+					{$notification->object_name}
+				{else}
+					<a href="http://{$notification->object_url}">{$notification->object_name}</a>
+				{/if}
+			{else}
+				<font class="light_text">[n/a]</font>
+			{/if}
+		</td>
+	</tr>
+	{if !$is_customer_user}
+	<tr>
+		<td class="highlight">Ticket:</td>
+		<td class="post_highlight">
+			{if $notification->ticket_id}
+				<a href="/?cl=krifs&op=ticket_edit&id={$notification->ticket_id}">#{$notification->ticket_id}: {$notification->ticket->subject|escape}</a><br/>
+				
+				{assign var="status" value=$notification->ticket->status}
+				{$TICKET_STATUSES.$status}, 
+				{assign var="assigned_id" value=$notification->ticket->assigned_id}
+				{$users_list.$assigned_id}
+				<br/>
+			{else}
+				<a href="{$notification->get_ticket_create_url()}">[ Create new &#0187; ]</a>
+			{/if}
+		</td>
+	</tr>
+	<tr>
+		<td class="highlight">Recipients:</td>
+		<td class="post_highlight">
+			{foreach from=$notification->recipients item=recip}
+				<a href="/?cl=user&amp;op=user_edit&amp;id={$recip->user_id}">{$recip->user->get_name()}</a><br/>
+			{foreachelse}
+				<font class="light_text">--</font>
+			{/foreach}
+		</td>
+	</tr>
+	{/if}
+</table>
+<p/>
+
+<input type="submit" class="button" name="cancel" value="Exit"/>
+</form>

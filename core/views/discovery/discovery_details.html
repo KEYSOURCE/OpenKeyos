@@ -1,0 +1,220 @@
+{assign var="customer_id" value=$detail->customer_id}
+{assign var="paging_titles" value="KAWACS, Networks Discoveries, Discovery Details"}
+{assign var="paging_urls" value="/?cl=kawacs, /?cl=discovery&op=manage_discoveries&customer_id=$customer_id"}
+{include file="paging.html"}
+
+<h1>Discovery Details{if $discovery->get_name()}: {$discovery->get_name()|escape}{/if}</h1>
+
+<p class="error">{$error_msg}</p>
+
+<p>
+Below you have the details about this discovered device.<br/>
+If this device has a fixed IP address, you should flag it as such. This is particularily 
+important for discovered devices without name or MAC address.
+</p>
+
+<form action="" method="POST" name="frm_t">
+{$form_redir}
+
+<table class="list" width="98%">
+	<thead>
+	<tr>
+		<td width="120">Discovered from:</td>
+		<td class="post_highlight" colspan="3">
+			{$detail->ip_start} - {$detail->ip_end},&nbsp;&nbsp;&nbsp; by #{$detail->computer_id}: {$detail->computer_name}
+		</td>
+	</tr>
+	</thead>
+	
+	<tr>
+		<td class="highlight">Host name:</td>
+		<td class="post_highlight">
+			{if $discovery->host_name}{$discovery->host_name|escape} {else} - {/if}
+		</td>
+		<td class="highlight" width="120">Last discovered:</td>
+		<td class="post_highlight" swidth="40%">{$discovery->last_discovered|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}</td>
+	</tr>
+	<tr>
+		<td class="highlight">IP address:</td>
+		<td class="post_highlight">{$discovery->ip}</td>
+		<td class="highlight">Is fixed IP:</td>
+		<td class="post_highlight">
+			<select name="discovery[is_fixed_ip]">
+				<option value="0">No</option>
+				<option value="1" {if $discovery->is_fixed_ip}selected{/if}>Yes</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="highlight">MAC address:</td>
+		<td class="post_highlight">
+			{if $discovery->mac}{$discovery->mac|escape} {else} - {/if}
+		</td>
+		<td class="highlight" width="120">Duration:</td>
+		<td class="post_highlight" swidth="40%">{$discovery->duration|number_format:2} sec.</td>
+	</tr>
+	<tr>
+		<td class="highlight"><b>Keyos matched device:</b> </td>
+		<td class="post_highlight">
+			{if !$discovery->matched_obj_id}
+				<font class="light_text">[None yet]</font>
+			{elseif $discovery->matched_obj_id < 0}
+				[Not in Keyos]
+			{else}
+				<a href="{$discovery->matched_obj_url}">{$discovery->matched_obj_name}</a>
+			{/if}
+			&nbsp;&nbsp;|&nbsp;&nbsp;
+			<a href="/?cl=discovery&amp;op=discovery_match&amp;id={$discovery->id}">Edit &#0187;</a>
+			
+			{if $discovery->matched_obj_id and $discovery->matched_auto}
+				<br/>
+				<font class="light_text">[Automatically matched]</font>
+			{/if}
+		</td>
+	</tr>
+	
+	<tr class="head">
+		<td colspan="4">NetBIOS data:</td>
+	</tr>
+	<tr>
+		<td class="highlight">NetBIOS name:</td>
+		<td class="post_highlight">
+			{if $discovery->nb_name}{$discovery->nb_name|escape} {else} - {/if}
+		</td>
+		<td class="highlight">Workgroup:</td>
+		<td class="post_highlight">
+			{if $discovery->nb_workgroup}{$discovery->nb_workgroup|escape} {else} - {/if}
+		</td>
+	</tr>
+	<tr>
+		<td class="highlight">MAC (via NetBIOS):</td>
+		<td class="post_highlight" colspan="3">
+			{if $discovery->nb_mac}{$discovery->nb_mac} {else} - {/if}
+		</td>
+	</tr>
+	
+	<tr class="head">
+		<td>SNMP data:</td>
+		<td colspan="3" class="post_highlight">
+			{if !$discovery->snmp_resp}[n/a]{/if}
+		</td>
+	</tr>
+	{if $discovery->snmp_resp}
+	<tr>
+		<td class="highlight">Name:</td>
+		<td class="post_highlight">
+			{if $discovery->snmp_sys_name}{$discovery->snmp_sys_name} {else} - {/if}
+		</td>
+		<td class="highlight">Type:</td>
+		<td class="post_highlight">
+			{if $discovery->snmp_sys_object_id}{$discovery->snmp_sys_object_id} {else} - {/if}
+		</td>
+	</tr>
+	<tr>
+		<td class="highlight">Description:</td>
+		<td class="post_highlight">
+			{if $discovery->snmp_sys_desc}{$discovery->snmp_sys_desc} {else} - {/if}
+		</td>
+		<td class="highlight">Contact:</td>
+		<td class="post_highlight">
+			{if $discovery->snmp_sys_contact}{$discovery->snmp_sys_contact} {else} - {/if}
+		</td>
+	</tr>
+	{/if}
+	
+	<tr class="head">
+		<td>WMI data:</td>
+		<td class="post_highlight" colspan="3">
+			{if !$discovery->wmi_resp}[n/a]&nbsp;&nbsp;&nbsp;{/if}
+			{if $discovery->wmi_error}<i>{$discovery->wmi_error}{/if}
+		</td>
+	</tr>
+	{if $discovery->wmi_resp}
+	<tr>
+		<td class="highlight">Name:</td>
+		<td class="post_highlight">
+			{if $discovery->wmi_name}{$discovery->wmi_name|escape} {else} - {/if}
+		</td>
+		<td class="highlight">Type:</td>
+		<td class="post_highlight">
+			{if $discovery->wmi_system_type}{$discovery->wmi_system_type} {else} - {/if}
+		</td>
+	</tr>
+	<tr>
+		<td class="highlight">Description:</td>
+		<td class="post_highlight">
+			{if $discovery->wmi_description}{$discovery->wmi_description|escape} {else} - {/if}
+		</td>
+		<td class="highlight">OEM string:</td>
+		<td class="post_highlight">
+			{if $discovery->wmi_oem_string_array}{$discovery->wmi_oem_string_array|escape} {else} - {/if}
+		</td>
+	</tr>
+	<tr>
+		<td class="highlight">Manufacturer:</td>
+		<td class="post_highlight">
+			{if $discovery->wmi_manufacturer}{$discovery->wmi_manufacturer|escape} {else} - {/if}
+		</td>
+		<td class="highlight">Model:</td>
+		<td class="post_highlight">
+			{if $discovery->wmi_model}{$discovery->wmi_model|escape} {else} - {/if}
+		</td>
+	</tr>
+	<tr>
+		<td class="highlight">Domain:</td>
+		<td class="post_highlight">
+			{if $discovery->wmi_domain}{$discovery->wmi_domain|escape} {else} - {/if}
+		</td>
+		<td class="highlight">Domain role:</td>
+		<td class="post_highlight">
+			{assign var="domain_role" value=$discovery->wmi_domain_role}
+			{if $WMI_DOMAIN_ROLES.$domain_role}{$WMI_DOMAIN_ROLES.$domain_role} {else} - {/if}
+		</td>
+	</tr>
+	<tr>
+		<td class="highlight">User:</td>
+		<td class="post_highlight">
+			{if $discovery->wmi_user_name}{$discovery->wmi_user_name|escape} {else} - {/if}
+		</td>
+		<td class="highlight">Memory:</td>
+		<td class="post_highlight">
+			{if $discovery->wmi_total_phys_memory}{$discovery->wmi_total_phys_memory|get_memory_string} {else} - {/if}
+		</td>
+	</tr>
+	<tr>
+		<td class="highlight">Owner name:</td>
+		<td class="post_highlight">
+			{if $discovery->wmi_primary_owner_name}{$discovery->wmi_primary_owner_name|escape} {else} - {/if}
+		</td>
+		<td class="highlight">Owner conact:</td>
+		<td class="post_highlight">
+			{if $discovery->wmi_primary_owner_contact}{$discovery->wmi_primary_owner_conact|escape} {else} - {/if}
+		</td>
+	</tr>
+	<tr>
+		<td class="highlight">OS:</td>
+		<td class="post_highlight">
+			{if $discovery->wmi_os_caption}{$discovery->wmi_os_caption|escape} {else} - {/if}
+		</td>
+		<td class="highlight">OS service pack:</td>
+		<td class="post_highlight">
+			{if $discovery->wmi_os_csd_version}{$discovery->wmi_os_csd_version|escape} {else} - {/if}
+		</td>
+	</tr>
+	<tr>
+		<td class="highlight">OS organization:</td>
+		<td class="post_highlight">
+			{if $discovery->wmi_os_organization}{$discovery->wmi_os_organization|escape} {else} - {/if}
+		</td>
+		<td class="highlight">OS serial number:</td>
+		<td class="post_highlight">
+			{if $discovery->wmi_os_serial_number}{$discovery->wmi_os_serial_number|escape} {else} - {/if}
+		</td>
+	</tr>
+	{/if}
+</table>
+<p/>
+
+<input type="submit" name="save" value="Save" class="button" />
+<input type="submit" name="cancel" value="Close" class="button" />
+</form>

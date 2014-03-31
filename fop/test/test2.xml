@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<report>
+<title>Computers</title>
+<type>computers</type>
+
+<report_data>
+	<computers>
+		<computer id="332">
+			<id>332</id>
+			<name>KS-SERVER</name>
+			<customer_id>6</customer_id>
+			<customer_name>Keysource</customer_name>
+			
+		</computer>
+		<computer id="333">
+			<id>333</id>
+			<name>KS-MAIL</name>
+			<customer_id>6</customer_id>
+			<customer_name>Keysource</customer_name>
+		</computer>
+	</computers>
+</report_data>
+</report>

@@ -1,0 +1,159 @@
+<reports_set>
+	<show_cover_page></show_cover_page>
+	<show_contents></show_contents>
+	<show_section_cover_pages></show_section_cover_pages>
+	<main_title>Eucomed Report</main_title>
+	
+	<customer_id></customer_id>
+	<customer_name></customer_name>
+	
+<section>
+	<title>Technical information</title>
+	
+		<report>
+		<title>Computers</title>
+		<type>computers</type>
+		
+		<report_data>
+		
+		<servers>
+					<computer>
+				<computer_id>111</computer_id>
+				<computer_name>EUCO-SW2</computer_name>
+				<comments>Mail Server</comments>
+				<os_name>Windows 2000 Server SP 4.0</os_name>
+			</computer>
+					<computer>
+				<computer_id>112</computer_id>
+				<computer_name>EUCO-SW1</computer_name>
+				<comments></comments>
+				<os_name>Windows 2000 Server SP 4.0</os_name>
+			</computer>
+					<computer>
+				<computer_id>113</computer_id>
+				<computer_name>EUCO-SW3</computer_name>
+				<comments>Service Server</comments>
+				<os_name>Windows 2000 Server SP 4.0</os_name>
+			</computer>
+					<computer>
+				<computer_id>395</computer_id>
+				<computer_name>euco-sl1.eucomed.loc</computer_name>
+				<comments></comments>
+				<os_name></os_name>
+			</computer>
+				</servers>
+		
+		<workstations>
+					<computer>
+				<computer_id>361</computer_id>
+				<computer_name>EUCO-W104-NM</computer_name>
+				<comments></comments>
+				<os_name>Windows XP Professional SP 1.0</os_name>
+				<last_login>EUCOMED\JJ</last_login>
+			</computer>
+					<computer>
+				<computer_id>362</computer_id>
+				<computer_name>EUCO-W103-ND</computer_name>
+				<comments></comments>
+				<os_name>Windows XP Professional SP 1.0</os_name>
+				<last_login>EUCOMED\NM</last_login>
+			</computer>
+					<computer>
+				<computer_id>363</computer_id>
+				<computer_name>EUCO-W102-EV</computer_name>
+				<comments></comments>
+				<os_name>Windows XP Professional SP 1.0</os_name>
+				<last_login>EUCOMED\MV</last_login>
+			</computer>
+					<computer>
+				<computer_id>364</computer_id>
+				<computer_name>EUCO-W113</computer_name>
+				<comments>Anna Ludwinek</comments>
+				<os_name>Windows XP Professional SP 1.0</os_name>
+				<last_login>EUCOMED\ALU</last_login>
+			</computer>
+					<computer>
+				<computer_id>365</computer_id>
+				<computer_name>EUCO-L117-MS</computer_name>
+				<comments></comments>
+				<os_name>Windows XP Professional SP 1.0</os_name>
+				<last_login>EUCOMED\ED</last_login>
+			</computer>
+					<computer>
+				<computer_id>366</computer_id>
+				<computer_name>EUCO-L120-AL</computer_name>
+				<comments></comments>
+				<os_name>Windows XP Professional SP 1.0</os_name>
+				<last_login>EUCOMED\AL</last_login>
+			</computer>
+					<computer>
+				<computer_id>367</computer_id>
+				<computer_name>EUCO-W112</computer_name>
+				<comments></comments>
+				<os_name>Windows XP Professional SP 1.0</os_name>
+				<last_login>EUCOMED\TS</last_login>
+			</computer>
+					<computer>
+				<computer_id>368</computer_id>
+				<computer_name>EUCO-L115-DP</computer_name>
+				<comments></comments>
+				<os_name>Windows XP Professional SP 1.0</os_name>
+				<last_login>EUCOMED\DP</last_login>
+			</computer>
+					<computer>
+				<computer_id>369</computer_id>
+				<computer_name>EUCO-L116-CP</computer_name>
+				<comments></comments>
+				<os_name>Windows XP Professional SP 1.0</os_name>
+				<last_login>EUCOMED\CP</last_login>
+			</computer>
+					<computer>
+				<computer_id>370</computer_id>
+				<computer_name>EUCO-L118-RM</computer_name>
+				<comments></comments>
+				<os_name>Windows XP Professional SP 1.0</os_name>
+				<last_login>EUCOMED\RM</last_login>
+			</computer>
+					<computer>
+				<computer_id>371</computer_id>
+				<computer_name>EUCO-W109-SCAN</computer_name>
+				<comments></comments>
+				<os_name>Windows 2000 Professional SP 3.0</os_name>
+				<last_login>EUCOMED\cm</last_login>
+			</computer>
+					<computer>
+				<computer_id>372</computer_id>
+				<computer_name>EUCO-L110-MW</computer_name>
+				<comments></comments>
+				<os_name>Windows 2000 Professional SP 3.0</os_name>
+				<last_login>EUCOMED\mw</last_login>
+			</computer>
+					<computer>
+				<computer_id>373</computer_id>
+				<computer_name>EUCO-W111</computer_name>
+				<comments></comments>
+				<os_name>Windows XP Professional SP 1.0</os_name>
+				<last_login>EUCOMED\FP</last_login>
+			</computer>
+					<computer>
+				<computer_id>374</computer_id>
+				<computer_name>EUCO-W110</computer_name>
+				<comments></comments>
+				<os_name>Windows XP Professional SP 1.0</os_name>
+				<last_login>EUCOMED\IM</last_login>
+			</computer>
+					<computer>
+				<computer_id>375</computer_id>
+				<computer_name>EUCO-W101-FB</computer_name>
+				<comments></comments>
+				<os_name>Windows XP Professional SP 1.0</os_name>
+				<last_login>EUCOMED\FB</last_login>
+			</computer>
+				</workstations>
+		
+		</report_data>
+	</report>
+		
+	
+</section>
+</reports_set>

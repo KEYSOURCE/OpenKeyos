@@ -1,0 +1,79 @@
+{assign var="paging_titles" value="KAWACS, Manage Networks Discoveries Settings"}
+{assign var="paging_urls" value="/?cl=kawacs"}
+{include file="paging.html"}
+
+
+<h1>Manage Networks Discoveries Settings</h1>
+
+<p class="error">{$error_msg}</p>
+
+<p>Below you have the settings for network discoveries for the active customers. To edit the settings
+for a specific customer, click the customer's name.</p>
+
+<form action="" method="POST" name="filter_frm">
+{$form_redir}
+
+Customer:
+<select name="filter[customer_id]" onchange="document.forms['filter_frm'].submit();">
+	<option value="">[All customers]</option>
+	{html_options options=$customers_list selected=$filter.customer_id}
+</select>
+</form>
+<p/>
+
+
+<table class="list" width="98%">
+	<thead>
+	<tr>
+		<td width="160">Customer</td>
+		<td width="30" align="center">Enabled</td>
+		<td>Settings</td>
+		<td width="120">Last discovery</td>
+		<td width="80">Duration</td>
+		<td> </td>
+	</tr>
+	</thead>
+	
+	{foreach from=$settings key=customer_id item=setting}
+	<tr>
+		<td {if $setting->details}rowspan="{$setting->details|@count}"{/if}>
+			<a href="/?cl=discovery&amp;op=discovery_edit&amp;customer_id={$setting->customer_id}">{$customers_list.$customer_id|escape}</a>
+			{if $setting->comments}<br/>{$setting->comments|escape|nl2br}{/if}
+		</td>
+		<td align="center" {if $setting->details}rowspan="{$setting->details|@count}"{/if}>
+			{if $setting->is_enabled()}Yes{else}--{/if}
+		</td>
+		
+		{foreach from=$setting->details item=detail name=disc_details}
+		<td nowrap="nowrap">
+			#{$detail->computer_id}: {$detail->computer_name};
+			IPs: {$detail->ip_start} - {$detail->ip_end} ({$detail->ip_start|@count_ips:$detail->ip_end} IPs)
+		</td>
+		<td nowrap="nowrap">
+			{if $detail->last_discovery}
+				{$detail->last_discovery|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}
+				{if $detail->discovery_errors}<br/><i class="warning">Warning: discovery errors</i>{/if}
+			{else}-
+			{/if}
+		</td>
+		<td nowrap="nowrap">
+			{if $detail->last_discovery and $detail->duration}{$detail->duration} sec.
+			{else}-
+			{/if}
+		</td>
+		{if $smarty.foreach.disc_details.first}
+			<td nowrap="nowrap" align="right" {if $setting->details}rowspan="{$setting->details|@count}"{/if}>
+				{if $setting->details}
+					<a href="/?cl=discovery&amp;op=manage_discoveries&amp;customer_id={$setting->customer_id}">Discoveries &#0187;</a>
+				{/if}
+			</td>
+		{/if}
+		</tr>
+		{foreachelse}
+			<td class="light_text" colspan="4">--</td>
+			</tr>
+		{/foreach}
+	{/foreach}
+	
+
+</table>

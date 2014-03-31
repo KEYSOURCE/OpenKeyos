@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html [
+  <!ENTITY % HTMLlat1 PUBLIC
+  "-//W3C/ENTITIES Latin 1 for XHTML//EN"
+  "html4-all.ent">
+  %HTMLlat1;
+]>
+
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+		xmlns:fo="http://www.w3.org/1999/XSL/Format"
+                version="1.0">
+
+<!-- Some styles to use in document -->
+<xsl:attribute-set name="page-title">
+	<xsl:attribute name="space-before">6pt</xsl:attribute>
+	<xsl:attribute name="space-after">18pt</xsl:attribute>
+	<xsl:attribute name="text-align">left</xsl:attribute>
+	<xsl:attribute name="font-size">20pt</xsl:attribute>
+	<xsl:attribute name="border-bottom-color">#709D19</xsl:attribute>
+	<xsl:attribute name="border-bottom-width">0.1mm</xsl:attribute>
+	<xsl:attribute name="border-bottom-style">solid</xsl:attribute>
+	<xsl:attribute name="padding-before">1mm</xsl:attribute>
+	<xsl:attribute name="font-weight">bold</xsl:attribute>
+	<xsl:attribute name="color">#709D19</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:attribute-set name="section-title">
+	<xsl:attribute name="space-before">10pt</xsl:attribute>
+	<xsl:attribute name="space-after">10pt</xsl:attribute>
+	<xsl:attribute name="font-size">14pt</xsl:attribute>
+	<xsl:attribute name="font-weight">bold</xsl:attribute>
+	<xsl:attribute name="color">#709D19</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:attribute-set name="TOC-1">
+	<xsl:attribute name="font-weight">bold</xsl:attribute>
+	<xsl:attribute name="font-size">10pt</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:attribute-set name="TOC-2">
+	<xsl:attribute name="text-align-last">justify"</xsl:attribute>
+	<xsl:attribute name="font-size">9pt</xsl:attribute>
+	<xsl:attribute name="margin-left">10pt</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:attribute-set name="pre-like">
+	<xsl:attribute name="white-space-collapse">false</xsl:attribute>
+	<xsl:attribute name="linefeed-treatment">preserve</xsl:attribute>
+	<xsl:attribute name="white-space-treatment">preserve</xsl:attribute>
+</xsl:attribute-set>
+
+<xsl:attribute-set name="table-cell-list">
+	<xsl:attribute name="padding">2mm</xsl:attribute>
+	<xsl:attribute name="font-size">9pt</xsl:attribute>	
+	<xsl:attribute name="border-top-color">grey</xsl:attribute> 
+	<xsl:attribute name="border-top-width">0.1mm</xsl:attribute>
+	<xsl:attribute name="border-top-style">solid</xsl:attribute>
+
+	<!-- <fo:table-cell padding="2mm" text-align="left" border-top-color="grey" border-top-width="0.1mm" border-top-style="solid"> -->
+</xsl:attribute-set>
+
+<xsl:attribute-set name="table-head-list">
+	<xsl:attribute name="padding">2mm</xsl:attribute>
+	<xsl:attribute name="font-size">9pt</xsl:attribute>	
+	<xsl:attribute name="font-weight">bold</xsl:attribute>
+	<xsl:attribute name="background-color">#DDDDDD</xsl:attribute> 
+	<xsl:attribute name="border-top-color">grey</xsl:attribute> 
+	<xsl:attribute name="border-top-width">0.1mm</xsl:attribute>
+	<xsl:attribute name="border-top-style">solid</xsl:attribute>
+</xsl:attribute-set>
+
+
+</xsl:stylesheet>

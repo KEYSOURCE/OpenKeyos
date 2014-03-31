@@ -1,0 +1,255 @@
+{assign var="paging_titles" value="KAWACS, Manage Removed AD Printers, View Removed AD Printer"}
+{assign var="paging_urls" value="/?cl=kawacs_removed, /?cl=kawacs_removed&op=manage_ad_printers"}
+{include file="paging.html"}
+
+<h1>Removed AD Printer : {$ad_printer->name|escape} ({$ad_printer->asset_number})</h1>
+
+<p class="error">{$error_msg}</p>
+
+
+<table width="98%" class="list">
+	<thead>
+	<tr>
+		<td width="120">Customer:</td>
+		<td swidth="40%"><a href="/?cl=customer&op=customer_edit&id={$customer->id}">{$customer->name} ({$customer->id})</a></td>
+		<td>Location:</td>
+		<td>
+			{if $ad_printer->customer_location}
+				<a href="/?cl=customer&amp;op=location_edit&amp;id={$ad_printer->customer_location->id}&amp;returl={$ret_url}">
+				{foreach from=$ad_printer->customer_location->parents item=parent}
+					{$parent->name|escape} &#0187;
+				{/foreach}
+				{$ad_printer->customer_location->name|escape}</a>
+			{else}
+				<font class="light_text">--</font>
+			{/if}
+		</td>
+	</tr>
+	</thead>
+	<tr>
+		<td width="120"><b>Managing since:</b></td>
+		<td swidth="40%">
+			{if $ad_printer->date_created}{$ad_printer->date_created|date_format:$smarty.const.DATE_FORMAT_SMARTY}
+			{else}--
+			{/if}
+		</td>
+		<td><b>Removal reason:</b></td>
+		<td>
+			{if $ad_printer->reason_removed}{$ad_printer->reason_removed|escape|nl2br}
+			{else}--
+			{/if}
+		</td>
+	</tr>
+	<tr>
+		<td><b>Removal date:</b></td>
+		<td>{$ad_printer->date_removed|date_format:$smarty.const.DATE_FORMAT_SMARTY}</td>
+		<td> </td>
+		<td>
+			[ <a href="/?cl=kawacs_removed&amp;op=ad_printer_dates&amp;id={$ad_printer->id}">Edit dates</a> ]
+			[ <a href="/?cl=kawacs_removed&amp;op=ad_printer_delete&amp;id={$ad_printer->id}">Delete permanently</a> ]
+		</td>
+	</tr>
+</table>
+<p>
+<a href="/?cl=kawacs_removed&op=manage_ad_printers">&#0171; Back to Removed AD Printers</a>
+<p/>
+
+
+<table width="98%">
+	<tr><td width="50%">
+	<!-- Show warranty information for AD Printers -->
+	<table class="list" width="90%">
+		<thead>
+		<tr>
+			<td width="120">Warranty information</td>
+			<td align="right" nowrap="nowrap"> </td>
+		</tr>
+		</thead>
+		
+		<tr>
+			<td class="highlight">Asset number:</td>
+			<td class="post_highlight">{$ad_printer->asset_number}</td>
+		</tr>
+		<tr>
+			<td class="highlight">Serial number:</td>
+			<td class="post_highlight">{$ad_printer->sn}</td>
+		</tr>
+		<tr>
+			<td class="highlight">Warranty starts:</td>
+			<td class="post_highlight">
+				{if $ad_printer->warranty_starts}
+					{$ad_printer->warranty_starts|date_format:$smarty.const.DATE_FORMAT_SMARTY}
+				{else}
+					-
+				{/if}
+			</td>
+		</tr>
+		<tr>
+			<td class="highlight">Warranty ends:</td>
+			<td class="post_highlight">
+				{if $ad_printer->warranty_ends}
+					{$ad_printer->warranty_ends|date_format:$smarty.const.DATE_FORMAT_SMARTY}
+				{else}
+					-
+				{/if}
+			</td>
+		</tr>
+		<tr>
+			<td class="highlight">Service package:</td>
+			<td class="post_highlight">
+				{assign var="service_package_id" value=$ad_printer->service_package_id}
+				{$service_packages_list.$service_package_id}
+			</td>
+		</tr>
+		<tr>
+			<td class="highlight">Service level:</td>
+			<td class="post_highlight">
+				{assign var="service_level_id" value=$ad_printer->service_level_id}
+				{$service_levels_list.$service_level_id}
+			</td>
+		</tr>
+		<tr>
+			<td class="highlight">Contract number:</td>
+			<td class="post_highlight">{$ad_printer->contract_number|escape}</td>
+		</tr>
+		<tr>
+			<td class="highlight">HW product ID:</td>
+			<td class="post_highlight">{$ad_printer->hw_product_id|escape}</td>
+		</tr>
+		<tr>
+			<td class="highlight">Product number:</td>
+			<td class="post_highlight">{$ad_printer->product_number|escape}</td>
+		</tr>
+	</table>
+	<td><td width="50%">
+	<!-- Show SNMP information -->
+	<table class="list" width="100%">
+		<thead>
+		<tr>
+			<td width="120">SNMP Monitoring</td>
+			<td align="right" nowrap="nowrap"> </td>
+		</tr>
+		</thead>
+		
+		<tr>
+			<td class="highlight">SNMP enabled:</td>
+			<td class="post_highlight">{if $ad_printer->snmp_enabled}Yes{else}No{/if}</td>
+		</tr>
+		<tr>
+			<td class="highlight">Monitor profile:</td>
+			<td class="post_highlight">
+				{if $ad_printer->profile_id}
+					<a href="/?cl=kawacs&amp;op=monitor_profile_periph_edit&amp;id={$monitor_profile->id}">{$monitor_profile->name|escape}</a>
+				{else}--
+				{/if}
+			</td>
+		</tr>
+		<tr>
+			<td class="highlight">Monitoring computer:</td>
+			<td class="post_highlight">
+				{if $ad_printer->snmp_computer_id}
+					{assign var="snmp_computer_id" value=$ad_printer->snmp_computer_id}
+					<a href="/?cl=kawacs&amp;op=computer_view&amp;id={$snmp_computer_id}">#{$snmp_computer_id}: {$computers_list.$snmp_computer_id}</a>
+				{else}--
+				{/if}
+			</td>
+		</tr>
+		<tr>
+			<td class="highlight">SNMP IP:</td>
+			<td class="post_highlight">
+				{if $ad_printer->snmp_ip}{$ad_printer->snmp_ip}
+				{else}--
+				{/if}
+			</td>
+		</td>
+		<tr>
+			<td class="highlight">Last SNMP contact:</td>
+			<td class="post_highlight">
+				{if $ad_printer->last_contact}{$ad_printer->last_contact|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}
+				{else}--
+				{/if}
+			</td>
+		</tr>
+		
+		{foreach from=$discoveries item=discovery}
+		<tr class="head">
+			<td>Matching discovery:</td>
+			<td class="post_highlight">
+				{assign var="detail_id" value=$discovery->detail_id}
+				By: #{$disc_details.$detail_id->computer_id}: {$disc_details.$detail_id->computer_name}, &nbsp;&nbsp;
+				{$disc_details.$detail_id->ip_start}&nbsp;-&nbsp;{$disc_details.$detail_id->ip_end}
+			</td>
+		</tr>
+		<tr>
+			<td class="highlight">Last discovered:</td>
+			<td class="post_highlight">
+				<a href="/?cl=discovery&amp;op=discovery_details&amp;id={$discovery->id}"
+				>{$discovery->last_discovered|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="highlight">Name:</td>
+			<td class="post_highlight">{$discovery->get_name()|escape}</td>
+		</tr>
+		<tr>
+			<td class="highlight">IP Address:</td>
+			<td class="post_highlight">{$discovery->ip}</td>
+		</tr>
+		{/foreach}
+	</table>
+	
+	</td></tr>
+</table>
+<p/>
+
+{if $ad_printer->snmp_enabled}
+<table class="list" width="98%">
+	<thead>
+	<tr>
+		<td colspan="6">SNMP Data</td>
+	</tr>
+	<tr>
+		<td width="30">ID</td>
+		<td width="160">Name/Updated</td>
+		<td width="30%">Value</td>
+		<td width="30">ID</td>
+		<td width="160">Name/Updated</td>
+		<td width="30%">Value</td>
+	</tr>
+	</thead>
+	
+	{assign var="cols" value="2"}
+	{foreach from=$ad_printer->values_snmp key=snmp_item_id item=snmp_item name=all_snmp_items}
+		{if ($smarty.foreach.all_snmp_items.index % $cols) == 0}<tr>{/if}
+	
+		<td width="30"><b>{$snmp_item_id}</b></td>
+		<td width="120">
+			{$snmp_item->itemdef->name}
+			{if $snmp_item->reported}
+				<br/>{$snmp_item->reported|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}
+			{/if}
+		</td> 
+		<td>
+			{foreach from=$snmp_item->val key=nrc item=val name=snmp_vals}
+				{if $smarty.foreach.snmp_vals.index >= 1}<p/>{/if}
+				{if is_array($val->value)}
+					{assign var="item_fields" value=$snmp_item->itemdef->struct_fields}
+					{assign var="cnt" value=0}
+					
+					{foreach from=$val->value item=val_field key=val_key name=snmp_vals_multi}
+						{$snmp_item->fld_names.$val_key}:&nbsp;{$snmp_item->get_formatted_value($nrc, $val_key)|escape}
+						{if !$smarty.foreach.snmp_vals_multi.last}<br/>{/if}
+					{/foreach}
+				{else}{$snmp_item->get_formatted_value($nrc)|escape}{/if}
+				
+			{/foreach}
+		</td>
+	{/foreach}
+	{if ($smarty.foreach.all_snmp_items.index % $cols) == 0}<td></td><td></td><td></td></tr>{/if}
+</table>
+<p/>
+{/if}
+
+<p>
+<a href="/?cl=kawacs_removed&op=manage_ad_printers">&#0171; Back to Removed AD Printers</a>
+<p>

@@ -1,0 +1,19 @@
+NEED_SUBJECT = "Please specify the subject."
+NEED_TICKET_TYPE = "Please specify the ticket type."
+NEED_CUSTOMER = "Please specify the customer."
+NEED_ASSIGNED = "The ticket must be assigned to someone."
+ASSIGNED_HASNT_ACCESS_TO_CUSTOMER = "The user to whom you tried to assign the ticket can't access the specified customer."
+ORDER_WRONG_CUSTOMER = "The order you selected does not belong to this customer."
+
+NEED_COMMENTS = "You have not entered any comments to add."
+NEED_ESCALATION_REASON = "Please enter some comments about the reason for escalation."
+NEED_ATTACHMENT = "Please specify an attachment to upload."
+UPLOADING_FAILED = "The uploading of the attachment has failed. Please try again."
+ATTACHMENT_MISSING = "Sorry, the attachment file is missing."
+
+CANT_DELETE_PREDEFINED_STAT = "This is a predefined status and can't be deleted."
+CANT_DELETE_USED_STAT = "There are tickets using this status, so it can't be deleted."
+CANT_DELETE_USER_TYPE = "There are tickets using this type, so it can't be deleted."
+
+EXCEEDED_SLA_TIME = "Exceeded SLA time
+TIME_LIMIT_EXCEEDED = "Time limit exceeded, ticket escalated."

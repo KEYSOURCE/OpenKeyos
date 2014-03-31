@@ -1,0 +1,122 @@
+{assign var="paging_titles" value="KB, View KB, View KB category, Add Article"}
+{assign var="paging_urls" value=$category->id|string_format:"/?cl=kb, .?cl=kb&op=manage_kb_categories, /?cl=kb&op=view_category&id=%d"}
+{include file="paging.html"}
+
+<style type="text/css">
+    @import "./kskb.css";
+</style>
+<script language="javascript" type="text/javascript" src="/javascript/ajax.js"></script>
+<script language="javascript" type="text/javascript">
+//<[CDATA[
+{literal}
+	function getSubarticles()
+	{
+		var selElem = document.getElementById("kbart[hasParent]");		
+		getKbSubarticles(selElem.value);
+	}
+	
+	function pickOtherArticle()
+	{
+		{/literal}
+		var container = document.getElementById("art_select_container");
+		var new_html = "<select name=\"kbart[hasParent]\" id=\"kbart[hasParent]\" onchange=\"getSubarticles()\">";
+		new_html += "<option value=\"-1\">[Root article]</option>";
+		{foreach from=$articles_list item="art_title" key="art_id"}
+		new_html += "<option label='{$art_title}' value='{$art_id}'>{$art_title}</option>";
+		{/foreach}
+		new_html += "</select>";
+		container.innerHTML = new_html;
+		{literal}
+	}
+{/literal}
+//]]>
+</script>
+<p class="error">{$error_msg}</p>
+<form name="frmAddKbArticle" enctype="multipart/form-data" action="" method="post">
+{$form_redir}
+<table border="0" style="width: 98%" cellpadding="0" cellspacing="0">
+    <tr valign="top">
+        <td style="width: 180px">
+            <div id="leftSideBox_related">
+                <div id="categTree_pnlBox" class="MagazineArticleCtrlBox">
+                    <div class="MagazineArticleCtrlHeader">Categories Tree</div>														
+                    <div id="editCategoryItem" style="padding: 3px 3px 3px 15px; margin: 0px; width: 140px">	
+                            <a class="ArtLink" href="#">
+                                Edit this category
+                            </a>
+                            <br />   
+                    </div>                                                                                
+                    <span id="categs_lblShow"></span>
+                </div>
+            </div>
+        </td>
+		<td>
+			<div class="FeatureHeadline">Add new KnowledgeBase article</div>
+			<p>
+			<div>
+			<p>
+					<a href="?cl=kb&op=view_category&id={$category->id}">Back to : {$category->hasTitle}</a>
+			</p>	
+			</div>
+			<table class="list" width="98%">
+				<thead>
+					<tr>
+						<td colspan=2>New article data</td>
+					</tr>
+				</thead>
+				<tr>
+					<td class="highlight" width="30%">
+						<b>Title:</b>
+					</td>
+					<td class="posthighlight" width="70%">
+						<input type="text" name="kbart[hasTitle]" id="kbart[hasTitle]" value="{$saved_data[hasTitle]}" size="70">
+					</td>
+				</tr>
+				<tr>
+					<td class="highlight" width="30%">
+						<b>Description:</b>
+					</td>
+					<td class="posthighlight" width="70%">
+						<textarea type="text" name="kbart[hasDescription]" id="kbart[hasDescription]" cols="50" rows="10">{$saved_data[hasDescription]}</textarea>
+					</td>
+				</tr>
+				<tr>
+					<td class="highlight" width="30%">
+						<b>Tags:</b>
+					</td>
+					<td class="posthighlight" width="70%">
+						<input type="text" name="kbart[hasKeywords]" id="kbart[hasKeywords]" value="{$saved_data[hasKeywords]}" size="70">
+					</td>
+				</tr>
+				<tr>
+					<td class="highlight" width="30%">
+						<b>Response variant to:</b>
+					</td>
+					<td class="posthighlight" width="70%">
+						<div id="art_select_container">
+						<input type='hidden' name='kbArtParent' id='kbArtParent' value='{if $parent_article}{$parent_article->id}{else}-1{/if}' />
+						<b>{if $parent_article}{$parent_article->hasTitle}{/if}</b>&nbsp;&nbsp;
+						<select name="kbart[hasParent]" id="kbart[hasParent]" onchange="getSubarticles()" >
+							<option value="-1">[Root article]</option>
+							{html_options options=$articles_list selected=$saved_data[hasParent]}
+						</select>
+						</div>
+					</td>
+				</tr>	
+				<tr>
+					<td class="highlight" width="30%">
+						<b>Original URL:</b>
+					</td>
+					<td class="posthighlight" width="70%">
+						<input type="text" name="kbart[originalURI]" id="kbart[originalURI]" value="{$saved_data[originalURI]}" size="70">
+					</td>
+				</tr>			
+			</table>
+			<p />
+
+			<input type="submit" name="save" value="Save">
+			<input type="submit" name="cancel" value="Cancel">
+		</td>
+    </tr>
+</table>    
+</form>

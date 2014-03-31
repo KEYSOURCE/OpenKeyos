@@ -1,0 +1,156 @@
+{assign var="customer_id" value=$detail->customer_id}
+{assign var="paging_titles" value="KAWACS, Networks Discoveries, Discovery Matching"}
+{assign var="paging_urls" value="/?cl=kawacs, /?cl=discovery&op=manage_discoveries&customer_id=$customer_id"}
+{include file="paging.html"}
+
+<script language="JavaScript" type="text/javascript">
+//<![CDATA[
+
+var obj_classes = new Array ();
+var cnt = 0;
+{foreach from=$SNMP_OBJ_CLASSES key=obj_class item=class_name}
+obj_classes[cnt++] = {$obj_class};
+{/foreach}
+
+{literal}
+
+/* Called when an object class is selected, will display the corresponding list of objects */
+function ck_class_change ()
+{
+	var frm = document.forms['frm_t'];
+	var lst_classes = frm.elements['discovery[matched_obj_class]'];
+	var c_class = lst_classes.options[lst_classes.selectedIndex].value;
+	
+	for (i=0; i<obj_classes.length; i++)
+	{
+		document.getElementById('lst_obj_'+obj_classes[i]).style.display = 'none';
+	}
+	document.getElementById('lst_obj_'+c_class).style.display = '';
+}
+
+/** Called when a suggested matched is clicked, will select the class and objects from the drop-down */
+function do_select_obj (obj_class, obj_id)
+{
+	var frm = document.forms['frm_t'];
+	var lst_classes = frm.elements['discovery[matched_obj_class]'];
+	var lst_objects = frm.elements['discovery[matched_obj_id]['+obj_class+']'];
+	
+	for (i=0; i<lst_classes.options.length; i++)
+	{
+		if (lst_classes.options[i].value == obj_class)
+		{
+			lst_classes.options[i].selected = true;
+			break;
+		}
+	}
+	ck_class_change ();
+	
+	for (i=0; i<lst_objects.options.length; i++)
+	{
+		if (lst_objects.options[i].value == obj_id)
+		{
+			lst_objects.options[i].selected = true;
+			break;
+		}
+	}
+}
+
+
+
+{/literal}
+//]]>
+</script>
+
+<h1>Discovery Matching</h1>
+
+<p class="error">{$error_msg}</p>
+
+<p>
+On this page you can specify which Keyos device corresponds to this discovered devices.<br/>
+If the device will not be managed in Keyos, simply select the <b>[Not in Keyos]</b> option.
+</p>
+
+
+<form action="" method="POST" name="frm_t">
+{$form_redir}
+
+<table class="list" width="98%">
+	<thead>
+	<tr>
+		<td width="120">Discovered from:</td>
+		<td class="post_highlight" colspan="3">
+			{$detail->ip_start} - {$detail->ip_end},&nbsp;&nbsp;&nbsp; by #{$detail->computer_id}: {$detail->computer_name}
+		</td>
+	</tr>
+	</thead>
+	
+	<tr>
+		<td class="highlight">Name:</td>
+		<td class="post_highlight">
+			{if $discovery->get_name()}{$discovery->get_name()|escape} {else} - {/if}
+		</td>
+		<td class="highlight" width="120">Last discovered:</td>
+		<td class="post_highlight" swidth="40%">{$discovery->last_discovered|date_format:$smarty.const.DATE_TIME_FORMAT_SMARTY}</td>
+	</tr>
+	<tr>
+		<td class="highlight">IP address:</td>
+		<td class="post_highlight">{$discovery->ip}</td>
+		<td class="highlight">Is fixed IP:</td>
+		<td class="post_highlight">
+			<select name="discovery[is_fixed_ip]">
+				<option value="0">No</option>
+				<option value="1" {if $discovery->is_fixed_ip}selected{/if}>Yes</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="highlight">Keyos match:</td>
+		<td class="post_highlight">
+			<select name="discovery[matched_obj_class]" onchange="ck_class_change();">
+				{html_options options=$SNMP_OBJ_CLASSES selected=$discovery->matched_obj_class}
+			</select>
+			&nbsp;&nbsp;:&nbsp;&nbsp;
+			{foreach from=$SNMP_OBJ_CLASSES key=obj_class item=class_name}
+			<select name="discovery[matched_obj_id][{$obj_class}]" id="lst_obj_{$obj_class}" style="display:none;">
+				
+				{if count($objects_lists.$obj_class)>0}
+					<option value="0">[Select matched device]</option>
+					<option value="-1" {if $discovery->matched_obj_id==-1}selected{/if}>[Not in Keyos]</option>
+					{html_options options=$objects_lists.$obj_class selected=$discovery->matched_obj_id}
+				{else}
+					<option value="0">[No such devices]</option>
+				{/if}
+			</select>
+			{/foreach}
+		</td>
+	</td>
+	<tr class="head">
+		<td>Suggested matches:</td>
+		<td colspan="3">
+			{if count($matches)>0}(Click to select)
+			{else}[No suggestions]
+			{/if}
+		</td>
+	</tr>
+	{foreach from=$matches item=m}
+	<tr>
+		<td> </td>
+		<td colspan="3" class="post_highlight">
+			{assign var="obj_class" value=$m.obj_class}
+			{assign var="obj_id" value=$m.obj_id}
+			<a href="#" onclick="do_select_obj ({$obj_class}, {$obj_id});">{$objects_lists.$obj_class.$obj_id}</a>
+		</td>
+	</tr>
+	{/foreach}
+</table>
+<p/>
+
+<input type="submit" name="save" value="Save" class="button" />
+<input type="submit" name="cancel" value="Close" class="button" />
+</form>
+
+<script language="JavaScript">
+//<[CDATA[
+ck_class_change ();
+//]]>
+</script>

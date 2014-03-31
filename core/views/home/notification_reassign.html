@@ -1,0 +1,26 @@
+{assign var="paging_titles" value="Notifications"}
+{assign var="paging_urls" value=""}
+{include file="paging.html"}
+
+
+<h1>Reassign Notifications</h1>
+<p>
+<font class="error">{$error_msg}</font>
+<p>
+
+Select the user to whom you want to reassign the notifications:
+<p>
+
+<form action="" method="POST" name="notifs_form">
+{$form_redir}
+
+{foreach from=$users item=user}
+	<input type="radio" name="user_id" value="{$user->id}"> {$user->fname} {$user->lname}<br>
+{/foreach}
+<input type="radio" name="user_id" value="0"> [None - use default]<br>
+
+<p>
+<input type="submit" name="assign" value="Assign">
+<input type="submit" name="cancel" value="Cancel">
+
+</form>

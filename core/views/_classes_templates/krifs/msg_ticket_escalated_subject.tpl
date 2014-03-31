@@ -1,0 +1,1 @@
+[KeyOS]{if $is_reminder} [Reminder]{/if} Ticket escalated: # {$notification->linked_object->id} : {$notification->linked_object->subject} 

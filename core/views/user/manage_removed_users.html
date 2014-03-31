@@ -1,0 +1,173 @@
+{assign var="paging_titles" value="Users Administration, RemovedUsers"}
+{assign var="paging_urls" value="/?cl=user&op=manage_removed_users"}
+{include file="paging.html"}
+<script language="JavaScript" type="text/javascript">
+//<![CDATA[
+{literal}
+function changePage (start_page)
+{
+	frm = document.forms['frm_rem_users']
+	
+	if (start_page < 0)
+	{
+		pages = frm.elements['filter_start']
+		start_page = pages.options[pages.selectedIndex].value
+	}
+	frm.elements['filter[start]'].value = start_page
+	frm.submit ()
+}
+{/literal}
+//]]>
+</script>
+<h1>Removed Users</h1>
+<p class="error_msg">{$error_msg}</p>
+
+<form name="frm_rem_users" action="" method="POST">
+{$form_redir}
+<input type="hidden" name="order_by_bk" value="{$filter.order_by}" />
+<input type="hidden" name="order_dir_bk" value="{$filter.order_dir}" />
+
+<table width="98%">
+	<tr>
+		<td width="75%" nowrap="nowrap">
+			View: 
+			<select name="filter[type]" onchange="document.forms['frm_rem_users'].submit();">
+				{html_options options=$USER_ONLY_TYPES selected=$filter.type}
+			</select>
+			
+			{if $filter.type == $smarty.const.USER_TYPE_CUSTOMER}
+				<select name="filter[customer_id]"  onchange="document.forms['frm_rem_users'].submit();">
+					<option value="">[All customers]</option>
+					{html_options options=$customers_list selected=$filter.customer_id}
+				</select>
+			{/if}
+		</td>
+		<td nowrap="nowrap" align="right">
+			{if $users_count > $filter.limit}
+				{if $filter.start > 0}
+					<a href="#" onclick="changePage({$start_prev});">&#0171; Previous</a>
+				{else}
+					<font class="light_text">&#0171; Previous</font>
+				{/if}
+				
+				<select name="filter_start" onchange="changePage (-1)">
+					{html_options options=$pages selected=$filter.start}
+				</select>
+				<input type="hidden" name="filter[start]" value="{$filter.start}">
+				
+				{if $filter.start + $filter.limit < $users_count}
+					<a href="#" onclick="changePage({$start_next});">Next &#0187;</a>
+				{else}
+					<font class="light_text">Next &#0187;</font>
+				{/if}
+				|
+			{/if}
+			Per page:
+			<select name="filter[limit]"  onchange="document.forms['frm_rem_users'].submit();">
+				{html_options options=$PER_PAGE_OPTIONS selected=$filter.limit} 
+			</select>
+		</td>
+	</tr>
+</table>
+<table class="list" width="98%">
+	<thead>
+	<tr>
+		<td class="sort_text" style="width: 1%; white-space: no-wrap;">{strip}
+			<a href="{$sort_url}&order_by=id&order_dir={if $filter.order_by=='id' and $filter.order_dir=='ASC'}DESC{else}ASC{/if}"
+			>ID</a>{if $filter.order_by=='id'}&nbsp;<img src="/images/{if $filter.order_dir=='ASC'}up{else}down{/if}.gif" width="11" height="6">{/if}
+		{/strip}</td>
+		
+		<td class="sort_text" style="white-space: no-wrap; width: 20%;">{strip}
+			<a href="{$sort_url}&order_by=name&order_dir={if $filter.order_by=='name' and $filter.order_dir=='ASC'}DESC{else}ASC{/if}"
+			>Name</a>{if $filter.order_by=='name'}&nbsp;<img src="/images/{if $filter.order_dir=='ASC'}up{else}down{/if}.gif" width="11" height="6">{/if}
+		{/strip}</td>
+		
+		<td class="sort_text" style="white-space: no-wrap; width: 10%;">{strip}
+			<a href="{$sort_url}&order_by=login&order_dir={if $filter.order_by=='login' and $filter.order_dir=='ASC'}DESC{else}ASC{/if}"
+			>Login</a>{if $filter.order_by=='login'}&nbsp;<img src="/images/{if $filter.order_dir=='ASC'}up{else}down{/if}.gif" width="11" height="6">{/if}
+		{/strip}</td>
+		
+		{if $filter.type == $smarty.const.USER_TYPE_KEYSOURCE}
+		<td class="sort_text" style="white-space: no-wrap; width: 10%;">{strip}
+			<a href="{$sort_url}&order_by=erp_id&order_dir={if $filter.order_by=='erp_id' and $filter.order_dir=='ASC'}DESC{else}ASC{/if}"
+			>ERP ID</a>{if $filter.order_by=='erp_id'}&nbsp;<img src="/images/{if $filter.order_dir=='ASC'}up{else}down{/if}.gif" width="11" height="6">{/if}
+		{/strip}</td>
+		{/if}
+		
+		{if $filter.type == $smarty.const.USER_TYPE_CUSTOMER}
+			<td class="sort_text" style="white-space: no-wrap; width: 20%;">{strip}
+			<a href="{$sort_url}&order_by=customer&order_dir={if $filter.order_by=='customer' and $filter.order_dir=='ASC'}DESC{else}ASC{/if}"
+			>Customer</a>{if $filter.order_by=='customer'}&nbsp;<img src="/images/{if $filter.order_dir=='ASC'}up{else}down{/if}.gif" width="11" height="6">{/if}
+			{/strip}</td>
+		{/if}
+		
+		{if $filter.type == $smarty.const.USER_TYPE_KEYSOURCE}
+			<td class="sort_text" style="white-space: no-wrap; width: 4%;">{strip}
+			<a href="{$sort_url}&order_by=restrict_customers&order_dir={if $filter.order_by=='restrict_customers' and $filter.order_dir=='ASC'}DESC{else}ASC{/if}"
+			>Restrict<br>cust.</a>{if $filter.order_by=='restrict_customers'}&nbsp;<img src="/images/{if $filter.order_dir=='ASC'}up{else}down{/if}.gif" width="11" height="6">{/if}
+			{/strip}</td>
+		{/if}
+		
+		<td class="sort_text" style="white-space: no-wrap; width: 10%;">{strip}
+			<a href="{$sort_url}&order_by=email&order_dir={if $filter.order_by=='email' and $filter.order_dir=='ASC'}DESC{else}ASC{/if}"
+			>Email</a>{if $filter.order_by=='email'}&nbsp;<img src="/images/{if $filter.order_dir=='ASC'}up{else}down{/if}.gif" width="11" height="6">{/if}
+		{/strip}</td>
+		<td style="white-space: no-wrap; text-align: right;">Was merged with user *)</td>
+		<td> </td>
+	</tr>
+	</thead>
+	
+	{foreach from=$users item=user}
+		<tr>
+			<td>{$user->user_id}</td>
+			<td>
+				{$user->fname} {$user->lname}
+			</td>
+			<td>{$user->login|escape}</td>
+			
+			{if $filter.type == $smarty.const.USER_TYPE_KEYSOURCE}
+				<td>{$user->erp_id|escape}</td>
+			{/if}
+			
+			{if $filter.type == $smarty.const.USER_TYPE_CUSTOMER}
+			<td>
+				{assign var="user_customers" value=$user->get_users_customer_list()}
+				{foreach from=$user_customers item="cust_id"}
+				{$customers_list.$cust_id}<br />
+				{/foreach}
+			</td>
+			{/if}
+			
+			{if $filter.type == $smarty.const.USER_TYPE_KEYSOURCE}
+			<td align="center">
+				{if $user->restrict_customers}Yes{else}No{/if}
+			</td>
+			{/if}
+			
+			<td>{$user->email}</td>
+			<td style="text-align: right;">
+				{assign var="mid" value=$user->merged_into_user_id}
+				{$mid}
+			</td>
+			
+			
+			<td align="right" nowrap="nowrap">
+				<a href="/?cl=user&op=restore_removed_user&id={$user->id}"
+					onclick="return confirm ('Are you sure you want to restore this user?');"
+				>Restore  &#0187;</a>
+				
+			</td>
+		</tr>
+	{foreachelse}
+		<tr>
+			<td colspan="4">[There are no users created yet]</td>
+		</tr>
+	{/foreach}
+
+</table>
+<p>
+	*) Note that when restoring an user account, it gains back the access to all the customers accounts it had before the merge. 
+	However, if you want to restrict the user account it was merged into, to have access to some customers accounts it gained as a result 
+	of this merge, you'll have to do it manually, from that user edit page.
+</p>
+</form>

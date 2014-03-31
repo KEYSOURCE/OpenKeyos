@@ -1,0 +1,54 @@
+label{
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    font-weight:bold;
+    color:#7D7D7D;
+}
+
+.clear{
+    clear: both;
+}
+
+.settings{
+    min-width: 434px; 
+    width: 44%; 
+    border: 0px solid; 
+    float: left; 
+    height: auto; 
+    padding: 5px;
+}
+
+.settings div{
+    width: 100%;
+    margin-bottom: 10px;
+    clear: both;
+}
+
+.settings div select, .settings div input, .settings div b{
+    margin-left: 10px;
+    float: left;
+}
+.section_div {
+    width: 95%; 
+    padding: 20px 10px 0 10px; 
+    border: 0px solid black; 
+    min-width: 900px;
+    text-align: left;
+}
+
+.settings_label_prehead{
+    float: left; 
+    margin-left: 10px; 
+    padding-top: 3px; 
+    width: 200px; 
+    float: left;
+    text-align: left;
+}
+.settings_label_prehead_min{
+    float: left; 
+    margin-left: 10px; 
+    margin-right:10px; 
+    width: auto;
+    float: left;
+    text-align:center;
+}

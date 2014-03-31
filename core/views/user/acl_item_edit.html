@@ -1,0 +1,117 @@
+{assign var="paging_titles" value="Users Administration, Manage ACL Items, Edit Item"}
+{assign var="paging_urls" value="/?cl=kalm, /?cl=kalm&op=manage_acl_items"}
+{include file="paging.html"}
+
+<h1>Edit ACL Item</h1>
+<p>
+<font class="error">{$error_msg}</font>
+<p>
+
+<form action="" method="POST" name="item_form">
+{$form_redir}
+<input type="hidden" name="class_change" value="">
+
+<table class="list" width="95%">
+	<thead>
+	<tr>
+		<td colspan="2">ACL item definition</td>
+	</tr>
+	</thead>
+	
+	<tr>
+		<td width="20%">Name: </td>
+		<td>
+			<input type="text" name="item[name]" value="{$item->name}" size="30">
+		</td>
+	</tr>
+	<tr>
+		<td>Category: </td>
+		<td>
+			<select name="item[category_id]">
+				<option value="">[Select category]</option>
+				{html_options options=$categories selected=$item->category_id}
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>Current assigned operations: </td>
+		<td>
+			{foreach from=$item->operations item=operation}
+				{$operation->module} :: {$operation->function} <br>
+			{/foreach}
+		</td>
+	</tr>
+	
+</table>
+
+<p>
+<h2>Operations</h2>
+<p>
+
+<table class="list" width="95%">
+	<thead>
+		<tr>
+			<td colspan="2">
+				Module:
+				<select name="class" onChange="document.forms['item_form'].elements['class_change'].value='1'; document.forms['item_form'].submit();">
+					{html_options options=$acl_classes selected=$class}
+				</select>
+				&nbsp;&nbsp; | &nbsp;&nbsp;
+				[<a href="#" onClick="check_all()">Check all</a>]
+				[<a href="#" onClick="uncheck_all()">Un-check all</a>]
+			</td>
+		</tr>
+	</thead>
+	
+	<tr>
+		<td>
+			<table border=0>
+				{assign var="columns" value="5"}
+				{assign var="col" value="1"}
+				
+				{foreach from=$class_methods item=method}
+					{if $col==1}<tr>{/if}
+				
+					<td style="border:none; padding: 0px;" nowrap>
+						<input type="checkbox" name="operations[]" value="{$method}" style="vertical-align: middle;"
+						{if in_array ($method, $selected_class_methods)} checked {/if}
+						> {$method}
+					</td>
+					
+					{if $col++==$columns}</tr>{assign var="col" value="1"}{/if}
+				
+				{/foreach}
+				
+			</table>
+		</td>
+	</tr>
+</table>
+<p>
+
+<input type="submit" name="save" value="Save">
+<input type="submit" name="cancel" value="Close">
+
+</form>
+
+{literal}
+<script language="JavaScript">
+
+function check_all()
+{
+	frm = document.forms['item_form']
+	for (i=0; i<frm.elements['operations[]'].length; i++)
+	{
+		frm.elements['operations[]'][i].checked = true;
+	}
+}
+
+function uncheck_all()
+{
+	frm = document.forms['item_form']
+	for (i=0; i<frm.elements['operations[]'].length; i++)
+	{
+		frm.elements['operations[]'][i].checked = false;
+	}
+}
+</script>
+{/literal}

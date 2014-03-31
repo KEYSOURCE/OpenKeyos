@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html SYSTEM "xml/html4-all.ent">
+<result>
+    <customer>
+        <customer_id>{$customer->id}</customer_id>
+        <customer_name>{$customer->name}</customer_name>        
+    </customer>
+    <log_months>
+        {foreach from=$log_months item="month"}
+            <lmonth>{$month}</lmonth>
+        {/foreach}
+    </log_months>
+    <chart_start_month>{$c_start_month}</chart_start_month>
+    <chart_end_month>{$c_end_month}</chart_end_month>
+    <items>
+        {foreach from=$evo item="item"} 
+        <item>
+            <Month>{$item.month}</Month>
+            <Available>{$item.available}</Available>
+            <Reporting>{$item.reporting}</Reporting>
+            <Blackout>{$item.blackout}</Blackout>
+        </item>
+        {/foreach}
+    </items>
+    <pie>
+        <item><Label>Reporting</Label><Amount>{$tot_comps_current}</Amount></item>
+	<item><Label>Not reporting</Label><Amount>{$tot_comps_old}</Amount></item>
+	<item><Label>Blackout</Label><Amount>{$tot_comps_blackout}</Amount></item>
+    </pie>
+</result>
+

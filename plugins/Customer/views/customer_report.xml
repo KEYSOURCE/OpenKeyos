@@ -1,0 +1,769 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html [
+  <!ENTITY % HTMLlat1 PUBLIC
+  "-//W3C/ENTITIES Latin 1 for XHTML//EN"
+  "html4-all.ent">
+  %HTMLlat1;
+]>
+
+<reports_set>
+	<show_cover_page>{$filter.show_cover_page}</show_cover_page>
+	<show_contents>{$filter.show_contents}</show_contents>
+	<show_section_cover_pages>{$filter.show_section_cover_pages}</show_section_cover_pages>
+	<main_title>{$filter.title}</main_title>
+
+	<customer_id>{$customer->id}</customer_id>
+	<customer_name>{$customer->name}</customer_name>
+
+{assign var="img_id" value=1}
+{if $selected_sections.technical_information}
+<section>
+	<title>Technical information</title>
+
+	{if $reports.report_computers}
+	<report>
+		<title>Computers</title>
+		<type>computers</type>
+
+		<report_data>
+
+			<servers>
+			{foreach from=$servers item=computer}
+				<computer>
+					<id>{$computer->id}</id>
+					<asset_no>{$computer->asset_no|escape}</asset_no>
+					<computer_name>{$computer->get_item('netbios_name')|escape}</computer_name>
+					<comments>{$computer->comments|escape|nl2br}</comments>
+					<os_name>{$computer->get_item('os_name')|escape}</os_name>
+					<last_login>{$computer->get_last_login()|escape}</last_login>
+					<computer_model>{$computer->get_item('computer_model')|escape}</computer_model>
+					{if $computer->roles}
+						{strip}
+						<roles>
+						{foreach from=$computer->roles item=role_name name=computer_roles}
+							{$role_name|escape}{if !$smarty.foreach.computer_roles.last},&#0160;{/if}
+						{/foreach}
+						</roles>
+						{/strip}
+					{/if}
+				</computer>
+			{/foreach}
+			</servers>
+
+			<workstations>
+			{foreach from=$workstations item=computer}
+				<computer>
+					<id>{$computer->id}</id>
+					<asset_no>{$computer->asset_no|escape}</asset_no>
+					<computer_name>{$computer->get_item('netbios_name')|escape}</computer_name>
+					<comments>{$computer->comments|escape}</comments>
+					<os_name>{$computer->get_item('os_name')|escape}</os_name>
+					<last_login>{$computer->get_last_login()|escape}</last_login>
+					<computer_model>{$computer->get_item('computer_model')|escape}</computer_model>
+					{if $computer->roles}
+						<roles>
+						{foreach from=$computer->roles item=role_name name=computer_roles}
+							{$role_name}{if !$smarty.foreach.computer_roles.last}, {/if}
+						{/foreach}
+						</roles>
+					{/if}
+				</computer>
+			{/foreach}
+			</workstations>
+
+			<unspecifieds>
+			{foreach from=$unspecifieds item=computer}
+				<computer>
+					<id>{$computer->id}</id>
+					<asset_no>{$computer->asset_no()|escape}</asset_no>
+					<computer_name>{$computer->get_item('netbios_name')|escape}</computer_name>
+					<comments>{$computer->comments|escape}</comments>
+					<os_name>{$computer->get_item('os_name')|escape}</os_name>
+					<last_login>{$computer->get_last_login()|escape}</last_login>
+					<computer_model>{$computer->get_item('computer_model')|escape}</computer_model>
+					{if $computer->roles}
+						<roles>
+						{foreach from=$computer->roles item=role_name name=computer_roles}
+							{$role_name}{if !$smarty.foreach.computer_roles.last}, {/if}
+						{/foreach}
+						</roles>
+					{/if}
+				</computer>
+			{/foreach}
+			</unspecifieds>
+
+		</report_data>
+	</report>
+	{/if}
+
+
+	{if $reports.report_peripherals}
+	<report>
+		<title>Peripherals</title>
+		<type>peripherals</type>
+
+		<report_data>
+			<include_summary>{$peripherals_summary}</include_summary>
+			<include_details>{$peripherals_details}</include_details>
+
+			{if $ad_printers}
+				<ad_printers>
+					{foreach from=$ad_printers item=ad_printer}
+						<ad_printer computer_id="{$ad_printer->computer_id}" nrc="{$ad_printer->nrc}" asset_no="{$ad_printer->asset_no|escape}">
+							{foreach from=$ad_printers_fields key=field_id item=field_name}
+								<field
+									name="{$field_name|escape}"
+									in_listings="{if $ad_printers_fields_summary.$field_id}yes{else}no{/if}"
+								>{$ad_printer->get_formatted_value($field_id)|escape}</field>
+							{/foreach}
+						</ad_printer>
+					{/foreach}
+				</ad_printers>
+			{/if}
+
+			{if $all_peripherals}
+				{foreach from=$all_peripherals key=class_id item=peripherals}
+				<peripherals_class>
+					{assign var="class_def" value=$peripherals.0->class_def}
+					{assign var="class_id" value=$class_def->id}
+					<class_id>{$class_id}</class_id>
+					<class_name>{$classes_list.$class_id}</class_name>
+					<link_computers>{if $class_def->link_computers}yes{else}no{/if}</link_computers>
+
+					<name_width>{$name_widths.$class_id}</name_width>
+					<word_name_width>{$word_name_widths.$class_id}</word_name_width>
+					{foreach from=$class_def->field_defs key=idx item=field_def}
+						<field
+							in_listings="{if $field_def->in_listings}yes{else}no{/if}"
+							in_reports="{if $field_def->in_reports}yes{else}no{/if}"
+							{if $field_def->in_listings}width="{$display_widths.$class_id.$idx}"{/if}
+							{if $field_def->in_listings}word_width="{$word_display_widths.$class_id.$idx}"{/if}
+							>{$field_def->name|escape}</field>
+					{/foreach}
+
+					<peripherals>
+					{foreach from=$peripherals item=peripheral}
+						<peripheral>
+							<peripheral_asset_no>{$peripheral->asset_no}</peripheral_asset_no>
+							<peripheral_id>{$peripheral->id}</peripheral_id>
+							<peripheral_name>{$peripheral->name}</peripheral_name>
+
+							{if $peripheral->class_def->field_defs}
+								<fields>
+								{foreach from=$peripheral->class_def->field_defs key=idx item=field_def}
+									<field
+										name="{$field_def->name|escape}"
+										in_listings="{if $field_def->in_listings}yes{else}no{/if}"
+										in_reports="{if $field_def->in_reports}yes{else}no{/if}"
+										pre_like="{if $field_def->type==$smarty.const.MONITOR_TYPE_TEXT}yes{else}no{/if}"
+										{if $field_def->in_listings}width="{$display_widths.$class_id.$idx}"{/if}
+										{if $field_def->in_listings}word_width="{$word_display_widths.$class_id.$idx}"{/if}
+									>{$peripheral->get_formatted_value($idx)|escape|nl2br}</field><!-- xxxxxxxx -->
+								{/foreach}
+								</fields>
+							{/if}
+
+							{if $peripheral->class_def->link_computers}
+								<computers>
+								{foreach from=$peripheral->computers item=computer_id}
+									<computer id="{$computer_id}">{$computers_list.$computer_id|escape}</computer>
+								{/foreach}
+								</computers>
+							{/if}
+						</peripheral>
+					{/foreach}
+					</peripherals>
+				</peripherals_class>
+				{/foreach}
+			{/if}
+		</report_data>
+	</report>
+	{/if}
+
+
+	{if $reports.report_warranties}
+	<report>
+		<title>Warranties</title>
+		<type>warranties</type>
+
+		<report_data>
+			<include_charts>{$warranties_charts}</include_charts>
+			<include_details>{$warranties_details}</include_details>
+			<show_warrranties_computers>{$show_warrranties_computers}</show_warrranties_computers>
+			<show_warrranties_ad_printers>{$show_warrranties_ad_printers}</show_warrranties_ad_printers>
+			<show_warrranties_peripherals>{$show_warrranties_peripherals}</show_warrranties_peripherals>
+
+			{if $computers_warranties}
+			<computers_warranties>
+				{foreach from=$computers_warranties item=warranty}
+					{assign var="computer_id" value=$warranty->id}
+					<warranty>
+						<computer_id>{$computer_id}</computer_id>
+						<asset_no>{$warranty->asset_no}</asset_no>
+						<computer_name>{$computers_list.$computer_id}</computer_name>
+						<name>{$warranty->product}</name>
+						<serial_number>{$warranty->sn}</serial_number>
+						{if $warranty->warranty_starts>0 or $warranty->warranty_ends>0}
+							<warranty_starts>{strip}
+								{if $warranty->warranty_starts>0}
+									{$warranty->warranty_starts|date_format:$smarty.const.DATE_FORMAT_SMARTY}
+								{else}
+									-
+								{/if}
+							{/strip}</warranty_starts>
+							<warranty_ends>{strip}
+								{if $warranty->warranty_ends>0}
+									{$warranty->warranty_ends|date_format:$smarty.const.DATE_FORMAT_SMARTY}
+								{else}
+									-
+								{/if}
+							{/strip}</warranty_ends>
+						{/if}
+						{if $warranty->service_package_id}
+							{assign var="service_package_id" value=$warranty->service_package_id}
+							<service_package>{$service_packages_list.$service_package_id|escape}</service_package>
+						{/if}
+						{if $warranty->service_level_id}
+							{assign var="service_level_id" value=$warranty->service_level_id}
+							<service_level>{$service_levels_list.$service_level_id|escape}</service_level>
+						{/if}
+						{if $warranty->contract_number}
+							<contract_number>{$warranty->contract_number|escape}</contract_number>
+						{/if}
+						{if $warranty->hw_product_id}
+							<hw_product_id>{$warranty->hw_product_id|escape}</hw_product_id>
+						{/if}
+					</warranty>
+				{/foreach}
+			</computers_warranties>
+
+			<computers_lifecycle>
+			<heading>
+				{foreach from=$computers_warranties_head key=year item=y}
+				<year year="{$year}" months_count="{$y->months_count}">
+					{foreach from=$y->groups item=g}
+						<months_group months_count="{$g->months_count}" {if $g->is_year_start}year_start="1"{/if}>{$g->month_str}</months_group>
+					{/foreach}
+					{assign var="is_year_start" value=1}
+					{foreach from=$y->months key=month_num item=month_str}
+						<month month_num="{$month_num}" month_str="{$month_str}" {if $is_year_start}year_start="1"{/if}/>
+						{assign var="is_year_start" value=0}
+					{/foreach}
+				</year>
+				{/foreach}
+
+				<!-- Put in the grouped months, especially for WordML where there is a 62 columns limit in tables -->
+				{foreach from=$computers_warranties_months_grouped key=year item=months}
+					<year_grouped year="{$year}" groups_count="{$months|@count}">
+						{foreach from=$months item=month}
+						<month_grouped {if $month->is_year_start}year_start="1"{/if}>{$month->month_str}</month_grouped>
+						{/foreach}
+					</year_grouped>
+				{/foreach}
+			</heading>
+			{foreach from=$computers_warranties item=warranty}
+				{assign var="computer_id" value=$warranty->id}
+				<warranty>
+					<name>{$computers_list.$computer_id|escape}</name>
+					{foreach from=$computers_warranties_months item=month}
+						<month {if $warranty->has_month($month)}color="{$warranty->get_color()}"{/if}
+							{if $month->is_current}current="1"{/if}
+							{if $month->is_year_start}year_start="1"{/if}/>
+					{/foreach}
+
+					<!-- Put in the grouped months, especially for WordML where there is a 62 columns limit in tables -->
+					{foreach from=$computers_warranties_months_grouped key=year item=months}
+					{foreach from=$months key=year item=month}
+						<month_grouped {if $warranty->has_month($month)}color="{$warranty->get_color()}"{/if}
+							{if $month->is_current}current="1"{/if}
+							{if $month->is_year_start}year_start="1"{/if}/>
+					{/foreach}
+					{/foreach}
+				</warranty>
+			{/foreach}
+			</computers_lifecycle>
+			{/if}
+
+
+			{if $ad_printers_warranties}
+			<ad_printers_warranties>
+				{foreach from=$ad_printers_warranties item=warranty}
+					{assign var="canonical_name" value=$warranty->canonical_name}
+					<warranty>
+						<name>{$ad_printers_list.$canonical_name}</name>
+						<asset_no>{$warranty->asset_no}</asset_no>
+						<serial_number>{$warranty->sn}</serial_number>
+						{if $warranty->warranty_starts>0 or $warranty->warranty_ends>0}
+							<warranty_starts>{strip}
+								{if $warranty->warranty_starts>0}
+									{$warranty->warranty_starts|date_format:$smarty.const.DATE_FORMAT_SMARTY}
+								{else}
+									-
+								{/if}
+							{/strip}</warranty_starts>
+							<warranty_ends>{strip}
+								{if $warranty->warranty_ends>0}
+									{$warranty->warranty_ends|date_format:$smarty.const.DATE_FORMAT_SMARTY}
+								{else}
+									-
+								{/if}
+							{/strip}</warranty_ends>
+						{/if}
+						{if $warranty->service_package_id}
+							{assign var="service_package_id" value=$warranty->service_package_id}
+							<service_package>{$service_packages_list.$service_package_id|escape}</service_package>
+						{/if}
+						{if $warranty->service_level_id}
+							{assign var="service_level_id" value=$warranty->service_level_id}
+							<service_level>{$service_levels_list.$service_level_id|escape}</service_level>
+						{/if}
+						{if $warranty->contract_number}
+							<contract_number>{$warranty->contract_number|escape}</contract_number>
+						{/if}
+						{if $warranty->hw_product_id}
+							<hw_product_id>{$warranty->hw_product_id|escape}</hw_product_id>
+						{/if}
+					</warranty>
+				{/foreach}
+			</ad_printers_warranties>
+
+			<ad_printers_lifecycle>
+			<heading>
+				{foreach from=$ad_printers_warranties_head key=year item=y}
+				<year year="{$year}" months_count="{$y->months_count}">
+					{foreach from=$y->groups item=g}
+						<months_group months_count="{$g->months_count}" {if $g->is_year_start}year_start="1"{/if}>{$g->month_str}</months_group>
+					{/foreach}
+					{assign var="is_year_start" value=1}
+					{foreach from=$y->months key=month_num item=month_str}
+						<month month_num="{$month_num}" month_str="{$month_str}" {if $is_year_start}year_start="1"{/if}/>
+						{assign var="is_year_start" value=0}
+					{/foreach}
+				</year>
+				{/foreach}
+
+				<!-- Put in the grouped months, especially for WordML where there is a 62 columns limit in tables -->
+				{foreach from=$ad_printers_warranties_months_grouped key=year item=months}
+					<year_grouped year="{$year}" groups_count="{$months|@count}">
+						{foreach from=$months item=month}
+						<month_grouped {if $month->is_year_start}year_start="1"{/if}>{$month->month_str}</month_grouped>
+						{/foreach}
+					</year_grouped>
+				{/foreach}
+			</heading>
+			{foreach from=$ad_printers_warranties item=warranty}
+				<warranty>
+					<name>{$warranty->product}</name>
+					{foreach from=$ad_printers_warranties_months item=month}
+						<month {if $warranty->has_month($month)}color="{$warranty->get_color()}"{/if}
+							{if $month->is_current}current="1"{/if}
+							{if $month->is_year_start}year_start="1"{/if}/>
+					{/foreach}
+
+					<!-- Put in the grouped months, especially for WordML where there is a 62 columns limit in tables -->
+					{foreach from=$ad_printers_warranties_months_grouped key=year item=months}
+					{foreach from=$months key=year item=month}
+						<month_grouped {if $warranty->has_month($month)}color="{$warranty->get_color()}"{/if}
+							{if $month->is_current}current="1"{/if}
+							{if $month->is_year_start}year_start="1"{/if}/>
+					{/foreach}
+					{/foreach}
+				</warranty>
+			{/foreach}
+			</ad_printers_lifecycle>
+			{/if}
+
+			{if $peripherals_warranties}
+			<peripherals_warranties>
+				{assign var="last_class" value=""}
+				{foreach from=$peripherals_warranties item=warranty}
+					{assign var="class_id" value=$warranty->id2}
+					{assign var="peripheral_id" value=$warranty->id}
+					{if $class_id != $last_class}
+						{if $last_class!=""}</class>{/if}
+						<class>
+						<class_name>{$peripherals_classes_list.$class_id}</class_name>
+						{assign var="last_class" value=$class_id}
+					{/if}
+						<warranty>
+							<name>{$peripherals_list.$peripheral_id}</name>
+							<asset_no>{$warranty->asset_no}</asset_no>
+							<serial_number>{$warranty->sn}</serial_number>
+							{if $warranty->warranty_starts>0 or $warranty->warranty_ends>0}
+								<warranty_starts>{strip}
+									{if $warranty->warranty_starts>0}
+										{$warranty->warranty_starts|date_format:$smarty.const.DATE_FORMAT_SMARTY}
+									{else}
+										-
+									{/if}
+								{/strip}</warranty_starts>
+								<warranty_ends>{strip}
+									{if $warranty->warranty_ends>0}
+										{$warranty->warranty_ends|date_format:$smarty.const.DATE_FORMAT_SMARTY}
+									{else}
+										-
+									{/if}
+								{/strip}</warranty_ends>
+							{/if}
+							{if $warranty->service_package_id}
+								{assign var="service_package_id" value=$warranty->service_package_id}
+								<service_package>{$service_packages_list.$service_package_id|escape}</service_package>
+							{/if}
+							{if $warranty->service_level_id}
+								{assign var="service_level_id" value=$warranty->service_level_id}
+								<service_level>{$service_levels_list.$service_level_id|escape}</service_level>
+							{/if}
+							{if $warranty->contract_number}
+								<contract_number>{$warranty->contract_number|escape}</contract_number>
+							{/if}
+							{if $warranty->hw_product_id}
+								<hw_product_id>{$warranty->hw_product_id|escape}</hw_product_id>
+							{/if}
+						</warranty>
+				{/foreach}
+				</class>
+			</peripherals_warranties>
+
+			<peripherals_lifecycle>
+			<heading>
+				{foreach from=$peripherals_warranties_head key=year item=y}
+				<year year="{$year}" months_count="{$y->months_count}">
+					{foreach from=$y->groups item=g}
+						<months_group months_count="{$g->months_count}" {if $g->is_year_start}year_start="1"{/if}>{$g->month_str}</months_group>
+					{/foreach}
+					{assign var="is_year_start" value=1}
+					{foreach from=$y->months key=month_num item=month_str}
+						<month month_num="{$month_num}" month_str="{$month_str}" {if $is_year_start}year_start="1"{/if}/>
+						{assign var="is_year_start" value=0}
+					{/foreach}
+				</year>
+				{/foreach}
+
+				<!-- Put in the grouped months, especially for WordML where there is a 62 columns limit in tables -->
+				{foreach from=$peripherals_warranties_months_grouped key=year item=months}
+					<year_grouped year="{$year}" groups_count="{$months|@count}">
+						{foreach from=$months item=month}
+						<month_grouped {if $month->is_year_start}year_start="1"{/if}>{$month->month_str}</month_grouped>
+						{/foreach}
+					</year_grouped>
+				{/foreach}
+			</heading>
+			{foreach from=$peripherals_warranties item=warranty}
+				{assign var="peripheral_id" value=$warranty->id}
+				<warranty>
+					<name>{$peripherals_list.$peripheral_id}</name>
+					{foreach from=$peripherals_warranties_months item=month}
+						<month {if $warranty->has_month($month)}color="{$warranty->get_color()}"{/if}
+							{if $month->is_current}current="1"{/if}
+							{if $month->is_year_start}year_start="1"{/if}/>
+					{/foreach}
+
+					<!-- Put in the grouped months, especially for WordML where there is a 62 columns limit in tables -->
+					{foreach from=$peripherals_warranties_months_grouped key=year item=months}
+					{foreach from=$months key=year item=month}
+						<month_grouped {if $warranty->has_month($month)}color="{$warranty->get_color()}"{/if}
+							{if $month->is_current}current="1"{/if}
+							{if $month->is_year_start}year_start="1"{/if}/>
+					{/foreach}
+					{/foreach}
+				</warranty>
+			{/foreach}
+			</peripherals_lifecycle>
+			{/if}
+		</report_data>
+	</report>
+	{/if}
+
+
+	{if $reports.report_software}
+	<report>
+		<title>Installed Software</title>
+		<type>software</type>
+
+		<report_data>
+
+			<softwares>
+			{foreach from=$softwares item=software}
+				{if $software->software->in_reports and $software->license_type != $smarty.const.LIC_TYPE_CLIENT}
+				<software>
+					<id>{$software->software->id}</id>
+					<name>{$software->software->name|escape}</name>
+					<manufacturer>{$software->software->manufacturer|escape}</manufacturer>
+					<used>{$software->used_licenses}</used>
+
+					<computers>
+					{foreach from=$software->computers_list item=computer_name key=asset_no}
+						<computer>
+							<asset_no>{$asset_no}</asset_no>
+							<computer_name>{$computer_name}</computer_name>
+						</computer>
+					{/foreach}
+					</computers>
+
+				</software>
+				{/if}
+			{/foreach}
+			</softwares>
+
+		</report_data>
+	</report>
+	{/if}
+
+
+	{if $reports.report_all_software}
+	<report>
+		<title>All installed software by computer</title>
+		<type>all_software</type>
+		<report_data>
+			<softwares>
+			{foreach from=$installed_sft item=sft key=cname}
+				<computers>
+					<computer_name>{$cname}</computer_name>
+					<software>
+					{foreach from=$sft item=soft_name}
+						<soft_name>
+							<name>{$soft_name.name|escape}</name>
+                                                        <install_date>{$soft_name.install_date|escape}</install_date>
+						</soft_name>
+					{/foreach}
+					</software>
+				</computers>
+			{/foreach}
+			</softwares>
+		</report_data>
+	</report>
+	{/if}
+
+
+	{if $reports.report_licenses}
+	<report>
+		<title>Software Licenses</title>
+		<type>licenses</type>
+
+		<report_data>
+
+			<softwares>
+			{foreach from=$softwares item=software}
+				{if $software->software->in_reports}
+				<software>
+					<id>{$software->software->id}</id>
+					<name>{$software->software->name|escape}</name>
+					<manufacturer>{$software->software->manufacturer|escape}</manufacturer>
+					<licenses>{$software->licenses}</licenses>
+					<used>{if $software->license_type == $smarty.const.LIC_TYPE_CLIENT}{$software->used}{else}{$software->used_licenses}{/if}</used>
+				</software>
+				{/if}
+			{/foreach}
+			</softwares>
+
+		</report_data>
+	</report>
+	{/if}
+
+
+	{if $reports.report_users}
+	<report>
+		<title>Users List</title>
+		<type>users</type>
+
+		<report_data>
+			<users>
+			{foreach from=$ad_users item=user}
+				<user>
+					<sam_account_name>{$user->sam_account_name}</sam_account_name>
+					<display_name>{$user->display_name|escape}</display_name>
+					<given_name>{$user->given_name|escape}</given_name>
+					<home_dir>{$user->home_dir|escape}</home_dir>
+					<home_drive>{$user->home_drive|escape}</home_drive>
+					<email>{$user->email|escape}</email>
+					<email_nickname>{$user->email_nickname|escape}</email_nickname>
+					<profile_path>{$user->profile_path|escape}</profile_path>
+					<profile_size>{if $user->profile_size}{$user->profile_size|get_memory_string}{else}-{/if}</profile_size>
+					<my_documents_size>{if $user->my_documents_size}{$user->my_documents_size|get_memory_string}{else}-{/if}</my_documents_size>
+					<desktop_size>{if $user->desktop_size}{$user->desktop_size|get_memory_string}{else}-{/if}</desktop_size>
+					<exchange_mailbox_size>{if $user->exchange_mailbox_size}{$user->exchange_mailbox_size|get_memory_string}{else}-{/if}</exchange_mailbox_size>
+					<home_size>{if $user->home_size}{$user->home_size|get_memory_string}{else}-{/if}</home_size>
+					<total_size>{if $user->total_size}{$user->total_size|get_memory_string}{else}-{/if}</total_size>
+				</user>
+			{/foreach}
+			</users>
+		</report_data>
+	</report>
+	{/if}
+</section>
+{/if}
+
+{if $selected_sections.statistics}
+<section>
+	<title>Statistics</title>
+
+	{if $reports.report_free_space}
+	<report>
+		<title>Free Disk Space</title>
+		<type>free_space</type>
+
+		<report_data>
+			<partitions>
+			{foreach from=$partitions item=partition}
+				<partition>
+					<computer_id>{$partition.computer_id}</computer_id>
+					<computer_name>{$partition.computer_name|escape}</computer_name>
+					<partition_name>{$partition.partition_name|escape}</partition_name>
+					<partition_size>{$partition.partition_size|escape}</partition_size>
+					<month_start>{$partition.month_start}</month_start>
+					<month_end>{$partition.month_end}</month_end>
+
+					{if $filter.report_free_space.show_charts}
+						<unique_img_id>img_{$img_id++}</unique_img_id>
+						<graph_url>{$partition.graph_url|escape}</graph_url>
+						<graph_width>{$partition.graph_width}</graph_width>
+						<graph_height>{$partition.graph_height}</graph_height>
+						<graph_width_pdf>{$partition.graph_width_pdf}</graph_width_pdf>
+						<graph_height_pdf>{$partition.graph_height_pdf}</graph_height_pdf>
+					{/if}
+
+					{if $filter.report_free_space.show_numbers}
+					<free_space_numbers>
+					{foreach from=$columns_free_space item=idx}<col>{$idx}</col> {/foreach}
+					{foreach from=$partition.free_space_numbers item=row}
+						<row>
+						{foreach from=$row key=date item=free_space}
+							<number>
+								<date>{$date}</date>
+								<free_space>{$free_space}</free_space>
+								<date_string>{$date|date_format:$smarty.const.DATE_FORMAT_SMARTY}</date_string>
+								<free_space_string>{$free_space|get_memory_string}</free_space_string>
+							</number>
+						{/foreach}
+						</row>
+					{/foreach}
+					</free_space_numbers>
+					{/if}
+
+				</partition>
+			{/foreach}
+			</partitions>
+		</report_data>
+	</report>
+	{/if}
+
+
+	{if $reports.report_backups}
+	<report>
+		<title>Backups</title>
+		<type>backups</type>
+
+		<report_data>
+			<backups>
+			{foreach from=$backups item=backup}
+			<backup>
+				<computer_id>{$backup.computer_id}</computer_id>
+				<computer_name>{$backup.computer_name|escape}</computer_name>
+				<month_start>{$backup.month_start}</month_start>
+				<month_end>{$backup.month_end}</month_end>
+				{if $filter.report_backups.show_charts}
+					{if $filter.report_backups.rep_age}
+						<age_unique_img_id>img_{$img_id++}</age_unique_img_id>
+						<age_graph_url>{$backup.age_graph_url|escape}</age_graph_url>
+					{/if}
+					{if $filter.report_backups.rep_size}
+						<size_unique_img_id>img_{$img_id++}</size_unique_img_id>
+						<size_graph_url>{$backup.size_graph_url|escape}</size_graph_url>
+					{/if}
+					<graph_width>{$backup.graph_width}</graph_width>
+					<graph_height>{$backup.graph_height}</graph_height>
+					<graph_width_pdf>{$backup.graph_width_pdf}</graph_width_pdf>
+					<graph_height_pdf>{$backup.graph_height_pdf}</graph_height_pdf>
+				{/if}
+				{if $filter.report_backups.show_numbers}
+					{if $filter.report_backups.rep_age}
+					<age_numbers>
+					{foreach from=$columns_bk item=idx}<col>{$idx}</col> {/foreach}
+					{foreach from=$backup.age_numbers item=row}
+						<row>
+						{foreach from=$row key=date item=age}
+							<number>
+								<date>{$date}</date>
+								<age>{$age}</age>
+								<date_string>{$date|date_format:$smarty.const.DATE_FORMAT_SMARTY}</date_string>
+							</number>
+						{/foreach}
+						</row>
+					{/foreach}
+					</age_numbers>
+					{/if}
+
+					{if $filter.report_backups.rep_size}
+					<size_numbers>
+					{foreach from=$columns_bk item=idx}<col>{$idx}</col> {/foreach}
+					{foreach from=$backup.size_numbers item=row}
+						<row>
+						{foreach from=$row key=date item=size}
+							<number>
+								<date>{$date}</date>
+								<size>{$size}</size>
+								<date_string>{$date|date_format:$smarty.const.DATE_FORMAT_SMARTY}</date_string>
+								<size_string>{$size|get_memory_string}</size_string>
+							</number>
+						{/foreach}
+						</row>
+					{/foreach}
+					</size_numbers>
+					{/if}
+				{/if}
+			</backup>
+			{/foreach}
+			</backups>
+		</report_data>
+	</report>
+	{/if}
+
+
+	{if $reports.report_av_status}
+	<report>
+		<title>AV Updates Status</title>
+		<type>av_status</type>
+
+		<report_data>
+			<date>{$av_status_date}</date>
+			<date_string>{$av_status_date|date_format:$smarty.const.DATE_FORMAT_SMARTY}</date_string>
+			<unique_img_id>img_{$img_id++}</unique_img_id>
+			<graph_url>{$av_status_graph_url|escape}</graph_url>
+			<graph_width>{$av_status_graph_width}</graph_width>
+			<graph_height>{$av_status_graph_height}</graph_height>
+			<graph_width_pdf>{$av_status_graph_width_pdf}</graph_width_pdf>
+			<graph_height_pdf>{$av_status_graph_height_pdf}</graph_height_pdf>
+		</report_data>
+	</report>
+	{/if}
+
+	{if $reports.report_av_hist}
+	<report>
+		<title>AV Updates History</title>
+		<type>av_hist</type>
+
+		<report_data>
+			<updates_age>
+			{foreach from=$updates_age item=update}
+				<update>
+					<computer_id>{$update.computer_id}</computer_id>
+					<computer_name>{$update.computer_name|escape}</computer_name>
+					<month_start>{$update.month_start}</month_start>
+					<month_end>{$update.month_end}</month_end>
+					<unique_img_id>img_{$img_id++}</unique_img_id>
+					<graph_url>{$update.graph_url|escape}</graph_url>
+					<graph_width>{$update.graph_width}</graph_width>
+					<graph_height>{$update.graph_height}</graph_height>
+					<graph_width_pdf>{$update.graph_width_pdf}</graph_width_pdf>
+					<graph_height_pdf>{$update.graph_height_pdf}</graph_height_pdf>
+				</update>
+			{/foreach}
+			</updates_age>
+		</report_data>
+	</report>
+	{/if}
+
+</section>
+{/if}
+
+</reports_set>

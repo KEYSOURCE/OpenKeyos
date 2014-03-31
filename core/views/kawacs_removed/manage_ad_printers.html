@@ -1,0 +1,56 @@
+{assign var="paging_titles" value="Kawacs, Removed AD Printers"}
+{assign var="paging_urls" value="/?cl=kawacs_removed"}
+{include file="paging.html"}
+
+<h1>Removed AD Printers</h1>
+
+<p class="error">{$error_msg}</p>
+
+<form action="" method="POST" name="filter"> 
+{$form_redir}
+
+Customer:
+<select name="filter[customer_id]" onChange="document.forms['filter'].submit()">
+	<option value="">[Select customer]</option>
+	{html_options options=$customers_list selected=$filter.customer_id}
+</select>
+<p/>
+</form>
+
+<table class="list" width="98%">
+	<thead>
+	<tr>
+		<td width="60">Asset&nbsp;No.</td>
+		<td width="40%">Name</td>
+		<td width="20%">Managing since</td>
+		<td width="20%">Removal date</td>
+		<td> </td>
+	</tr>
+	</thead>
+	
+	{foreach from=$ad_printers item=ad_printer}
+	<tr>
+		<td><a href="/?cl=kawacs_removed&amp;op=ad_printer_view&amp;id={$ad_printer->id}">{$ad_printer->asset_number}</a></td>
+		<td><a href="/?cl=kawacs_removed&amp;op=ad_printer_view&amp;id={$ad_printer->id}">{$ad_printer->name}</a></td>
+		<td nowrap="nowrap">
+			{if $ad_printer->date_created}{$ad_printer->date_created|date_format:$smarty.const.DATE_FORMAT_SMARTY}
+			{else}--{/if}
+		</td>
+		<td>
+			{if $ad_printer->date_removed}{$ad_printer->date_removed|date_format:$smarty.const.DATE_FORMAT_SMARTY}
+			{else}--{/if}
+		</td>
+		<td align="right" nowrap="nowrap">
+			<a href="/?cl=kawacs_removed&amp;op=ad_printer_delete&amp;id={$ad_printer->id}"
+			onclick="return confirm('Are you sure you want to permanently delete this AD Printer?');"
+			>Delete &#0187;</a>
+		</td> 
+	</tr>
+	{foreachelse}
+	<tr>
+		<td colspan="5" class="light_text">[No Removed AD Printers]</td>
+	</tr>
+	{/foreach}
+	
+</table>
+<p/>

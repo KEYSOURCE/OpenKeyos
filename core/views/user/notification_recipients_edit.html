@@ -1,0 +1,71 @@
+{assign var="paging_titles" value="Users Administration, Generic Notifications Recipients, Edit"}
+{assign var="paging_urls" value="/?cl=user, /?cl=user&op=manage_notification_recipients"}
+{include file="paging.html"}
+
+<h1>Edit Generic Notification Recipients : {$NOTIF_OBJ_CLASSES.$class_id}</h1>
+<p>
+<font class="error">{$error_msg}</font>
+<p>
+
+<form action="" method="POST">
+{$form_redir}
+
+Select recipients from the list below. User the radio buttons to specify the default recipient.
+<p>
+
+<table class="list" width="60%">
+	<thead>
+	<tr>
+		<td>Users:</td>
+		<td>Default</td>
+	</tr>
+	</thead>
+	
+	{foreach from=$users item=user}
+	<tr>
+		<td>
+			<input type="checkbox" name="recipients[]" value="{$user->id}"
+				{if is_array($recipients.$class_id)}
+					{if in_array ($user->id, $recipients.$class_id)}checked{/if}
+				{/if}
+			>
+			{$user->fname} {$user->lname}
+
+		</td>
+		<td>
+			<input type="radio" name="is_default" value="{$user->id}"
+				{if $default_recipients.$class_id == $user->id}checked{/if}
+			>
+		</td>
+	</tr>
+	{/foreach}
+	
+	<tr class="head">
+		<td colspan="2">Groups</td>
+	</tr>
+	
+	{foreach from=$groups key=group_id item=group_name}
+	<tr>
+		<td>
+			<input type="checkbox" name="recipients[]" value="{$group_id}"
+				{if is_array($recipients.$class_id)}
+					{if in_array ($group_id, $recipients.$class_id)}checked{/if}
+				{/if}
+			>
+			{$group_name}
+
+		</td>
+		<td>
+			<input type="radio" name="is_default" value="{$group_id}"
+				{if $default_recipients.$class_id == $group_id}checked{/if}
+			>
+		</td>
+	</tr>
+	{/foreach}
+	
+</table>
+<p>
+<input type="submit" name="save" value="Save">
+<input type="submit" name="cancel" value="Close">
+
+</form>

@@ -1,0 +1,5 @@
+NEED_REMOVED_DATE = Please specify the removal date
+NEED_REMOVED_REASON = Please specify the removal reason
+
+NEED_NOTE_TEXT = Please enter some text for the note.
+NEED_NOTE_COMPUTER = Please specifiy the computer linked to this note.

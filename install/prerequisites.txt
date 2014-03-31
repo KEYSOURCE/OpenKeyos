@@ -1,0 +1,35 @@
+GENERAL NOTE
+Don't forget that after a new extension is installed or a modification in the webserver or apache settings you need to restart the webserver or in some cases reload the server settings
+
+1. Webserver
+    1.1 must be configured with mod-rewrite
+        on apache2 webserver:
+        sudo a2enmod rewrite | service apache2 restart
+
+    1.2. the .htaccess file in the webroot directory must contain at least the following in order for the OpenKeyOS routing engine to work
+
+         RewriteEngine on
+         RewriteCond %{REQUEST_FILENAME} !-f
+         RewriteCond %{REQUEST_FILENAME} !-d
+         RewriteRule ^(.*)$ index.php/$1 [QSA,L]
+
+2. Caching  -
+    2.1 we need the redis server installed and working. Usualy is the redis-server packacge
+        on debian systems: sudo apt-get install redis-server
+    2.2 if the redis extension is used - the package phpredis needs to be installed:  https://code.google.com/p/phpredis/
+        - to install this package we need phpize to compile it - this is found in the php5-dev package,  then follow the install instructions and php module activation
+
+    2.3 if the memcache extension is used we need the memcached server installed and ready to accept connections
+    2.4 also in order to communicate with it we will need the php5-memcache php extention
+        e.g. on debian systems - with apache2 webserver:
+             sudo apt-get install memcachedb php5-memcache | service apache2 restart
+
+3. Smarty:
+    3.1 the smarty template engine needs to be able to write in the designated template compile directory. By default the work directory for smarty is located in the webroot and it's called _smarty.
+        you can make this directory writable for the webserver in 2 ways:
+        3.1.1. make the owner the user of the webserver and assign it write permissions:
+                chown -R www-data:www-data _smarty | chmod -R 755 _smarty
+        3.1.2 make the _smarty directory world writable:
+                chmod -R 777 _smarty
+
+

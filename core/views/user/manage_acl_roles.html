@@ -1,0 +1,64 @@
+{assign var="paging_titles" value="Users Administration, Manage ACL Roles"}
+{assign var="paging_urls" value="/?cl=user"}
+{include file="paging.html"}
+
+
+<h1>Manage ACL Roles</h1>
+<p>
+<font class="error">{$error_msg}</font>
+<p>
+
+<form action="" method="POST" name="acl_roles">
+{$form_redir}
+
+View: 
+<select name="filter[type]" onChange="document.forms['acl_roles'].submit();">
+	<option value="">[All]</option>
+	{html_options options=$ACL_ROLE_TYPES selected=$filter.type}
+</select>
+<p>
+
+<a href="/?cl=user&op=acl_role_add">Add ACL role &#0187;</a>
+<p>
+
+<table class="list" width="98%">
+	<thead>
+	<tr>
+		<td width="10">ID</td>
+		<td>Name</td>
+		<td>Type</td>
+		<td>Permissions</td>
+		<td> </td>
+	</tr>
+	</thead>
+	
+	{foreach from=$roles item=role}
+		<tr>
+			<td><a href="/?cl=user&op=acl_role_edit&id={$role->id}">{$role->id}</a></td>
+			<td><a href="/?cl=user&op=acl_role_edit&id={$role->id}">{$role->name}</a></td>
+			<td>
+				{assign var="role_type" value=$role->type}
+				{$ACL_ROLE_TYPES.$role_type}
+			</td>
+			<td>
+				{foreach from=$role->get_items() item=item}
+					{$item->category->name} : {$item->name}
+					<br>
+				{/foreach}
+			</td>
+			<td>
+				<a href="/?cl=user&op=acl_role_delete&id={$role->id}"
+					onClick="return confirm ('Are you sure you want to delete this role?');"
+				>Delete</a>
+			</td>
+		</tr>		
+	{foreachelse}
+		<tr>
+			<td colspan="4">[There are no ACL roles defined yet]</td>
+		</tr>
+	{/foreach}
+
+</table>
+<p>
+
+</form>

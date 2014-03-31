@@ -1,0 +1,59 @@
+{assign var="paging_titles" value="KAWACS, Manage Removed Peripherals, Remove Multiple Peripherals"}
+{assign var="paging_urls" value="/?cl=kawacs_removed, /?cl=kawacs_removed&op=manage_peripherals"}
+{include file="paging.html"}
+
+<script language="JavaScript" type="text/javascript">
+//<![CDATA[
+{literal}
+
+function doCkAll ()
+{
+	var frm = document.forms['frm_t'];
+	var ckboxes = frm.elements['peripheral_id[]'];
+	var ck_main = frm.elements['ck_all'];
+	
+	for (var i=0; i<ckboxes.length; i++)
+	{
+		ckboxes[i].checked = ck_main.checked;
+	}
+}
+
+{/literal}
+//]]>
+</script>
+
+<h1>Remove Multiple Peripherals</h1>
+
+<p class="error">{$error_msg}</p>
+
+<p>On this page you can select one or more peripherals to remove for this customer.</p>
+
+<p><b>Removing</b> a peripheral means marking it as not being in use anymore. After you 
+select the peripherals you want and you click <b>Remove</b>, you will 
+be directed to a new page asking for confirmation and for entering the removal reason.</p>
+
+<form action="" method="POST" name="frm_t">
+{$form_redir}
+
+<table class="list" width="60%">
+	<thead>
+	<tr>
+		<td width="20">
+			<input type="checkbox" name="ck_all" class="checkbox" onclick="doCkAll ();" />
+		</td>
+		<td>Customer: {$customer->name|escape} ({$customer->id})</td>
+	</tr>
+	</thead>
+	
+	{foreach from=$peripherals_list key=peripheral_id item=peripheral_name}
+	<tr>
+		<td width="20"><input type="checkbox" name="peripheral_id[]" value="{$peripheral_id}" class="checbox" /></td>
+		<td>#{$peripheral_id}: {$peripheral_name|escape}</td>
+	</tr>
+	{/foreach}
+</table>
+<p/>
+
+<input type="submit" name="save" value="Remove selected" class="button" />
+<input type="submit" name="cancel" value="Cancel" class="button" />
+</form>
