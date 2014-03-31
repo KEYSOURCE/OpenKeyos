@@ -4,7 +4,7 @@
  * and save the config
  */
 
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 require_once __DIR__ . '/install_lib.php';
 if(file_exists(abs_path("install/generated/.install"))){
     $ff = file_get_contents(abs_path("install/generated/.install"));
