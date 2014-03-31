@@ -35,7 +35,7 @@ $tables = array(
       `name` varchar(100) NOT NULL DEFAULT '',
       PRIMARY KEY (`id`),
       KEY `name` (`name`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'acl_items' => array(
@@ -48,7 +48,7 @@ $tables = array(
       KEY `special` (`special`),
       KEY `category_id` (`category_id`),
       KEY `name` (`name`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'acl_items_operations' => array(
@@ -61,7 +61,7 @@ $tables = array(
       KEY `acl_item_id` (`acl_item_id`),
       KEY `module` (`module`),
       KEY `function` (`function`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=586 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'acl_roles' => array(
@@ -71,7 +71,7 @@ $tables = array(
       `type` int(11) NOT NULL DEFAULT '0',
       PRIMARY KEY (`id`),
       KEY `type` (`type`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'acl_roles_items' => array(
@@ -115,7 +115,7 @@ $tables = array(
       KEY `erp_code` (`erp_code`),
       KEY `family` (`family`),
       KEY `helpdesk` (`helpdesk`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=109 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'action_types_categories' => array(
@@ -126,7 +126,7 @@ $tables = array(
       PRIMARY KEY (`id`),
       KEY `erp_id` (`erp_id`),
       KEY `name` (`name`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'activities' => array(
@@ -143,7 +143,7 @@ $tables = array(
       KEY `is_travel` (`is_travel`),
       KEY `erp_id` (`erp_id`),
       KEY `erp_name` (`erp_name`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'activities_categories' => array(
@@ -153,7 +153,7 @@ $tables = array(
       `erp_code` varchar(30) DEFAULT '',
       PRIMARY KEY (`id`),
       KEY `name` (`name`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'activities_users' => array(
@@ -253,7 +253,7 @@ $tables = array(
       KEY `ignore_days` (`ignore_days`),
       KEY `send_to` (`send_to`),
       KEY `delay_email` (`delay_email`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'alerts_conditions' => array(
@@ -267,7 +267,7 @@ $tables = array(
       PRIMARY KEY (`id`),
       KEY `alert_id` (`alert_id`),
       KEY `field_id` (`field_id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=110 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'alerts_lists_values' => array(
@@ -329,7 +329,7 @@ $tables = array(
       KEY `no_repeat` (`no_repeat`),
       KEY `ticket_id` (`ticket_id`),
       KEY `level` (`level`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=41551 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'cart_item' => array(
@@ -354,7 +354,7 @@ $tables = array(
       KEY `ITCLEUNIK` (`ITCLEUNIK`),
       KEY `CUCLEUNIK` (`CUCLEUNIK`),
       KEY `EGCLEUNIK` (`EGCLEUNIK`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=latin1 COMMENT='Shop-Item-Cart';",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Shop-Item-Cart';",
     ),
 
     'cc_cf' => array(
@@ -377,7 +377,7 @@ $tables = array(
       `Class_Name` varchar(40) DEFAULT NULL,
       UNIQUE KEY `C1CLEUNIK` (`C1CLEUNIK`),
       UNIQUE KEY `Class_Name` (`Class_Name`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1 COMMENT='Shop-Item-Category';",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Shop-Item-Category';",
     ),
 
     'class2' => array(
@@ -388,7 +388,7 @@ $tables = array(
       UNIQUE KEY `C2CLEUNIK` (`C2CLEUNIK`),
       UNIQUE KEY `Class_Name` (`Class_Name`),
       KEY `C1CLEUNIK` (`C1CLEUNIK`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=latin1 COMMENT='Shop-Item-Sub-Category';",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Shop-Item-Sub-Category';",
     ),
 
     'class3' => array(
@@ -399,7 +399,7 @@ $tables = array(
       UNIQUE KEY `C3CLEUNIK` (`C3CLEUNIK`),
       UNIQUE KEY `Class_Name` (`Class_Name`),
       KEY `C2CLEUNIK` (`C2CLEUNIK`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=127 DEFAULT CHARSET=latin1 COMMENT='Shop-Item-Sub-Sub-Category';",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Shop-Item-Sub-Sub-Category';",
     ),
 
     'component_class' => array(
@@ -409,7 +409,7 @@ $tables = array(
       `type` tinyint(1) DEFAULT NULL,
       PRIMARY KEY (`id`),
       KEY `fk_component_class_1_idx` (`id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'components_filter' => array(
@@ -419,7 +419,7 @@ $tables = array(
       `type_filter` int(11) DEFAULT NULL,
       PRIMARY KEY (`id`),
       KEY `fk_components_filter_1_idx` (`id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'computer_groups' => array(
@@ -439,7 +439,7 @@ $tables = array(
       `skype_im` varchar(100) DEFAULT NULL,
       PRIMARY KEY (`id`),
       FULLTEXT KEY `title` (`title`,`description`,`address`,`email`,`yim`,`skype_im`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COMMENT='//groups of computers from a customer';",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='//groups of computers from a customer';",
     ),
 
     'computer_groups_computers' => array(
@@ -457,7 +457,7 @@ $tables = array(
       `logmein_id` int(11) NOT NULL,
       PRIMARY KEY (`id`),
       KEY `computer_id` (`computer_id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'computer_quick_contacts' => array(
@@ -475,7 +475,7 @@ $tables = array(
       `net_mac_address` varchar(100) NOT NULL DEFAULT '',
       `net_remote_ip` varchar(100) NOT NULL DEFAULT '',
       PRIMARY KEY (`id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=408 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'computer_stolen' => array(
@@ -518,7 +518,7 @@ $tables = array(
       KEY `is_manual` (`is_manual`),
       KEY `date_created` (`date_created`),
       KEY `netbios_name` (`netbios_name`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=2527 DEFAULT CHARSET=latin1;",
+    ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;",
     ),
 
     'computers_agent_linux_versions' => array(
@@ -609,7 +609,7 @@ $tables = array(
       KEY `computer_id` (`computer_id`),
       KEY `user_id` (`user_id`),
       KEY `created` (`created`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'computers_passwords' => array(
@@ -626,7 +626,7 @@ $tables = array(
       KEY `computer_id` (`computer_id`),
       KEY `login` (`login`),
       KEY `customer_id` (`customer_id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=399 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'computers_plan' => array(
@@ -650,7 +650,7 @@ $tables = array(
       UNIQUE KEY `computer_plan_id` (`computer_id`,`plan_id`),
       KEY `plan_id` (`plan_id`),
       KEY `plug_id` (`plug_id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'computers_remote_services' => array(
@@ -673,7 +673,7 @@ $tables = array(
       KEY `name` (`name`),
       KEY `is_web` (`is_web`),
       KEY `use_https` (`use_https`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=4915 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'computers_roles' => array(
@@ -709,7 +709,7 @@ $tables = array(
       UNIQUE KEY `Country_Name_NL` (`Country_Name_NL`),
       UNIQUE KEY `Country_Name_UK` (`Country_Name_UK`),
       UNIQUE KEY `Country_Name_ES` (`Country_Name_ES`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=221 DEFAULT CHARSET=latin1 COMMENT='List of Countries';",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='List of Countries';",
     ),
 
     'customer_nagvis_account' => array(
@@ -722,7 +722,7 @@ $tables = array(
       `protocol` varchar(150) NOT NULL,
       PRIMARY KEY (`id`),
       KEY `customer_id` (`customer_id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'customer_orders' => array(
@@ -749,7 +749,7 @@ $tables = array(
       KEY `status` (`status`),
       KEY `billable` (`billable`),
       KEY `from_subscription` (`for_subscription`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=57 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'customer_template_styles' => array(
@@ -771,7 +771,7 @@ $tables = array(
       `tab_header_text_color` varchar(7) NOT NULL DEFAULT '#709D19',
       PRIMARY KEY (`id`),
       KEY `fk_cust` (`customer_id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'customers' => array(
@@ -826,7 +826,7 @@ $tables = array(
       KEY `contract_sub_type` (`contract_sub_type`),
       KEY `contract_type` (`contract_type`),
       KEY `price_type` (`price_type`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=776 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'customers_allowed_ips' => array(
@@ -840,7 +840,7 @@ $tables = array(
       KEY `customer_id` (`customer_id`),
       KEY `remote_ip` (`remote_ip`),
       KEY `updated_by_id` (`updated_by_id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=260 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'customers_cc_recipients' => array(
@@ -863,7 +863,7 @@ $tables = array(
       PRIMARY KEY (`id`),
       KEY `customer_id` (`customer_id`),
       KEY `subject` (`subject`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'customers_contacts' => array(
@@ -879,7 +879,7 @@ $tables = array(
       KEY `email` (`email`),
       KEY `customer_id` (`customer_id`),
       KEY `name` (`fname`,`lname`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=629 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'customers_contacts_phones' => array(
@@ -891,7 +891,7 @@ $tables = array(
       `comments` varchar(100) NOT NULL DEFAULT '',
       PRIMARY KEY (`id`),
       KEY `contact_id` (`contact_id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=837 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'customers_internet_contracts' => array(
@@ -944,7 +944,7 @@ $tables = array(
       KEY `suspend_notifs` (`suspend_notifs`),
       KEY `notice_days_again` (`notice_days_again`),
       KEY `notice_again_sent` (`notice_again_sent`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=73 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'customers_internet_contracts_attachments' => array(
@@ -958,7 +958,7 @@ $tables = array(
       KEY `customer_internet_contract_id` (`customer_internet_contract_id`),
       KEY `uploaded` (`uploaded`),
       KEY `local_filename` (`local_filename`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'customers_photos' => array(
@@ -980,7 +980,7 @@ $tables = array(
       KEY `object_class` (`object_class`),
       KEY `object_id` (`object_id`),
       KEY `subject` (`subject`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=305 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'customers_satisfaction' => array(
@@ -1003,7 +1003,7 @@ $tables = array(
       `would_recommend` tinyint(1) NOT NULL DEFAULT '1',
       `date_completed` int(11) NOT NULL,
       PRIMARY KEY (`id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'daily_re' => array(
@@ -1023,7 +1023,7 @@ $tables = array(
       KEY `Date` (`Date`),
       KEY `user_id` (`user_id`),
       KEY `user_id_date` (`user_id`,`Date`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=10052 DEFAULT CHARSET=latin1 COMMENT='Daily Report';",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Daily Report';",
     ),
 
     'disabled_plugins' => array(
@@ -1106,7 +1106,7 @@ $tables = array(
       KEY `disable_discoveries` (`disable_discoveries`),
       KEY `last_discovery` (`last_discovery`),
       KEY `duration` (`duration`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=146 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'discoveries_settings_details' => array(
@@ -1148,7 +1148,7 @@ $tables = array(
       KEY `category_id` (`category_id`),
       KEY `source_id` (`source_id`),
       KEY `types` (`types`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=110 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'events_sources' => array(
@@ -1164,7 +1164,7 @@ $tables = array(
       KEY `name` (`name`),
       KEY `reported_first` (`reported_first`),
       FULLTEXT KEY `ft_name_idx` (`name`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=136642 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'filter_type' => array(
@@ -1172,7 +1172,7 @@ $tables = array(
       `id` int(11) NOT NULL AUTO_INCREMENT,
       `name` varchar(255) DEFAULT NULL,
       PRIMARY KEY (`id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'imap_settings' => array(
@@ -1187,7 +1187,7 @@ $tables = array(
       `password` varchar(255) NOT NULL,
       `assigned_user_id` int(11) NOT NULL,
       PRIMARY KEY (`id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'int_rpt' => array(
@@ -1225,7 +1225,7 @@ $tables = array(
       KEY `Date_Time` (`Date_Intervention`,`Time_in`),
       KEY `user_id` (`user_id`),
       KEY `Engineer_Date` (`user_id`,`Date_Intervention`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=5988 DEFAULT CHARSET=latin1 COMMENT='Intervention Report';",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Intervention Report';",
     ),
 
     'int_rpt_tmp' => array(
@@ -1277,7 +1277,7 @@ $tables = array(
       KEY `name` (`name`),
       KEY `on_site` (`on_site`),
       KEY `helpdesk` (`helpdesk`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'intervention_reports' => array(
@@ -1299,7 +1299,7 @@ $tables = array(
       KEY `subject` (`subject`),
       KEY `approved_date` (`approved_date`),
       KEY `approved_by_id` (`approved_by_id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=8302 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'intervention_reports_details' => array(
@@ -1327,7 +1327,7 @@ $tables = array(
       KEY `for_subscription` (`for_subscription`),
       KEY `billable` (`billable`),
       KEY `location_id` (`location_id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=17039 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'intervention_reports_details_ids' => array(
@@ -1353,7 +1353,7 @@ $tables = array(
       KEY `created` (`created`),
       KEY `status` (`status`),
       KEY `md5_file` (`md5_file`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=730 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'interventions_exports_actions' => array(
@@ -1365,7 +1365,7 @@ $tables = array(
       `requester_ip` varchar(255) DEFAULT NULL,
       `result_ok` tinyint(4) NOT NULL DEFAULT '0',
       PRIMARY KEY (`id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=1048 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'interventions_exports_ids' => array(
@@ -1415,7 +1415,7 @@ $tables = array(
       KEY `ArtID3` (`ArtID3`),
       KEY `PartID` (`PartID`),
       KEY `C1CLEUNIK_C2CLEUNIK_C3CLEUNIK` (`C1CLEUNIK`,`C2CLEUNIK`,`C3CLEUNIK`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=43449 DEFAULT CHARSET=latin1 COMMENT='Shop-Item';",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Shop-Item';",
     ),
 
     'kawacs_agent_linux_updates' => array(
@@ -1429,7 +1429,7 @@ $tables = array(
       `date_published` int(11) NOT NULL DEFAULT '0',
       PRIMARY KEY (`id`),
       KEY `version` (`version`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'kawacs_agent_updates' => array(
@@ -1442,7 +1442,7 @@ $tables = array(
       `date_published` int(11) NOT NULL DEFAULT '0',
       PRIMARY KEY (`id`),
       KEY `gen_version` (`gen_version`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'kawacs_agent_updates_files' => array(
@@ -1464,7 +1464,7 @@ $tables = array(
       PRIMARY KEY (`id`),
       KEY `update_id` (`update_id`),
       KEY `computer_id` (`computer_id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=196 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'kerm_ad_groups' => array(
@@ -1512,7 +1512,7 @@ $tables = array(
       `DistinguishedName` varchar(100) DEFAULT NULL,
       `GroupName` varchar(200) NOT NULL,
       PRIMARY KEY (`id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'kerm_customers_domains' => array(
@@ -1533,7 +1533,7 @@ $tables = array(
       PRIMARY KEY (`id`),
       KEY `user_id` (`id`),
       KEY `name` (`name`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'krifs_saved_searches_favorites' => array(
@@ -1559,7 +1559,7 @@ $tables = array(
       KEY `name` (`name`),
       KEY `parent_id` (`parent_id`),
       KEY `city_id` (`town_id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=153 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'locations_comments' => array(
@@ -1573,7 +1573,7 @@ $tables = array(
       KEY `location_id` (`location_id`),
       KEY `user_id` (`user_id`),
       KEY `updated` (`updated`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'locations_fixed' => array(
@@ -1586,7 +1586,7 @@ $tables = array(
       KEY `name` (`name`),
       KEY `type` (`type`),
       KEY `parent_id` (`parent_id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'mibs' => array(
@@ -1604,7 +1604,7 @@ $tables = array(
       KEY `orig_fname` (`orig_fname`),
       KEY `loaded_ok` (`loaded_ok`),
       KEY `main_file_id` (`main_file_id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'mibs_files' => array(
@@ -1615,7 +1615,7 @@ $tables = array(
       PRIMARY KEY (`id`),
       KEY `mib_id` (`mib_id`),
       KEY `fname` (`fname`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=232 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'mibs_oids' => array(
@@ -1645,7 +1645,7 @@ $tables = array(
       KEY `access` (`access`),
       KEY `status` (`status`),
       KEY `ord` (`ord`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=6976 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'mibs_oids_vals' => array(
@@ -1681,7 +1681,7 @@ $tables = array(
       KEY `join_type` (`join_type`),
       KEY `ignore_days` (`ignore_days`),
       KEY `send_to` (`send_to`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=109 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'monitor_alerts_conditions' => array(
@@ -1695,7 +1695,7 @@ $tables = array(
       PRIMARY KEY (`id`),
       KEY `alert_id` (`alert_id`),
       KEY `field_id` (`field_id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=248 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'monitor_items' => array(
@@ -1726,7 +1726,7 @@ $tables = array(
       KEY `list_type` (`list_type`),
       KEY `is_snmp` (`is_snmp`),
       KEY `snmp_oid_id` (`snmp_oid_id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=5105 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'monitor_profiles' => array(
@@ -1738,7 +1738,7 @@ $tables = array(
       `description` mediumtext NOT NULL,
       `alert_missed_cycles` int(11) NOT NULL DEFAULT '0',
       PRIMARY KEY (`id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'monitor_profiles_items' => array(
@@ -1770,7 +1770,7 @@ $tables = array(
       `description` mediumtext NOT NULL,
       `alert_missed_cycles` int(11) NOT NULL DEFAULT '0',
       PRIMARY KEY (`id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'monitored_ips' => array(
@@ -1806,7 +1806,7 @@ $tables = array(
       KEY `last_traceroute_test` (`last_traceroute_test`),
       KEY `ping_ok` (`ping_ok`),
       KEY `last_test_duration` (`last_test_duration`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'mremote_connection_info' => array(
@@ -1832,7 +1832,7 @@ $tables = array(
       `customer_id` int(11) DEFAULT NULL,
       `computer_id` int(11) DEFAULT NULL,
       PRIMARY KEY (`id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=1280 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'notifications' => array(
@@ -1869,7 +1869,7 @@ $tables = array(
       KEY `no_repeat` (`no_repeat`),
       KEY `ticket_id` (`ticket_id`),
       KEY `level` (`level`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=76884 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'notifications_customers_recipients' => array(
@@ -1918,7 +1918,7 @@ $tables = array(
       KEY `user_id` (`user_id`),
       KEY `emailed_last` (`emailed_last`),
       KEY `date_read` (`date_read`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=317851 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'now_working' => array(
@@ -1982,7 +1982,7 @@ $tables = array(
       KEY `snmp_ip` (`snmp_ip`),
       KEY `last_contact` (`last_contact`),
       KEY `date_created` (`date_created`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=896 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'peripherals_classes' => array(
@@ -2031,7 +2031,7 @@ $tables = array(
       KEY `warranty_contract_number_field` (`warranty_contract_number_field`),
       KEY `warranty_hw_product_id_field` (`warranty_hw_product_id_field`),
       KEY `use_snmp` (`use_snmp`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'peripherals_classes_fields' => array(
@@ -2048,7 +2048,7 @@ $tables = array(
       KEY `type` (`type`),
       KEY `class_id` (`class_id`),
       KEY `ord` (`ord`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=328 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'peripherals_classes_profiles' => array(
@@ -2137,7 +2137,7 @@ $tables = array(
       `plan_path` varchar(250) DEFAULT NULL,
       PRIMARY KEY (`id`),
       KEY `customer_id` (`customer_id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'plink' => array(
@@ -2192,7 +2192,7 @@ $tables = array(
       `scale` tinyint(3) NOT NULL DEFAULT '100',
       PRIMARY KEY (`id`),
       KEY `plan_id` (`plan_id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'profiles_alerts' => array(
@@ -2222,7 +2222,7 @@ $tables = array(
       PRIMARY KEY (`id`),
       KEY `name` (`name`),
       KEY `website` (`website`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'providers_contacts' => array(
@@ -2237,7 +2237,7 @@ $tables = array(
       KEY `fname` (`fname`,`lname`),
       KEY `provider_id` (`provider_id`),
       KEY `email` (`email`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'providers_contacts_phones' => array(
@@ -2250,7 +2250,7 @@ $tables = array(
       PRIMARY KEY (`id`),
       KEY `contact_id` (`contact_id`),
       KEY `type` (`type`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'providers_contracts' => array(
@@ -2262,7 +2262,7 @@ $tables = array(
       PRIMARY KEY (`id`),
       KEY `provider_id` (`provider_id`),
       KEY `name` (`name`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'pub_name' => array(
@@ -2272,7 +2272,7 @@ $tables = array(
       `Logo` varchar(255) DEFAULT NULL,
       UNIQUE KEY `PUCLEUNIK` (`PUCLEUNIK`),
       UNIQUE KEY `Name` (`Name`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=246 DEFAULT CHARSET=latin1 COMMENT='Shop-Publisher Name';",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Shop-Publisher Name';",
     ),
 
     'real_components' => array(
@@ -2282,7 +2282,7 @@ $tables = array(
       `detail` text,
       PRIMARY KEY (`id`),
       KEY `fk_real_components_1_idx` (`id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'remote_access' => array(
@@ -2302,7 +2302,7 @@ $tables = array(
       KEY `has_port_forwarding` (`has_port_forwarding`),
       KEY `customer_id` (`customer_id`),
       KEY `private_key_id` (`private_key_id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'removed_ad_printers' => array(
@@ -2373,7 +2373,7 @@ $tables = array(
       KEY `date_created` (`date_created`),
       KEY `netbios_name` (`netbios_name`),
       KEY `date_removed` (`date_removed`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=1903 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'removed_computers_items' => array(
@@ -2402,7 +2402,7 @@ $tables = array(
       KEY `computer_id` (`computer_id`),
       KEY `user_id` (`user_id`),
       KEY `created` (`created`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'removed_peripherals' => array(
@@ -2434,7 +2434,7 @@ $tables = array(
       KEY `date_created` (`date_created`),
       KEY `date_removed` (`date_removed`),
       KEY `removed_by` (`removed_by`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=676 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'removed_peripherals_fields' => array(
@@ -2535,7 +2535,7 @@ $tables = array(
       `sub_chapter_name_FR` varchar(40) DEFAULT NULL,
       `report_name` varchar(40) DEFAULT NULL,
       PRIMARY KEY (`Id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;",
     ),
 
     'roles' => array(
@@ -2544,7 +2544,7 @@ $tables = array(
       `name` varchar(100) DEFAULT NULL,
       PRIMARY KEY (`id`),
       KEY `name` (`name`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'service_levels' => array(
@@ -2554,7 +2554,7 @@ $tables = array(
       `description` text NOT NULL,
       PRIMARY KEY (`id`),
       KEY `name` (`name`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'snmp_sysobjids' => array(
@@ -2581,7 +2581,7 @@ $tables = array(
       KEY `manufacturer` (`manufacturer`),
       KEY `license_types` (`license_types`),
       FULLTEXT KEY `name_2` (`name`,`manufacturer`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=144 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'software_licenses' => array(
@@ -2601,7 +2601,7 @@ $tables = array(
       KEY `software_id` (`software_id`),
       KEY `used` (`used`),
       KEY `no_notifications` (`no_notifications`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=343 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'software_licenses_files' => array(
@@ -2617,7 +2617,7 @@ $tables = array(
       KEY `uploaded` (`uploaded`),
       KEY `original_filename` (`original_filename`),
       KEY `local_filename` (`local_filename`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=98 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'software_licenses_sn' => array(
@@ -2629,7 +2629,7 @@ $tables = array(
       PRIMARY KEY (`id`),
       KEY `license_id` (`license_id`),
       KEY `sn` (`sn`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=214 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'software_matches' => array(
@@ -2640,7 +2640,7 @@ $tables = array(
       `expression` varchar(255) NOT NULL DEFAULT '',
       PRIMARY KEY (`id`),
       KEY `software_id` (`match_type`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=156 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'supplier_customers' => array(
@@ -2692,7 +2692,7 @@ $tables = array(
       `name` varchar(100) NOT NULL DEFAULT '',
       PRIMARY KEY (`id`),
       KEY `name` (`name`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'suppliers_c_customers' => array(
@@ -2715,7 +2715,7 @@ $tables = array(
       PRIMARY KEY (`id`),
       KEY `supplier_id` (`supplier_id`),
       KEY `name` (`name`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=54 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'tasks' => array(
@@ -2750,7 +2750,7 @@ $tables = array(
       KEY `date_end` (`date_end`),
       KEY `modified_date` (`modified_date`),
       KEY `exchange_uid` (`exchange_uid`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=730 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'tasks_attendees' => array(
@@ -2771,7 +2771,7 @@ $tables = array(
       `date_last_modification` int(11) NOT NULL DEFAULT '0',
       `fk_user` int(11) NOT NULL,
       PRIMARY KEY (`id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'tickets' => array(
@@ -2821,7 +2821,7 @@ $tables = array(
       KEY `customer_order_id` (`customer_order_id`),
       KEY `for_subscription` (`for_subscription`),
       KEY `seen_manager_id` (`seen_manager_id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=116070 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'tickets_attachments' => array(
@@ -2836,7 +2836,7 @@ $tables = array(
       KEY `user_id` (`user_id`),
       KEY `uploaded` (`uploaded`),
       KEY `ticket_id` (`ticket_id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=1043 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'tickets_cc' => array(
@@ -2894,7 +2894,7 @@ $tables = array(
       KEY `is_continuation` (`is_continuation`),
       KEY `customer_order_id` (`customer_order_id`),
       KEY `for_subscription` (`for_subscription`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=77186 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'tickets_escalation_recipients' => array(
@@ -2935,7 +2935,7 @@ $tables = array(
       PRIMARY KEY (`id`),
       KEY `name` (`name`),
       KEY `escalate_after` (`escalate_after`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'tickets_types' => array(
@@ -2950,7 +2950,7 @@ $tables = array(
       KEY `is_customer_default` (`is_customer_default`),
       KEY `ignore_count` (`ignore_count`),
       KEY `is_billable` (`is_billable`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'timesheets' => array(
@@ -2971,7 +2971,7 @@ $tables = array(
       KEY `closed_by_id` (`closed_by_id`),
       KEY `approved_date` (`approved_date`),
       KEY `approved_by_id` (`approved_by_id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=1059 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'timesheets_details' => array(
@@ -2995,7 +2995,7 @@ $tables = array(
       KEY `ticket_detail_id` (`ticket_detail_id`),
       KEY `customer_id` (`customer_id`),
       KEY `detail_special_type` (`detail_special_type`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=5928 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'timesheets_exports' => array(
@@ -3011,7 +3011,7 @@ $tables = array(
       KEY `created` (`created`),
       KEY `status` (`status`),
       KEY `md5_file` (`md5_file`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=98 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'timesheets_exports_actions' => array(
@@ -3023,7 +3023,7 @@ $tables = array(
       `requester_ip` varchar(255) DEFAULT NULL,
       `result_ok` tinyint(4) NOT NULL DEFAULT '0',
       PRIMARY KEY (`id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'timesheets_exports_ids' => array(
@@ -3043,7 +3043,7 @@ $tables = array(
       `action_user` int(11) NOT NULL DEFAULT '0',
       `action_date` int(11) NOT NULL DEFAULT '0',
       PRIMARY KEY (`id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'users' => array(
@@ -3093,7 +3093,7 @@ $tables = array(
       KEY `is_manager` (`is_manager`),
       KEY `language` (`language`),
       KEY `newsletter` (`newsletter`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=724 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'users_customers' => array(
@@ -3152,7 +3152,7 @@ $tables = array(
       `comment` varchar(100) NOT NULL DEFAULT '',
       PRIMARY KEY (`id`,`user_id`),
       KEY `type` (`type`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=195 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'valid_dup_names' => array(
@@ -3162,7 +3162,7 @@ $tables = array(
       `computer_id` int(11) NOT NULL DEFAULT '0',
       PRIMARY KEY (`id`),
       KEY `netbios_name` (`netbios_name`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'web_access' => array(
@@ -3175,7 +3175,7 @@ $tables = array(
       `date_modified` int(11) NOT NULL,
       `user_id` int(11) NOT NULL,
       PRIMARY KEY (`id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'web_access_resources' => array(
@@ -3190,7 +3190,7 @@ $tables = array(
       `date_modified` int(11) NOT NULL,
       `user_id` int(11) NOT NULL,
       PRIMARY KEY (`id`)
-    ) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;",
+    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;",
     ),
 
     'work_markers' => array(
